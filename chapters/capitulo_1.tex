@@ -1,0 +1,212 @@
+% 1. Introducción a los códigos lineales
+% Por ahora es el capítulo 1 de Huffman y Pless
+
+\chapter{Introducción a los códigos lineales}
+
+Todo el desarrollo de este capítulo está basado en \cite{Huffman_Pless_2010} .
+\section{Códigos lineales}
+
+Sea $\mathbb{F}_q$ el cuerpo finito de $q$ elementos, denotamos $\mathbb{F}_q^n$ al espacio vectorial de las n-tuplas sobre el cuerpo finito $\mathbb{F}_q$. A los vectores $(a_1,a_2,\cdots,a_n)$ de $\mathbb{F}_q$ generalmente los escribiremos como $a_1a_2\cdots a_n$.
+
+
+
+\begin{definition}
+Un $(n,M)$ \emph{código} $\mathcal{C}$ sobre $\mathbb{F}_q$ es un subconjunto de $\mathbb{F}_q^n$ de tamaño $M$. Llamaremos \emph{palabras código} a los elementos de $\mathcal{C}$.
+\end{definition}
+
+\begin{exampleth}
+\begin{itemize}
+	\item En el cuerpo $\mathbb{F}_2$, a los códigos se les conoce como \emph{códigos binarios} y un ejemplo sería $\mathcal{C} = \{00,01,10,11\}$.
+
+	\item En el cuerpo $\mathbb{F}_3$, a los códigos se les conoce como \emph{códigos ternarios} y un ejemplo sería $\mathcal{C} = \{01, 12, 02, 10, 20, 21, 22\}$.
+\end{itemize}
+\end{exampleth}
+
+Si $\mathcal{C}$ es un espacio k-dimensional de $\mathbb{F}_q^n$, entonces decimos que $\mathcal{C}$ es un $\left[n,k\right]$ \emph{código linear} sobre $\mathbb{F}_q$ y tiene $q^k$ palabras código. Las dos formas más comunes de representar un código lineal son con la \emph{matriz generadora} o la \emph{matriz de paridad}.
+
+\begin{definition}
+
+Una \emph{matriz generadora} de un $\left[n,k\right]$ \emph{código linear} $\mathcal{C}$ es cualquier matriz $k \times n$ cuyas columnas forman una base de $\mathcal{C}$.
+\end{definition}
+
+Para cada conjunto de $k$ columnas independientes de una matriz generadora $G$, se dice que el conjunto de coordenadas forman un \emph{conjunto de información} de $\mathcal{C}$. Las $r = n - k$ coordenadas restantes forman el \emph{conjunto de redundancia} y el número $r$ es la \emph{redundancia} de $\mathcal{C}$.
+
+En general no hay una única matriz generadora pero si las primeras $k$ coordenadas forman un conjunto de información, entonces el código tiene una única matriz generado de la forma $\left[I_k | A\right]$, donde $I_k$ es la matriz identidad $k \times k$. Esta matriz se dice que está en \emph{forma estándar}.
+
+Como un código linear es un subespacio de un espacio vectorial, es el núcleo de alguna transformación lineal.
+
+\begin{definition}
+Una \emph{matriz de paridad} $H$ de dimensión $(n-k) \times k$ de un $\left[n,k\right]$ \emph{código linear} $\mathcal{C}$ es una matriz que verifica :
+\[
+C = \{ x \in  \mathbb{F}_q^n | Hx^T = 0  \}
+\]
+\end{definition}
+
+Como ocurría con la matriz generadora, la matriz de paridad no es única. Con el siguiente resultado podremos obtener una de ellas cuando $\mathcal{C}$ tiene una matriz generadora en forma estándar.
+
+\begin{theorem}[Matriz de paridad a partir de la generadora]
+
+Si $G = \left[I_k | A\right]$ es una matriz generadora del $\left[n,k\right]$ código $\mathcal{C}$ en su forma estándar, entonces $H = \left[-A^T |I_{n-k}\right]$ es la matriz de paridad de $\mathcal{C}$.
+\end{theorem}
+
+\begin{proof}
+Sabemos que $HG^T = -A^T + A^T = 0$, luego $\mathcal{C}$ está contenido en el núcleo de la transformación lineal $x \mapsto Hx^T$. Como $H$ tiene rango $n-k$, el núcleo de esta transformación es de dimensión $k$ que coincide con la dimensión de $\mathcal{C}$.
+\end{proof}
+
+\begin{exampleth}
+ \label{ex:matriz_generadora}
+Sea la matriz $G = \left[I_4 | A\right]$, donde
+
+\[
+G = \left( \begin{array}{cccc|ccc}
+	1 & 0 & 0 & 0 & 0 & 1 & 1 \\
+	0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+	0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+	0 & 0 & 0 & 1 & 1 & 1 & 1 
+			\end{array} 
+	\right)
+\]
+es la matriz generadora en forma estándar del $\left[7,4\right]$ código binario que denotaremos por $\mathcal{H}_3$.
+Por el teorema, la matriz de paridad de $\mathcal{H}_3$ es
+
+\[
+H =  \left[A^T | I_3\right] = \left( \begin{array}{cccc|ccc}
+	0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+	1 & 0 & 1 & 1 & 0 & 1 & 0 \\
+	1 & 1 & 0 & 1 & 0 & 0 & 1 
+
+			\end{array} 
+	\right)
+\]
+
+Este código se le conoce como el $\left[7,4\right]$ \emph{código de Hamming}.
+\end{exampleth}
+
+\section{Códigos duales}
+La matriz generadora $G$ de un $\left[n,k\right]$ código $\mathcal{C}$  es simplemente una matriz cuyas filas son independientes y que expanden el código. Las filas de la matriz de paridad $H$ también son independientes, luego $H$ es la matriz generadora del mismo código al que llamaremos \textit{código dual u ortogonal} y lo denotaremos como $\mathcal{C}^\perp$. Notamos que $\mathcal{C}^\perp$ es un $\left[n,n-k\right]$ código. Otra forma de verlo es de la siguiente manera: \\
+
+
+\begin{definition}
+$\mathcal{C}$ es un subespacio de un espacio vectorial luego a su ortogonal es a lo que llamamos \textit{espacio dual u ortogonal} de $\mathcal{C}$ y viene dado por
+
+$\mathcal{C}^\perp = \left\{ \textbf{x} \in \mathbb{F}_q^n \; : \; \textbf{x} \cdot \textbf{c} = 0 \quad  \forall \textbf{c} \in \mathcal{C} \right\}$
+\end{definition}
+
+Vamos a obtener ahora la matriz generadora y de paridad de $\mathcal{C}^\perp$ a partir de las de $\mathcal{C}$
+
+\begin{proposition}
+Si $G$ y $H$ son las matrices generadora y de paridad de $\mathcal{C}$ respectivamente, entonces $H$ y $G$ son las matrices generadora y de paridad de $\mathcal{C}^\perp$.
+\end{proposition}
+
+\begin{proof}
+Sea $G = \left[I_k | A\right]$ la  matriz generadora y $H = \left[-A^T |I_{n-k}\right]$ la matriz de paridad del $\left[n,k\right]$ código $\mathcal{C}$. 
+
+Sabemos que $HG^T = GH^T = 0$ luego
+
+$\mathcal{C}^\perp = \left\{ \textbf{x} \in \mathbb{F}_q^n \; : \; \textbf{x} \cdot \textbf{c} = 0 \quad  \forall \textbf{c} \in \mathcal{C} \right\} = \left\{ \textbf{x} \in \mathbb{F}_q^n \; : \; \textbf{x} \cdot G^T = 0 \quad  \forall \textbf{c} \in \mathcal{C} \right\} = $ \\
+ $\qquad \qquad = \left\{ \textbf{x} \in \mathbb{F}_q^n \; : \; G \cdot \textbf{x}^T = 0 \quad  \forall \textbf{c} \in \mathcal{C} \right\}$
+ 
+Luego $\mathcal{C}^\perp$ está contenido en el núcleo de la transformación lineal $x \mapsto Gx^T$. Como $G$ tiene rango $k$, el núcleo de esta transformación es de dimensión $n-k$ que coincide con la dimensión de $\mathcal{C}^\perp$. Por tanto, $G$ es la matriz de paridad de $\mathcal{C}^\perp$.
+
+Por último, como $HG^T = 0$ entonces $H$ es la matriz generadora de $\mathcal{C}^\perp$.
+\end{proof}
+
+Tras este resultado se ve claramente que $\mathcal{C}^\perp$ es un $\left[n,n-k\right]$ código.
+
+\begin{definition}
+Diremos que un código $\mathcal{C}$ es auto-ortogonal si $\mathcal{C} \subseteq \mathcal{C}^\perp$ y diremos que es autodual si $\mathcal{C} = \mathcal{C}^\perp$
+
+\end{definition}
+
+\begin{exampleth}
+Tenemos una matriz generadora del código de Hamming $\left[7,4\right]$ dada en el ejemplo \ref{ex:matriz_generadora}. Ahora definimos $\mathcal{H}'_3$ como el $\left[8,4\right]$ código en donde hemos añadido una columna a la paridad de $G$. Sea
+
+\[
+G' = \left( \begin{array}{cccc|cccc}
+	1 & 0 & 0 & 0 & 0 & 1 & 1 & 1\\
+	0 & 1 & 0 & 0 & 1 & 0 & 1 & 1\\
+	0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 \\
+	0 & 0 & 0 & 1 & 1 & 1 & 1 & 0
+			\end{array} 
+	\right)
+\]
+
+donde $G'$ es la matriz generadora de $\mathcal{H}'_3$. Veamos que es autodual:
+
+Sabemos que $G' = \left[I_4 | A'\right]$  y en este caso $A'$ es la siguiente matriz:
+
+\[
+A' = \left( \begin{array}{cccc}
+	 0 & 1 & 1 & 1\\
+	 1 & 0 & 1 & 1\\
+	 1 & 1 & 0 & 1 \\
+	 1 & 1 & 1 & 0
+			\end{array} 
+	\right)	
+\]
+
+y $(A')^T$ es la misma matriz. Luego como $A'(A')^T = I_4 $ entonces $\mathcal{H}'_3$ es autodual.
+
+\end{exampleth}
+
+\section{Pesos y distancias}
+\begin{definition}
+La \textit{distancia de Hamming} $d(x,y)$ entre dos vectores $x,y \in \mathbb{F}_q^n$ es el número de coordenadas en las que x e y difieren. 
+\end{definition}
+
+\begin{exampleth}
+	Sea $\mathbf{x}=20110$ y $\mathbf{y}=10121$ entonces $d(x,y)=3$.
+\end{exampleth}
+
+\begin{theorem}
+	La función distancia $d(x,y)$ satisface las siguientes cuatro propiedades:
+	\begin{enumerate}
+	\item No negatividad: $d(x,y) \geq 0 \quad \forall x,y \in \mathbb{F}_q^n$.
+	\item $d(x,y)=0 \Leftrightarrow x = y$.
+	\item Simetría: $d(x,y)=d(y,x) \quad \forall x,y \in \mathbb{F}_q^n$.
+	\item Desigualdad triangular: $d(x,z)\leq d(x,y) + d(y,z) \quad \forall x,y,z \in \mathbb{F}_q^n$
+	\end{enumerate}
+	
+\end{theorem}
+
+\begin{proof}
+Las tres primeras propiedades son evidentes por la definición de la distancia, comprobemos la última propiedad.
+
+Distinguimos dos casos, si $ x = z $ tenemos que $d(x,z) = 0$ y por tanto se verifica la desigualdad. Si $x \neq z$ entonces, no puede ocurrir que $x = y = z $, por tanto $d(x,y) \neq 0$ o $d(y,z) \neq 0$ y por la no negatividad se tendría la desigualdad, en el caso de que $ x = y$ o $y = z$ tendríamos la igualdad.
+\end{proof}
+
+Llamaremos \textit{distancia mínima} de un código $\mathcal{C}$ a la menor distancia no-nula entre dos palabras cualquiera del código. Además, esta distancia es un invariante y es importante a la hora de determinar la capacidad de corrección de errores del código $\mathcal{C}$ .
+
+\begin{exampleth}
+Sea $\mathcal{C} = \left\{ 201310, 311210, 202210, 312100 \right\} $ un código. Sus distancias son:
+\[
+d(201310, 311210) = 3 , \quad d(201310,202210) = 2, \quad d(201310,312100) = 5,
+\]
+\[
+ d(311210, 202210) = 3, \quad d(311210,312100) = 3, \quad d(202210,312100) = 4 
+\]
+Luego, la distancia mínima es $d(\mathcal{C}) = 2$.
+\end{exampleth}
+
+\begin{definition}
+El \textit{peso de Hamming} o $\operatorname{wt}(x)$ de un vector $x \in \mathbb{F}_q^n$ es el número de coordenadas no-nulas en $x$. Llamaremos \textit{peso de $\mathcal{C}$} a 
+$\operatorname{wt}(\mathcal{C}) = \min(\operatorname{wt}(x))$ con $x \neq 0 $.
+\end{definition}
+
+\begin{exampleth}
+	Sea $\mathbf{x} = 202210$ un vector en $\mathbb{F}_3^6$ entonces $\operatorname{wt}(x) = 4$.
+\end{exampleth}
+
+\begin{theorem}
+Si $x,y \in \mathbb{F}_q^n$, entonces $d(x,y) = \operatorname{wt}(x-y)$. Si $\mathcal{C}$ es un código linear, la mínima distancia $d$ es igual al mínimo peso de $\mathcal{C}$.
+\end{theorem}
+
+\begin{proof}
+Como $\mathcal{C}$ es lineal, tenemos que $ 0 \in \mathcal{C}$ y además $\operatorname{wt}(x) = d(x,0) \quad \forall x \in \mathcal{C}$, luego $d(\mathcal{C}) \leq \operatorname{wt}(\mathcal{C})$.
+
+Por otro lado, sea $x,y \in \mathcal{C}$ entonces $x-y \in \mathcal{C} \quad \forall x,y \in \mathcal{C}$ y sabemos que $d(x,y) = \operatorname{wt}(x-y) \geq \operatorname{wt}(\mathcal{C})$ para cualesquiera $x,y \in \mathcal{C}$. Se tiene que $d(\mathcal{C}) \geq \operatorname{wt}(\mathcal{C})$.
+
+Hemos conseguido así la igualdad, $d(\mathcal{C}) = \operatorname{wt}(\mathcal{C})$.
+\end{proof}
+
+Como resultado de este teorema, para códigos lineales, la \textit{mínima distancia}  también se denomina el \textit{peso mínimo} de un código. Si se conoce el peso mínimo de un código, entonces nos referiremos a él como el $\left[n,k,d\right]$ código.
