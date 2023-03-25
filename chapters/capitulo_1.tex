@@ -483,7 +483,7 @@ Haciendo cuentas en $\mathcal{R}_n$ obtenemos la matriz $\mathcal{H}$.
 \end{proof}
 
 
-\section{Idempotentes y multiplicadores}
+\subsection{Idempotentes y multiplicadores}
 
 Además del polinomio generador, podemos encontrar otros polinomios que también se pueden usar para generar un código cíclico. Otro polinomio muy común es el que llamaremos \textit{generador idempotente}.
 
@@ -575,3 +575,116 @@ Esto es equivalente a decir que $\{ e(x),xe(x),\cdots,x^{k-1}e(x) \}$ es una bas
 \end{proof}
 
 
+\begin{definition}
+Sea $\mathcal{C}_1$ y $\mathcal{C}_2$ códigos de tamaño \textit{n} en $\mathbb{F}_q$, definimos la suma de $\mathcal{C}_1$ y $\mathcal{C}_2$ como 
+\[
+\mathcal{C}_1 + \mathcal{C}_2 = \{ c_1 + c_2 \mid \thinspace c_1 \in \mathcal{C}_1 \thinspace y \thinspace c_2 \in \mathcal{C}_2 \}
+\]
+\end{definition}
+
+\begin{theorem}
+\label{th:inter_suma_generadores}
+Sea $\mathcal{C}_i$ un código cíclico de longitud n en $\mathbb{F}_q$ con polinomio generador $g_i(x)$ y generador idempotente $e_i(x)$ con $i = 1,2$. Entonces:
+\begin{enumerate}
+	\item $\mathcal{C}_1 \cap \mathcal{C}_2$ tiene como polinomio generador el $mcm(g_1(x),g_2(x))$ y generador idempotente $e_1(x)e_2(x)$
+	\item $\mathcal{C}_1 + \mathcal{C}_2$ tiene como polinomio generador el $mcd(g_1(x),g_2(x))$ y generador idempotente $e_1(x) + e_2(x) - e_1(x)e_2(x)$
+\end{enumerate}
+\end{theorem}
+
+%TODO demostración viene hecha la de la suma y la de la intersección me falta una inclusión, página 135 del libro 
+
+Describiremos ahora un tipo especial de idempotentes que son los \textit{idempotentes primitivos}, los cuales, una vez conocidos, podemos obtener todos los idempotentes de $\mathcal{R}_n$ y por tanto, todos los códigos cíclicos.
+
+\begin{definition}
+Sea $x^n-1 = f_1(x) \cdots f_s(x)$, donde $f_i(x)$ es irreducible en $\mathbb{F}_q$ para $ 1 \leq i \leq s$. Sea $\widehat{f_i}(x) = (x^n-1)/f_i(x)$, llamaremos \textit{idempotentes primitivos} a $\widehat{e_i}(x)=<\widehat{f_i}(x)>$
+\end{definition}
+
+\begin{theorem}
+\label{th:idempotentes primitivos}
+Lo siguiente es cierto en $\mathcal{R}_n$ :
+\begin{enumerate}
+	\item Los ideales $<\widehat{f_i}(x)>$ para $ 1 \leq i \leq s$ son todos minimales en $\mathcal{R}_n$
+	\item $\mathcal{R}_n$ es la suma directa de $<\widehat{f_i}(x)>$ para $ 1 \leq i \leq s$
+	\item Si $ i \neq j $, entonces $\widehat{e_i}(x)\widehat{e_j}(x) = 0$ en $\mathcal{R}_n$
+	\item $\sum_{i=1}^s \widehat{e_i}(x) = 1$ en $\mathcal{R}_n$
+	\item Los únicos elementos idempotentes en $<\widehat{f_i}(x)>$ son 0 y $\widehat{e_i}(x)$
+	\item Si $e(x)$ es un idempotente no-nulo en $\mathcal{R}_n$, entonces hay un subconjunto $T$ de $\{ 1,2, \cdots , s \}$ tal que $e(x) = \sum_{i \in T} \widehat{e_i}(x) $ y $ < e(x) > = \sum_{i \in T} < \widehat{f_i}(x) > $.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Supongamos que los $<\widehat{f_i}(x)>$ no son ideales minimales en $\mathcal{R}_n$. Luego, tiene que haber un polinomio generador $g(x)$ de un ideal no-nulo contenido en $<\widehat{f_i}(x)>$ tal que $f_i(x) | g(x) $ con $g(x) \neq f_i(x)$. Como $f_i(x)$ es irreducible y $ g(x)| (x^n-1) $, esto es imposible. Así que $<\widehat{f_i}(x)>$ es el ideal minimal de $\mathcal{R}_n$, con esto ya tenemos parte de 1).
+
+Como $\{ \widehat{f_i}(x) | 1 \leq i \leq s \}$ no tiene factores irreducibles comunes de $x^n-1$ y cada polinomio en el conjunto divide a $x^n-1$, $mcd(\widehat{f_1}(x), \cdots , \widehat{f_s}(x) ) = 1 $. Aplicando el Algoritmo de Euclides, tenemos que 
+\begin{equation}
+	1 = \sum_{i=1}^s a_i(x)\widehat{f_i}(x)
+\end{equation}
+
+para algunos $a_i(x) \in \mathbb{F}_q[x]$. Así que 1 es la suma de todos los ideales $<\widehat{f_i}(x)>$  que es también un ideal de $\mathcal{R}_n$. En cualquier anillo, el único ideal que contiene a la identidad del anillo es el propio anillo, luego esto prueba que $\mathcal{R}_n$ es la suma de los ideales $<\widehat{f_i}(x)>$. Para ver que es directa, debemos probar que $<\widehat{f_i}(x)> \cap \sum_{j \neq i} <\widehat{f_j}(x)> = { 0 }$ para $1 \leq i \leq s$. Como $f_i(x) | \widehat{f_j} $ para $j \neq i $, $f_i(x) \nmid \widehat{f_j} $ y los factores irreducibles de $x^n-1$ on distintos, luego $f_i(x) = mcd \{ \widehat{f_j}(x) | 1 \leq i \leq s \thinspace , j \neq i \}$ . Aplicando inducción llegamos a que $<\widehat{f_i}(x)> = \sum_{j \neq i} <\widehat{f_j}(x)> $. Así que $<\widehat{f_i}(x)> \cap \sum_{j \neq i} <\widehat{f_j}(x)> = <\widehat{f_i}(x)> \cap <f_i(x)> = <mcm(\widehat{f_i}(x),f_i(x))> = <x^n-1> = { 0 }$ probando así 2).
+
+Sea $\mathcal{M} = <m(x)>$ un ideal minimal cualquiera de  $\mathcal{R}_n$. Tenemos que 
+\[
+0 \neq m(x) = m(x) \cdot 1 = \sum_{i=1}^s m(x)a_i(x)\widehat{f_i}(x)
+\]
+
+luego, hay un \textit{i} tal que $m(x)a_i(x)\widehat{f_i}(x) \neq 0$. Por tanto, $\mathcal{M} \cap <\widehat{f_i}(x)> \neq {0}$ ya que $m(x)a_i(x)\widehat{f_i}(x) \in \mathcal{M} \cap <\widehat{f_i}(x)>$ y además $\mathcal{M} = <\widehat{f_i}(x)>$ por ser $\mathcal{M}$ y $<\widehat{f_i}(x)>$ minimales. Esto completa la prueba de 1).
+
+Si $ i \neq j$, $\widehat{e_i}(x)\widehat{e_j}(x) \in <\widehat{f_i}(x)> \cap <\widehat{f_j}(x)> = {0}$ por 2), lo que prueba 3). Usando 3) e inducción en el apartado 2) del teorema \ref{th:inter_suma_generadores} , $\sum_{i=1}^s \widehat{e_i}(x)$ es el generador idempotente de $\sum_{i=1}^s \widehat{f_i}(x) = \mathcal{R}_n$ por 2) y el generador idempotente de $\mathcal{R}_n$ es 1, luego hemos probado 4). 
+
+Si $e(x)$ es un idempotente no-nulo en $<\widehat{f_i}(x)>$, entonces $<e(x)>$ es un ideal contenido en $<\widehat{f_i}(x)>$. Por ser minimal y $e(x)$ no nulo, tenemos que $<\widehat{f_i}(x)> = <e(x)>$, implicando que $e(x) = \widehat{e_i}(x)$ ya que ambos son las únicas unidades de $\widehat{f_i}(x)$. Así tenemos 5).
+
+Para 6), notamos que $e(x)\widehat{e_i}(x)$ es idempotente en $\widehat{f_i}(x)$, luego $e(x)\widehat{e_i}(x)$ es 0 o es $\widehat{e_i}(x)$ por 5). Sea $T = \{ i | \thinspace e(x)\widehat{e_i}(x) \neq 0 \}$. Entonces, por 4), $e(x) = e(x) \cdot 1 = e(x)\sum_{i=1}^s \widehat{e_i}(x) = \sum_{i=1}^s e(x)\widehat{e_i}(x) = \sum_{i \in T} \widehat{e_i}(x)$. Además, $<e(x)> = < \sum_{i \in \mathcal{T}} \widehat{e_i}(x)> = \sum_{i \in T} <\widehat{e_i}(x)>$ por el teorema \ref{th:inter_suma_generadores} 2) e inducción, probándose así 6).
+\end{proof}
+
+\begin{theorem}
+Sea $\mathcal{M}$ un ideal minimal de $\mathcal{R}_n$. Entonces $\mathcal{M}$ es un cuerpo de extensión de $\mathbb{F}_q$.
+\end{theorem}
+
+\begin{proof}
+Solo hay que probar que cada elemento no-nulo en $\mathcal{M}$ tiene un inverso multiplicativo en $\mathcal{M}$. Sea $a(x) \in \mathcal{M}$ no-nulo. Entonces $<a(x)>$ es un ideal no-nulo de $\mathcal{R}_n$ contenido en $\mathcal{M}$, y por tanto, $<a(x)> = \mathcal{M}$. Así que, si $e(x)$ es la unidad en $\mathcal{M}$, hay un elemento $b(x)$ en $\mathcal{R}_n$ tal que $a(x)b(x) = e(x)$. Ahora si $c(x) = b(x)e(x) \in \mathcal{M}$ con $e(x) \in \mathcal{M}$. Por tanto, $a(x)c(x) = e(x)^2 = e(x) $
+\end{proof}
+
+Veremos ahora una permutación particular que nos permite mapear idempotentes de $\mathcal{R}_n$ en idempotentes de $\mathcal{R}_n$.
+
+\begin{definition}
+Sea \textit{a} un entero tal que $mcd(a,n) = 1$. La función $\mu_a$ definida en $ \{ 0,1 , \cdots , n-1 \}$ por $i\mu_a \equiv ia \thinspace (mod \thinspace n)$ es una permutación de las coordenadas $ \{ 0,1 , \cdots , n-1 \}$ de un código cíclico de tamaño n y la llamaremos \textit{multiplicador}.
+\end{definition}
+
+Otra forma de ver a los multiplicadores es con la ecuación 
+\begin{equation}
+f(x)\mu_a \equiv f(x^a) \thinspace (mod \thinspace x^n-1)
+\end{equation}
+
+es consistente con la otra definición ya que $x^i\mu_a = x^{ia} = x^{ia + jn}$ en $\mathcal{R}_n$ para un entero \textit{j} tal que $ 0 \leq ia + jn < n$ ya que $x^n = 1 $ en $\mathcal{R}_n$. En otras palabras, $x^i\mu_a = x^{ia \thinspace mod \thinspace n}$.
+
+
+\begin{theorem}
+\label{th:propiedades de multiplicadores}
+Sean $f(x)$ y $g(x)$ elementos de $\mathcal{R}_n$. Supongamos que $e(x)$ es idempotente en $\mathcal{R}_n$ y sea a primo relativo con n. Entonces : 
+\begin{enumerate}
+	\item Si $ b \equiv a \thinspace (mod \thinspace n)$ entonces $\mu_b = \mu_a$
+	\item $(f(x) + g(x))\mu_a = f(x)\mu_a + g(x)\mu_a$
+	\item $(f(x)g(x))\mu_a = (f(x)\mu_a)(g(x)\mu_a)$
+	\item $\mu_a$ es un automorfismo de $\mathcal{R}_n$
+	\item $e(x)\mu_a$ es idempotente en $\mathcal{R}_n$
+	\item $\mu_q$ deja invariante cada clase q-ciclotómica módulo n y tiene orden igual al $ord_n(q)$
+\end{enumerate}
+\end{theorem}
+
+
+\begin{theorem}
+Sea $\mathcal{C}$ un código cíclico de longitud n sobre $\mathbb{F}_q$ con generador idempotente $e(x)$. Sea a un entero con $mcd(a,n) = 1$. Entonces :
+\begin{enumerate}
+	\item $\mathcal{C}\mu_a = <e(x)\mu_a>$ y $e(x)\mu_a$ es el generador idempotente de $\mathcal{C}\mu_a$
+	\item $ e(x)\mu_q = e(x)$ y $\mu_q \in PAut(\mathcal{C})$
+\end{enumerate}
+\end{theorem}
+
+
+\begin{proof}
+Usando el teorema \ref{th:propiedades de multiplicadores} 3), $\mathcal{C}\mu_a = \{ (e(x)f(x))\mu_a \thinspace | \thinspace f(x) \in \mathcal{R}_n \} = \{ e(x)\mu_a \times f(x)\mu_a \thinspace | \thinspace f(x)\mu_a \in \mathcal{R}_n \} = \{ e(x)\mu_ah(x) \thinspace | \thinspace h(x) \in \mathcal{R}_n \} = <e(x)\mu_a> $ ya que $\mu_a$ es un automofirsmo por el teorema \ref{th:propiedades de multiplicadores} 4). Por tanto, $\mathcal{C}\mu_a$ es cíclico y tiene de generador idempotente $e(x)\mu_a$ por el teorema \ref{th:propiedades de multiplicadores} 5), probando así 1).
+
+Si probamos que $e(x)\mu_q = e(x)$, luego por 1), $\mathcal{C}\mu_q = \mathcal{C}$ y por tanto $\mu_q \in PAut(\mathcal{C})$. Por el teorema \ref{th:idempotentes primitivos} 6), $e(x) = \sum_{i \in T} \widehat{e_i}(x) $ para algún conjunto T. Por el teorema \ref{th:propiedades de multiplicadores} 2), $e(x)\mu_q = e(x)$ si $\widehat{e_i}(x)\mu_q = \widehat{e_i}(x)$ para todo \textit{i}. Pero $\widehat{e_i}(x)\mu_q = \widehat{e_i}(x^q) = (\widehat{e_i}(x))^q$ siendo un elemento no-nulo de $<\widehat{e_i}(x)>$ luego por el teorema \ref{th:idempotentes primitivos} 5) $\widehat{e_i}(x)\mu_q  = \widehat{e_i}(x)$.
+\end{proof}
+
+\subsection{Ceros de un código cíclico}
