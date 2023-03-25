@@ -210,3 +210,368 @@ Hemos conseguido así la igualdad, $d(\mathcal{C}) = \operatorname{wt}(\mathcal{
 \end{proof}
 
 Como resultado de este teorema, para códigos lineales, la \textit{mínima distancia}  también se denomina el \textit{peso mínimo} de un código. Si se conoce el peso mínimo de un código, entonces nos referiremos a él como el $\left[n,k,d\right]$ código.
+
+
+\section{Códigos cíclicos}
+
+Vamos a estudiar los códigos cíclicos de longitud n, por ello, denotaremos las coordenadas de sus posiciones como $0,\cdots,n-1$ que son los enteros módulo n.
+
+\begin{definition}
+ Un código lineal $\mathcal{C}$ de longitud n sobre $\mathbb{F}_q$ es \textit{cíclico} si para cada vector $c = c_0,\cdots,c_{n-2},c_{n-1}$ en  $\mathcal{C}$, el vector $c_{n-1},c_0,\cdots,c_{n-2}$ obtenido de \textbf{c} por la permutación de las coordenadas $ i \rightarrow i+1 (mod n)$, está también en $\mathcal{C}$.
+ \end{definition}
+ 
+ Así, un código cíclico contiene las n permutaciones de cada palabra código. Por tanto, es conveniente pensar que las coordenadas cuando alcanzan $n-1$, vuelven a la coordenada 0.
+
+Cuando hablemos de códigos cíclicos sobre $\mathbb{F}_q$, normalmente las palabras códigos las representaremos en su forma polinómica, ya que hay una correspondencia biyectiva entre los vectores $c = c_0,c_1,\cdots,c_{n-1}$ en $\mathbb{F}_q^n$ y los polinomios $c(x)=c_0+c_1x+\cdots+c_{n-1}x^{n-1}$ en $\mathbb{F}_q[x]$ con grado como mucho $n-1$. Notemos que si \textbf{c} es el polinomio dado, entonces $xc(x)=c_{n-1}x^{n}+c_0x+c_1x^2+\cdots+c_{n-2}x^{n-1}$ representa una permutación de \textbf{c} si $x^n$ es igual a 1. Más formalmente, el hecho de que el código cíclico $\mathcal{C}$ sea invariante por permutaciones, implica que $c(x)$ está en $\mathcal{C}$, luego $xc(x)$ también lo está multiplicando módulo $x^n-1$. 
+
+Esto sugiere que para un mejor estudio de los códigos cíclicos, desarrollemos el anillo cociente \[ \mathcal{R}_n =\mathbb{F}_q[x] / (x^n-1)\]  bajo la correspondencia vectores-polinomios dada anteriormente, los códigos cíclicos son ideales de $\mathcal{R}_n$ y los ideales de $\mathcal{R}_n$ son códigos cíclicos. Luego, el estudio de códigos cíclicos en $\mathbb{F}_q^n$ es equivalente al estudio de los ideales de $\mathcal{R}_n$ que se basa en factorizar el polinomio $x^n-1$
+
+
+\subsection{Factorización de $x^n-1$ }
+Queremos encontrar los factores irreducibles de $x^n-1$. Encontramos dos posibilidades: que $x^n-1$ tenga factores irreducibles repetidos o no los tenga. En el caso de los códigos cíclicos, se centra más en el segundo caso, por ello, hacemos la asumpción de que $x^n-1$ no tiene factores repetidos si y solo si \textit{q} y \textit{n} son primos relativos.
+
+Como ayuda para factorizar $x^n-1$ sobre $\mathbb{F}_q^n$, es útil encontrar una extensión del cuerpo $\mathbb{F}_{q^t}^n$ sobre $\mathbb{F}_q^n$ que contiene todas las raíces del polinomio. En otras palabras, $\mathbb{F}_{q^t}^n$ debe contener las raíces primitivas \textit{n-ésimas} de la unidad, que ocurre cuando $ n \mid (q^t-1)$.  Definimos el orden, $ord_n(q)$ de \textit{q} módulo \textit{n}, como el entero positivo más pequeño \textit{a} tal que $q^a \equiv 1 \thinspace ( mod \thinspace n)$. Notemos que si $t = ord_n(q)$, entonces $\mathbb{F}_{q^t}^n$ contiene la raíz primitiva \textit{n-ésima} de la unidad $\alpha$ , pero ninguna extesión del cuerpo $\mathbb{F}_q^n$ contiene esa raíz. Como los $\alpha^i$ son distintos para $0 \leq i < n $ y $(\alpha^i)^n = 1$ , entonces $\mathbb{F}_{q^t}^n$ contiene todas las raíces de $x^n-1$. Consecuentemente, llamaremos a $\mathbb{F}_{q^t}^n$ el \textit{cuerpo de descomposición} de $x^n-1$ sobre $\mathbb{F}_q^n$. Así que los factores irreducibles de $x^n-1$ sobre $\mathbb{F}_q^n$ deben de ser productos de los distintos polinomios mínimos de las raíces \textit{n-ésimas} en $\mathbb{F}_{q^t}^n$.  Supongamos que $\gamma$ es un elemento primitivo, es decir, el elemento generador de $\mathbb{F}_{q^t}^n$, entonces $\alpha = \gamma^d$ es una raíz primitiva \textit{n-ésima} de la unidad en donde $d = (q^t-1)/n$. Las raíces de $\mathcal{M}_{\alpha^s}(x)$ son $\{ \gamma^{ds}, \gamma^{dsq},\gamma^{dsq^2} ,\cdots, \gamma^{dsq^{r-1}} \} = \{ \alpha^s,\alpha^{sq},\alpha^{sq^2},\cdots,\alpha^{sq^{r-1}} \}$ donde \textit{r} es el entero positivo más pequeño que cumple que $dsq^r \equiv ds \thinspace ( mod \thinspace q-1 )$ pero esto solo se verifica si y solo si $sq^r \equiv s \thinspace ( mod \thinspace n )$
+% n | (q t − 1) by Theorem 3.3.3. Define the order ord n (q) of
+
+\begin{definition}
+Sea $\mathbb{F}_q^n$ un cuerpo finito y $\mathbb{F}_{q^t}^n$ un cuerpo de extensión suyo, llamaremos \textit{clase q-ciclotómica de s módulo n} al conjunto :
+\[
+	\mathcal{C}_s = \{s,sq,\cdots,sq^{r-1} \} \thinspace (mod \thinspace n)
+\]
+donde \textit{r} es el menor entero positivo tal que $sq^r \equiv s \thinspace (mod \thinspace n ) $.
+\end{definition}
+
+Las distintas clases \textit{q-ciclotómicas} modulo \textit{n} forman una partición del conjunto de los enteros $\{0,1,2,\cdots,n-1\}$.
+
+\begin{exampleth}
+\label{ex: clase_mod_nueve}
+ Vamos a calcular las clases \textit{2-ciclotómicas} para $n=9$ y $q=2$ :
+
+La primera de todas es $\mathcal{C}_0 = \{ 0*2^r \equiv 0 \thinspace (mod \thinspace 9) \} = \{ 0 \} $ y repetimos este proceso. Luego tenemos:
+
+$\mathcal{C}_1 = \{ 1*2^r \equiv 1 \thinspace (mod \thinspace 9) \} = \{ 1, 1*2^1=2, 1*2^2 = 4, 1*2^3 = 8, 1*2^4 = 7, 1*2^5 = 5 \} = \{1,2,4,8,7,5\} $
+ya que $1*2^6 = 64 \equiv 1 \thinspace (mod \thinspace 9)$ luego $r=6$
+
+$\mathcal{C}_3 = \{ 3*2^r \equiv 3 \thinspace (mod \thinspace 9) \} = \{ 3,3*2 = 6 \} = \{3,6 \} $ ya que $3*2^2 = 12 \equiv 3 \thinspace (mod \thinspace 9 )$ luego $r=2$
+
+\end{exampleth}
+
+\begin{exampleth} 
+\label{ex:clase_mod_trece}
+Vamos a calcular las clases \textit{3-ciclotómicas} para $n=13$ y $q=3$ que serán las siguientes :
+
+$\mathcal{C}_0 = \{ 0*3^r \equiv 0 \thinspace (mod \thinspace 13) \} = \{ 0 \} $
+
+$\mathcal{C}_1 = \{ 1*3^r \equiv 1 \thinspace (mod \thinspace 13) \} = \{ 1, 1*3^1=3, 1*3^2 = 9 = \{1,3,9\} $
+ya que $1*3^3 = 27 \equiv 1 \thinspace (mod \thinspace 13)$ luego $r=3$
+
+$\mathcal{C}_2 = \{ 2*3^r \equiv 2 \thinspace (mod \thinspace 13) \} = \{ 2, 2*3^1=6, 2*3^2 = 5 \} = \{2,6,5\} $
+ya que $2*3^3 = 54 \equiv 2 \thinspace (mod \thinspace 13)$ luego $r=3$ 
+
+$\mathcal{C}_4 = \{ 4*3^r \equiv 4 \thinspace (mod \thinspace 13) \} = \{ 4, 4*3^1=12, 4*3^2 = 10 \} = \{4,12,10\} $
+ya que $4*3^3 = 108 \equiv 4 \thinspace (mod \thinspace 13)$ luego $r=3$
+
+$\mathcal{C}_7 = \{ 7*3^r \equiv 7 \thinspace (mod \thinspace 13) \} = \{ 7, 7*3^1=8, 7*3^2 = 11 \} = \{7,8,11\} $
+ya que $7*3^3 = 189 \equiv 7 \thinspace (mod \thinspace 13)$ luego $r=3$
+
+Luego, ya tenemos todas las clases \textit{3-ciclotómicas} para $n=13$ y $q=3$.
+
+\end{exampleth}
+
+
+
+\begin{theorem}
+\label{factorizar_xn}
+Sea \textit{n} un entero positivo, primo relativo con \textit{q}. Sea $t = ord_n(q)$ y sea $\alpha$ la raíz primitiva \textit{n-ésima} de la unidad en $\mathbb{F}_{q^t}$.
+\begin{enumerate}
+
+	\item Por cada entero \textit{s} con $0 \leq s < n$, el polinomio mínimo de $\alpha^s$ sobre  $\mathbb{F}_q$ es
+	\[
+	\mathcal{M}_{\alpha^s}(x) = \prod_{i \in \mathcal{C}_s} (x-\alpha^i)
+	\] 
+	donde $\mathcal{C}_s$ es la clase \textit{q-ciclotómica} de \textit{s} módulo \textit{n}
+	\item  Los conjugados de $\alpha^s$ son los elementos $\alpha^i$ con $i \in \mathcal{C}_s$
+	\item  
+	\[
+	x^n-1 =  \prod_{s} \mathcal{M}_{\alpha^s}(x) 
+	\]
+	es la factorización de $x^n-1$ en factores irreducibles sobre $\mathbb{F}_q$ donde \textit{s} recorre un conjunto de los representantes de la clase \textit{q-ciclotómica} modulo \textit{n}.
+\end{enumerate}
+\end{theorem}
+ 
+
+ \begin{exampleth}
+Vamos a factorizar $x^9-1$ para ello, cogemos las clases \textit{2-ciclotómicas} calculadas en el ejemplo \ref{ex: clase_mod_nueve} que son $\mathcal{C}_0 = \{ 0 \}$ , $\mathcal{C}_1 = \{ 1,2,4,8,7,5 \}$ y $\mathcal{C}_3 = \{ 3,6 \}$. Luego el $ord_9(2) = 6$ y la \textit{nueve-ésima} raíz primitiva de la unidad reside en el cuerpo de extensión $\mathbb{F}_{64}$ y no en ningún otro más pequeño cuerpo de extensión de $\mathbb{F}_2$.
+
+Podemos afirmar que los factores irreducibles de $x^9-1$ tienen grado 1,2 y 6. Estos polinomios son $\mathcal{M}_{1}(x) = x -1 $ , $\mathcal{M}_{\alpha}(x)$ y $\mathcal{M}_{\alpha^3}(x)$ donde $\alpha$ es la \textit{nueve-ésima} raíz primitiva de la unidad en $\mathbb{F}_{64}$. Como el único polinomio irreducible de grado dos en $\mathbb{F}_2$ es $x^2+x+1$ no queda otra que sea $\mathcal{M}_{\alpha^3}(x)$. Por tanto, así tenemos la factorización que es $x^9-1 = (x-1)(x^2+x+1)(x^6+x^3+1)$ y $\mathcal{M}_{\alpha}(x) = x^6+x^3+1$.
+ 
+ \end{exampleth}
+ 
+\begin{exampleth}
+Ahora vamos a factorizar $x^13-1$ para ello, cogemos las clases \textit{3-ciclotómicas} calculadas en el ejemplo \ref{ex:clase_mod_trece} que son $\mathcal{C}_0 = \{ 0 \}$ , $\mathcal{C}_1 = \{ 1,3,9 \}$, $\mathcal{C}_2 = \{ 2,6,5 \}$,  $\mathcal{C}_4 = \{ 4,12,10 \}$ y  $\mathcal{C}_7 = \{ 7,8,11 \}$ . Luego el $ord_13(3) = 3$ y la \textit{trece-ésima} raíz primitiva de la unidad reside en el cuerpo de extensión $\mathbb{F}_{27}$ y no en ningún otro más pequeño cuerpo de extensión de $\mathbb{F}_3$.
+
+Podemos afirmar que los factores irreducibles de $x^13-1$ tienen grado 1,3,3,3 y 3. Estos polinomios son $\mathcal{M}_{1}(x) = x -1 $ , $\mathcal{M}_{\alpha}(x)$ y $\mathcal{M}_{\alpha^2}(x)$,  $\mathcal{M}_{\alpha^4}(x)$ y  $\mathcal{M}_{\alpha^7}(x)$ donde $\alpha$ es la \textit{trece-ésima} raíz primitiva de la unidad en $\mathbb{F}_{27}$. 
+
+Como el único polinomio irreducible de grado dos en $\mathbb{F}_2$ es $x^2+x+1$ no queda otra que sea $\mathcal{M}_{\alpha^3}(x)$. Por tanto, así tenemos la factorización que es $x^9-1 = (x-1)(x^2+x+1)(x^6+x^3+1)$ y $\mathcal{M}_{\alpha}(x) = x^6+x^3+1$.
+
+\end{exampleth}
+ 
+Viendo estos ejemplos podemos sacar que el tamaño de cada clase \textit{q-ciclotómica} es un divisor del $ord_n(q)$.
+
+\begin{theorem}
+El tamaño de cada clase \textit{q-ciclotómica} es un divisor del $ord_n(q)$. Además, el tamaño de $\mathcal{C}_1$ es justamente el  $ord_n(q)$.
+\end{theorem}
+
+\begin{proof}
+Sea $t = ord_n(q)$ y sea $m$ el tamaño de $\mathcal{C}_s$. Entonces $\mathcal{M}_{\alpha^s}(x)$ es un polinomio de grado m donde $\alpha$ es la \textit{n-ésima} raíz primitiva de la unidad. Así que, $ m \mid t$. Por definición de orden y clase \textit{q-ciclotómica} sale que el tamaño de $\mathcal{C}_1 = ord_n(q) $.
+\end{proof}
+
+
+\subsection{Teoría básica de los códigos cíclicos}
+
+Anteriormente, denotamos que los códigos cíclicos sobre $\mathbb{F}_q$ son precisamente los ideales de 
+\[
+\mathcal{R}_n = F_q[x]/(x^n-1)
+\] 
+Además cada ideal de $\mathbb{F}_q[x]$ es un ideal principal, luego los ideales de $\mathcal{R}_n$ son también principales y por eso, los códigos cíclicos son ideales principales de $\mathcal{R}_n$.
+
+Los elementos de $\mathcal{R}_n$ son los polinomios de $\mathbb{F}_q$ con grado menor que n y la multiplicación la realizamos módulo $x^n-1$. Así, cuando trabajamos en $\mathcal{R}_n$, al multiplicar dos polinomios, los multiplicamos como lo hacemos en $\mathbb{F}_q[x]$ y reemplazamos los términos de la forma $ax^{ni+j}$, con $ 0 \leq j < n$ por $ax^j$.
+
+Para distinguir el ideal principal $(g(x))$ de $\mathbb{F}_q[x]$ del ideal principal de $\mathcal{R}_n$, denotamos $<g(x)>$ como el ideal principal de $\mathcal{R}_n$ generado por $g(x)$. Vemos ahora con el siguiente teorema que hay una correspondencia biyectiva entre los códigos cíclicos en $\mathcal{R}_n$ y los polinomios mónicos divisores de $x^n-1$.
+
+
+\begin{theorem}
+\label{th:base_ciclicos}
+Sea $\mathcal{C} $ un código cíclico no-nulo en $\mathcal{R}_n$. Existe un polinomio $(x) \in \mathcal{C}$ que cumple las siguientes propiedades:
+\begin{enumerate}
+	\item $g(x)$ es el único polinomio mónico de menor grado en $\mathcal{C}$.
+	\item $\mathcal{C} = <g(x)>$
+	\item $g(x) | (x^n-1)$
+	
+	Sea $k = n - deg(g(x))$ y sea $g(x) = \sum_{i=0}^{n-k}g_ix^i$ donde $g_{n-k} = 1$. Entonces:
+	\item La dimensión de $\mathcal{C}$ es k y $\{g(x),xg(x),\cdots,x^{k-1}g(x)\}$ forman una base de $\mathcal{C}$.
+	\item Cada elemento de $\mathcal{C}$ se puede expresar particularmente como el producto de $g(x)f(x)$, donde $f(x) = 0$ o $deg(f(x)) < k$
+	\item 	
+	
+	$\mathcal{G} = \begin{pmatrix}
+			g_0 & g_1 & g_2 & \cdots & g_{n-k} & 0 & \cdots & 0 \\
+			0 & g_0 & g_1 & g_2 & \cdots & g_{n-k} & \cdots & \vdots \\
+			\vdots & \vdots & \vdots & \vdots & \vdots &\vdots & \vdots & \vdots \\
+			0 & \cdots & 0 & g_0 & g_1 & g_2 & \cdots & g_{n-k} 
+	\end{pmatrix} \Leftrightarrow \begin{pmatrix}
+			g(x) &  &  &   \\
+			 & xg(x)  &  &   \\
+			 &  & \ddots &   \\
+			 &  &  & x^{k-1}g(x)  \\
+	\end{pmatrix}$ 
+	es una matriz generadora de $\mathcal{C}$.
+	\item Si $\alpha$ es la n-ésima raíz de la unidad en el cuerpo de extensión $\mathbb{F}_q^n$ entonces \[ 
+	g(x) = \prod_s \mathcal{M}_{\alpha^s} (x)
+	\]
+	donde el producto es en un subconjunto representativo de las clases q-ciclotómicas módulo n.	
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Sea $g(x)$ un polinomio mónico de menor grado en $\mathcal{C}$. Como $\mathcal{C}$ es no-nulo, ese polinomio existe. Si $c(x) \in \mathcal{C}$, entonces por el algoritmo de la división en $\mathbb{F}_q[x]$, $c(x) = g(x)h(x) + r(x)$, donde $r(x) = $ o $deg(r(x)) < deg(g(x))$. Como $\mathcal{C}$ es un ideal en $\mathcal{R}_n$, $r(x) \in \mathcal{C}$ y como el grado de $g(x)$ es mínimo, implica que $r(x) = 0$. Esto prueba 1) y 2).
+
+De nuevo, por el algoritmo de la división, $x^n-1 = g(x)h(x)+r(x)$, donde de nuevo $r(x) = 0$ o $deg(r(x)) < deg(g(x))$ en  $\mathbb{F}_q[x]$. Como $x^n-1$ correponde con la palbra código 0 en $\mathcal{C}$ y $\mathcal{C}$ es un ideal en $\mathcal{R}_n$, entonces $r(x) \in \mathcal{C}$ que es una contradicción, a menos que $r(x) = 0$, lo que prueba 3).
+
+Supongamos que $deg(g(x)) = n-k$. Por 2) y 3) , si $c(x) \in \mathcal{C}$ con $c(x) = 0$ o $deg(c(x)) < n $, entonces $c(x) = g(x)f(x)$ en $\mathbb{F}_q[x]$. Si $c(x) = 0$, entonces $f(x) = 0$. Si $c(x) \neq 0$, $deg(c(x)) < n $ y el grado del producto de dos polinomio es la suma de los grados de los polinomios y sabemos que $deg(g(x)) = n-k$ lo que implica que $deg(f(x)) < k$. Por tanto, 
+\[
+\mathcal{C} = \{ g(x)f(x) | f(x) = 0 \thinspace o \thinspace deg(f(x)) < k \}
+\]
+
+Así que $\mathcal{C}$ tiene como mucho dimensión k y $\{g(x),xg(x),\cdots,x^{k-1}g(x)\}$ expande a $\mathcal{C}$. Como estos k polinomios son de distinto grado, son independientes en $\mathbb{F}_q[x]$. Como su grado es como mucho $n-1$, son también independientes en $\mathcal{R}_n$, por lo que queda demostrado 4) y 5). Para 6), basta colocar por filas los elementos de la base y así obtenemos $\mathcal{G}$. El último punto se obtiene del teorema \ref{factorizar_xn}. 
+\end{proof}
+
+A partir de este teorema podemos extraer el siguiente corolario.
+
+\begin{corollary}
+\label{co:generador_unico}
+Sea $\mathcal{C}$ un código cíclico no-nulo en $\mathcal{R}_n$. Son equivalentes:
+\begin{enumerate}
+	\item $g(x)$ es el único polinomio mónico de menor grado en $\mathcal{C}$.
+	\item $\mathcal{C} = <g(x)>$, $g(x)$ es mónico y $g(x) | (x^n-1)$. 
+\end{enumerate}
+
+\end{corollary}
+
+\begin{proof}
+1) implica 2) se ha demostrado en \ref{ex:base_ciclicos}. Asumiendo 2), sea $g_1(x)$ un polinomio mónico de menor grado en $\mathcal{C}$. Por la demostración del teorema \ref{ex:base_ciclicos} apartados 1) y 2), $g_1(x) | g(x)$ en $\mathbb{F}_q[x]$ y $\mathcal{C} = < g_1(x)>$. Como $ g_1(x) \in \mathcal{C} = < g(x) >$, entonces $g_1(x) = g(x)a(x) + (x^n-1)b(x)$ en $\mathbb{F}_q[x]$. Como $g(x) | (x^n-1)$, $g(x) | g(x)a(x) + (x^n-1)b(x)$ y por tanto $g(x) | g_1(x)$. Como $g_1(x)$ y $g(x)$ son mónicos  y se dividen entre ellos en $\mathbb{F}_q[x]$, luego son iguales.
+\end{proof}
+
+Del teorema, sacamos que $g(x)$ es un polinomio mónico que divide a $x^n-1$ y genera a $\mathcal{C}$. Del corolario, sacamos que además $g(x)$ es único. Luego, a este polinomio lo llamaremos el \textit{polinomio generador} del código cíclico $\mathcal{C}$.
+
+Así que hay una correspondencia uno a uno de los códigos cíclicos no-nulos y los divisores de $x^n-1$ no iguales a $x^n-1$. Con el fin de tener una correspondencia biyectiva entre todos los códigos cíclicos de $\mathcal{R}_n$ y todos los divisores mónicos de $x^n-1$, definimos que el \textit{polinomio generador} del código cíclico cero ${0}$ sea $x^n-1$. Esto da lugar al siguiente corolario.
+
+\begin{corollary}
+El número de códigos cíclicos en $\mathcal{R}_n$ es igual a $2^m$ donde m es el número de clases q-ciclotómicas módulo n. Además, las dimensiones de los códigos cíclicos son todas las posibles sumas de los tamaños de las clases q-ciclotómicas módulo n.
+
+\end{corollary}
+
+\begin{exampleth}
+Para el polinomio $x^9-1$ en $\mathbb{F}_2$, calculamos sus clases \textit{2-ciclotómicas} en el ejemplo \ref{ex: clase_mod_nueve} que eran $\mathcal{C}_0 = \{ 0 \}$ , $\mathcal{C}_1 = \{ 1,2,4,8,7,5 \}$ y $\mathcal{C}_3 = \{ 3,6 \}$. Luego, sus tamaños son 1,2 y 6, por tanto, por el corolario anterior sabemos que hay $2^3 = 8$ códigos cíclicos y sus dimensiones son : $0,1,2,3,6,7,8,9$ . Veamos los polinomios generadores de cada uno en la siguiente tabla.
+
+
+ \begin{tabular}{ c | c | c}
+	i & dimensión & $g_i(x)$ \\ \hline
+	0 & 0 & $ x^9 + 1$ \\
+	1 & 1 & $ (x^2+x+1)(x^6+x^3+1) = x^8+x^7+x^6+x^5+x^4+x^3+x^2+x+1$ \\ 
+	2 & 2 & $(x+1)(x^6+x^3+1) = x^7+x^6+x^4+x^3+x+1$ \\
+	3 & 3 & $x^6+x^3+1$ \\
+	4 & 6 & $(x+1)(x^2+x+1) = x^3+1$ \\
+	5 & 7 & $x^2+x+1$ \\
+	6 & 8 & $x+1$ \\ 
+	7 & 9 & 1
+
+	\end{tabular}
+	
+\end{exampleth}
+
+
+Veamos ahora un resultado con respecto a los códigos duales.
+
+\begin{theorem}
+El código dual de un código cíclico es también cíclico.
+\end{theorem}
+
+\begin{proof}
+Damos primero la definición de código dual $\mathcal{C}^\perp = \left\{ \textbf{x} \in \mathbb{F}_q^n \; : \; \textbf{x} \cdot \textbf{c} = 0 \quad  \forall \textbf{c} \in \mathcal{C} \right\}$. Lo que tenemos que probar es que dado un $c \in \mathcal{C}$ entonces $xc \in \mathcal{C}^\perp$. Tomamos $c' \in \mathcal{C}^\perp$
+
+
+\[
+	c' \cdot y = 0 \thinspace \forall y \in \mathcal{C} \Rightarrow x \cdot c' \cdot y = 0 \Longrightarrow x \cdot c' \in \mathcal{C}^\perp
+\]
+
+Y por tanto, hemos probado que $\mathcal{C}^\perp$ es cíclico.
+\end{proof}
+
+Podemos dar la matriz generado de un código cíclico dual que, en efecto, es también la matriz de paridad de un código cíclico.
+
+\begin{theorem}
+\label{th:matriz_paridad_ciclico_dual}
+
+Sea $\mathcal{C}$ $[n,k]$ código cíclico con polinomio generador $g(x)$. Sea $h(x)=(x^n-1)/g(x) = \sum_{i=0}^k h_ix^i$. Entonces el polinomio generador de  $\mathcal{C}^\perp$ es $g(x)^\perp = x^kh(x^{-1})/h(0)$. Además, la matriz generadora de  $\mathcal{C}^\perp$ y por tanto, la matriz de paridad de  $\mathcal{C}$ es 
+
+$\mathcal{H} = \begin{pmatrix}
+			h_k & h_{k-1} & h_{k-2} & \cdots & h_0 & 0 & \cdots & 0 \\
+			0 & h_k & h_{k-1} & h_{k-2} & \cdots & h_0 & 0 & \vdots \\
+			\vdots & \vdots & \vdots & \vdots & \vdots &\vdots & \vdots & \vdots \\
+			0 & \cdots & h_k & h_{k-1} & h_{k-2} & \cdots & \cdots & h_0 
+	\end{pmatrix}$
+\end{theorem}
+
+\begin{proof}
+Como sabemos cual es el polinomio generador de $\mathcal{C}^\perp$, podemos calcular su matriz generadora.
+
+$\begin{pmatrix}
+			g(x)^\perp &  &  &   \\
+			 & xg(x)^\perp  &  &   \\
+			 &  & \ddots &   \\
+			 &  &  & x^{k-1}g(x)^\perp  \\
+	\end{pmatrix} = $
+	
+	$\begin{pmatrix}
+			x^kh(x^{-1})/h(0) &  &  &   \\
+			 & xx^kh(x^{-1})/h(0)  &  &   \\
+			 &  & \ddots &   \\
+			 &  &  & x^{k-1}x^kh(x^{-1})/h(0)  \\
+	\end{pmatrix}$ 
+	
+Haciendo cuentas en $\mathcal{R}_n$ obtenemos la matriz $\mathcal{H}$. 
+\end{proof}
+
+
+\section{Idempotentes y multiplicadores}
+
+Además del polinomio generador, podemos encontrar otros polinomios que también se pueden usar para generar un código cíclico. Otro polinomio muy común es el que llamaremos \textit{generador idempotente}.
+
+\begin{definition}
+Un elemento \textit{e} de un anillo lo llamaremos \textit{idempotente} si satisface que $e^2=e$.
+\end{definition}
+
+\begin{theorem}
+Sea $\mathcal{C}$ un código cíclico en $\mathcal{R}_n$. Entonces :
+\begin{enumerate}
+	\item Existe un único elemento idempotente $e(x) \in \mathcal{C}$ tal que $\mathcal{C} = < e(x) >$,
+	\item si $e(x)$ es un elemento idempotente no-nulo en $\mathcal{C}$, entonces $\mathcal{C} = < e(x) >$ si y solo si es una unidad de $\mathcal{C}$.
+\end{enumerate}
+\end{theorem} 
+
+\begin{proof}
+Sea $\mathcal{C}$ un código cero, entonces el idempotente es el polinomio cero y se verifica 1) y 2) no se puede aplicar.
+
+Asumimos que $\mathcal{C}$ es no-nulo. Probaremos 2) primero, supongamos que $e(x)$ es una unidad en $\mathcal{C}$. Luego $<e(x)> \in \mathcal{C}$ viendo a $\mathcal{C}$ como un ideal. Si $c(x) \in \mathcal{C}$, entonces $c(x)e(x) = c(x)$ en $\mathcal{C}$, lo que implica que $<e(x)> = \mathcal{C}$. Por el contrario, supongamos que $e(x)$ es el idempotente no-nulo tal que $ \mathcal{C} = <e(x)> $. Luego, cada elemento $c(x) \in \mathcal{C}$ se puede escribir de la forma $c(x) = f(x)e(x)$, pero $c(x)e(x) = f(x)e(x)^2 = f(x)e(x) = c(x)$ lo que implica que $e(x)$ es una unidad en $\mathcal{C}$.
+
+Como $\mathcal{C}$ es no-nulo, por 2) si $e_1(x)$ y $e_2(x)$ son generadores idempotentes, entonces ambos son unidades y $e_1(x) = e_2(x)e_1(x) = e_2(x)$. Solo nos falta probar la existencia. Si $g(x)$ es el polinomio generador de $\mathcal{C}$, entonces $g(x) | x^n-1$. Sea $h(x) = (x^n-1)/g(x)$, entonces el $mcd(g(x),h(x)) = 1$ en $\mathbb{F}_q[x]$ ya que $x^n-1$ tiene distintas raíces. Por el Algoritmo de Euclídes, sabemos que existen $a(x),b(x) \in \mathbb{F}_q[x]$ tal que $a(x)g(x) + b(x)h(x) = 1$. Sea $e(x) \equiv a(x)g(x) \thinspace (mod \thinspace x^n-1)$, donde $e(x)$ es el representante de $a(x)g(x) + (x^n-1)$ en $\mathcal{R}_n$. Luego en $\mathcal{R}_n$, $e(x)^2 \equiv (a(x)g(x))(1-b(x)h(x)) \equiv a(x)g(x) \equiv e(x) \thinspace (mod \thinspace x^n-1)$ ya que $g(x)h(x) = x^n-1$. Además si $c(x) \in \mathcal{C}$, $c(x) = f(x)g(x)$ implica que $c(x)e(x) \equiv f(x)g(x)(1-b(x)h(x)) \equiv f(x)g(x) \equiv c(x) \thinspace (mod \thinspace x^n-1)$, por tanto, $e(x)$ es una unidad de $\mathcal{C}$ y 1) se prueba a partir de 2).
+\end{proof}
+
+Gracias a la demostración, hemos encontrado una forma de calcular el polinomio $e(x)$ a partir del polinomio generador $g(x)$. Basta con resolver $1 = a(x)g(x) + b(x)h(x)$ donde $h(x) = (x^n-1)/g(x)$. Luego, reduciendo $a(x)g(x)$ módulo $x^n-1$ se tiene $e(x)$. Veamos ahora una forma de obtener $g(x)$ a partir de $e(x)$.
+
+\begin{theorem}
+Sea $\mathcal{C}$ un código cíclico sobre $\mathbb{F}_q$ con generador idempotente $e(x)$. Entonces, el polinomio generador de $\mathcal{C}$ es $g(x) = mcd(e(x),x^n-1)$ en $\mathbb{F}_q[x]$.
+\end{theorem}
+
+\begin{proof}
+Sea $d(x) = mcd(e(x),x^n-1)$ en $\mathbb{F}_q[x]$ y sea $g(x)$ el polinomio generador de $\mathcal{C}$. Como $d(x) | e(x)$, $e(x) = d(x)k(x)$ implica que cada elemento de $\mathcal{C} = < e(x) > $ es también un múltiplo de $d(x)$, así que $\mathcal{C} \subseteq <d(x)<$. Por el teorema \ref{ex:base_ciclicos}, sabemos que $g(x) | (x^n-1)$ y por tanto, $g(x) | e(x)$ porque $e(x) \in \mathcal{C}$. Luego $g(x) | d(x)$ y por tanto, $d(x) \in \mathcal{C}$. Como $d(x)$ es un divisor mónico de $x^n-1$ que genera a $\mathcal{C}$, entonces por el corolario \ref{co:generador_unico}, $d(x) = g(x)$.
+\end{proof}
+
+\begin{exampleth}
+Vamos a calcular las clases \textit{2-ciclotómicas} para $n=7$ y ver cuáles son sus códigos cíclicos, dando su polinomio generador e idempotente.
+
+Las clases \textit{2-ciclotómicas} son : $\mathcal{C}_0 = \{ 0 \} $, $\mathcal{C}_1 = \{ 1*2^r \equiv 1 \thinspace (mod \thinspace 7) \} = \{ 1,2,4 \} $ , $\mathcal{C}_3 = \{ 3*2^r \equiv 3 \thinspace (mod \thinspace 7) \} = \{ 3,6,5 \} $. 
+
+Por tanto, tenemos tres clases \textit{2-ciclotómicas} de tamaños, 1,3 y 3 y la factorización de $x^7-1 = (x+1)(x^3+x^2+1)(x^3+x+1)$ Sabemos que hay 8 códigos cíclicos cuyas dimensiones son 0,1,3,3,4,4,6,7. En la siguiente tabla veremos los polinomios generadores e idempotentes.
+
+ \begin{tabular}{ c | c | c | }
+	i & dimensión & $g_i(x)$ \\ \hline
+	0 & 0 & $ x^7 + 1$  \\
+	1 & 1 & $ (x^3+x+1)(x^3+x^3+1) = x^6+x^5+x^4+x^3+x^2+x+1$  \\ 
+	2 & 3 & $ (x+1)(x^3+x^2+1) = x^4+x^2+x+1$ \\
+	3 & 3 & $ (x+1)(x^3+x+1) = x^4+x^3+x^2+1$  \\
+	4 & 4 & $ x^3+x^2+1$  \\
+	5 & 4 & $ x^3+x+1$ \\
+	6 & 6 & $x+1$  \\ 
+	7 & 7 & 1 
+
+	\end{tabular}
+	
+	\begin{tabular}{ c | c | c |}
+	i & dimensión & $e_i(x)$\\ \hline
+	0 & 0  & 0 \\
+	1 & 1 & $x^6+x^5+x^4+x^3+x^2+x+1$ \\ 
+	2 & 3  & $x^6+x^5+x^3+1$\\
+	3 & 3  &  $x^4+x^3+x^2+1$ \\
+	4 & 4  & $x^4+x^2+x$ \\
+	5 & 4  & $x^6+x^5+x^3$\\
+	6 & 6  & $x^6+x^5+x^4+x^3+x^2+x$ \\ 
+	7 & 7  & 1
+
+	\end{tabular}
+
+Los polinomios idempotentes los hemos calculado como indicamos anteriormente. Además, los dos códigos de dimensión cuatro son los $[7,4,3]$ códigos Hamming.
+
+\end{exampleth}
+
+
+Veamos ahora que al igual que los polinomios generadores podíamos sacar la matriz generadora, también podemos hacerlo con los idempotentes.
+
+\begin{theorem}
+Sea $\mathcal{C}$ un $[n,k]$ código cíclico con polinomio idempotente $e(x)= \sum_{i=0}^{n-1} e_ix^i$, la matriz $k \times n $
+
+$ \begin{pmatrix}
+			e_0 & e_1 & e_2 & \cdots & e_{n-2} & e_{n-1} \\
+			e_{n-1} & e_0 & e_1 & \cdots  & e_{n-3} & e_{n-2} \\
+			\vdots & \vdots & \vdots & \vdots & \vdots &\vdots & \vdots & \vdots \\
+			e_{n-k+1} & e_{n-k+2} & e_{n-k+3} & \cdots  & e_{n-k-1} & e_{n-k} \\
+	\end{pmatrix}$
+
+es la matriz generadora de $\mathcal{C}$.
+\end{theorem}
+
+\begin{proof}
+Esto es equivalente a decir que $\{ e(x),xe(x),\cdots,x^{k-1}e(x) \}$ es una base de $\mathcal{C}$. Por tanto,  es suficiente ver que si $a(x) \in \mathbb{F}_q[x]$ tiene menor grado que \textit{k} tal que $a(x)e(x)=0$, entonces $a(x)=0$. Sea $g(x)$ el polinomio generador de $\mathcal{C}$. Si $a(x)e(x)=0$, entonces $0 = a(x)e(x)g(x)= a(x)g(x)$ ya que $e(x)$ es una unidad de $\mathcal{C}$, contradiciendo así el teorema \ref{th:base_ciclicos} 5) a menos que $a(x) = 0$.
+\end{proof}
+
+
