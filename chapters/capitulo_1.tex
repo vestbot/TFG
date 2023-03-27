@@ -806,3 +806,125 @@ Sea $\mathcal{C}$ un código cíclido de longitud n sobre $\mathbb{F}_q$ con cer
  \end{lemma}
 
 
+\begin{theorem}[\textbf{Cota inferior BCH}]
+\label{th:cota_bch}
+Sea $\mathcal{C}$ un código cíclico de longitud n sobre $\mathbb{F}_q$ con conjunto de definición T. Supongamos que $d$ es el mínimo peso de $\mathcal{C}$. Asumimos que T contiene los $\delta -1$ elementos consecutivos para un entero $\delta$. Entonces $d \geq \delta$.
+\end{theorem}
+
+\begin{proof}
+Asumimos que $\mathcal{C}$ tiene ceros que incluye a $\alpha^b,\alpha^{b+1}, \cdots , \alpha^{b+\delta-2}$. Sea $c(x)$ una palabra código no-nula en $\mathcal{C}$ de peso $w$ y sea 
+\[ 
+	c(x) = \sum_{j=1}^w c_{i_j}x^{i_j}
+\]
+
+Asumimos por el contrario que $w < \delta$. Como $c(\alpha^i) = 0$ para $ b \leq i \leq b+\delta -2$, $Mu^T = 0$, donde 
+
+$ M = \begin{pmatrix}
+	 \alpha^{i_1b} & \alpha^{i_2b} & \cdots & \alpha^{i_wb} \\
+	 \alpha^{i_1(b+1)} & \alpha^{i_2(b+1)} & \cdots  & \alpha^{i_w(b+1)} \\
+	 \vdots & \vdots & \vdots & \vdots  \\
+     \alpha^{i_1(b+w-1)} & \alpha^{i_2(b+w-1)} & \cdots  & \alpha^{i_w(b+w-1)} \\
+	\end{pmatrix}$
+	
+y $u=c_{i_1}c_{i_2}\cdots c_{i_w}$. Como $u \neq 0$, M es una matriz singular y por tanto $det \thinspace M = 0$. Pero $det \thinspace M = \alpha^{(i_1+i_2+\cdots + i_w)^b}det \thinspace V$, donde V es la matriz de Vandermonde :
+
+$ V = \begin{pmatrix}
+	 1 & 1 & \cdots & 1 \\
+	 \alpha^{i_1} & \alpha^{i_2} & \cdots  & \alpha^{i_w} \\
+	 \vdots & \vdots & \vdots & \vdots  \\
+     \alpha^{i_1(w-1)} & \alpha^{i_2(w-1)} & \cdots  & \alpha^{i_w(w-1)} \\
+	\end{pmatrix}$
+	
+Como los $\alpha^{i_j}$ son distintos, $det \thinspace V \neq 0$ por el lema \ref{le:vandermonde}, contradiciendo que $det \thinspace M = 0$.
+\end{proof}
+
+La cota BCH asegura que queremos encontrar el conjunto más largo de elementos consecutivos en el conjunto de definición. Sin embargo, el conjunto de definición depende del elemento primitivo escogido. Sea $\beta = \alpha^a$, donde $mcd(a,n)=1$. Así que $\beta$ es también una n-ésima raíz primitiva de la unidad. Además $a^{-1}$ es el inverso multiplicativo de a módulo n. Luego, los polinomios minimales $\mathcal{M}_\alpha^s(x)$ y $\mathcal{M}_\beta^{a^{-1}s}(x)$ son iguales. Por tanto, el código con conjunto de definición T, relativo al elemento $\alpha$ es el mismo que el código con conjunto de definición $a^{-1}T \thinspace mod \thinspace n$, relativo al elemento $\beta$. Por consiguiente, si aplicamos la cota BCH o cualquiera de las otras cotas inferiores, podemos obtener una cota inferior mayor si aplicamos un multiplicador del conjunto de definición. Alternativamente, los códigos $\mathcal{C}$ y $\mathcal{C}\mu_a$ son equivalentes y tienen conjuntos de definición T y $a^{-1}$T respecto al mismo elemento $\alpha$, luego tienen el mismo peso mínimo.
+
+\begin{exampleth}
+Sea $\mathcal{C}$ el $[31,25,d]$ código cíclico binario con conjunto de definición $T = \{ 0,3,6,12,24,17 \}$. Si aplicamos la cota BCH a $\mathcal{C}$, vemos que $d \geq 2$ ya que el conjunto con más elementos consecutivos es de tamaño 1. Sin embargo, si multiplicamos T por $ 3^{-1} \equiv 21 \thinspace (mod \thinspace 31)$, obtenemos que $3^{-1}T \thinspace mod \thinspace 31 = \{ 0,1,2,4,8,16 \}$. Reemplazando $\alpha$ por $\alpha^3$ o $\mathcal{C}$ por $\mathcal{C}\mu_3$ y aplicando la cota BCH , ahora obtenemos que $ d \geq 4 $.
+\end{exampleth}
+
+
+
+Hartmann y Tzeng probaron que si hay varios conjuntos de $\delta -1$ elementos consecutivos en el conjunto de definición y están espaciados adecuadamente, entonces la cota BCH se puede mejorar.
+
+Para definir la cota Hartmann-Tzeng vamos a necesitar la siguiente notación. Si $A$ y $B$ son subconjuntos de enteros módulo n, entonces $A+B = \{ a + b \thinspace mod \thinspace n | \thinspace a \in A, \thinspace b \in B \}$
+
+
+\begin{theorem}[\textbf{Cota inferior Hartmann-Tzeng}]
+Sea $\mathcal{C}$ un código cíclico de longitud n sobre $\mathbb{F}_q$ con conjunto de definición T. Sea A un conjunto de $\delta -1$ elementos consecutivos de T y sea $B = \{ jb \thinspace mod \thinspace n |\thinspace 0\leq j \leq s \}$, donde $mcd(b,n) < \delta$. Si $A+B \subseteq T$, el mínimo peso d en $\mathcal{C}$ satisface que $ d \geq \delta + s$.
+
+\end{theorem}
+
+Se puede observar que la cota BCH es la cota Hartmann-Tzeng para $s=0$.
+
+\begin{exampleth}
+\label{ex:cota_Hartmann}
+Sea $\mathcal{C}$ un código cíclico binario de longitud 17 con conjunto de definición $T = \{ 1,2,4,8,9,13,15,16 \}$. Hay dos elementos consecutivos en T luego la cota BCH nos da $ d \geq 3 $. La cota de Hartmann-Tzeng la mejora. Sea $A = \{ 1,2 \}$ y $B = \{ 0,7,14 \}$. Así que $\delta = 3, b=7$ y $s=2$, además $mcd(7,17) = 1 < \delta$. Luego $\mathcal{C}$ tiene de peso mínimo $d \geq 5$
+\end{exampleth}
+
+
+Van Lint y Wilson dieron técnicas que se pueden usar para producir cotas inferiores de mínimo peso para códigos cíclicos. Presentaremos una de ellas, a la cual nos referiremos como la \textit{técnica de acotación de van Lint-Wilson}. Para usar esta técnica, debemos construir una secuencia de subconjuntos módulo n relacionada con el conjunto de definición del código.
+
+\begin{definition}
+Sea $\mathcal{N} = \{ 0,1, \cdots, n-1 \}$. Sea $ S \subseteq \mathcal{N}$. Una secuencia $I_0,I_1,I_2, \cdots$ de subconjuntos de $\mathcal{N}$ es una \textit{sucesión independiente con respecto a S} si :
+
+\begin{enumerate}
+	\item $I_0 = \emptyset $
+	\item Si $ i > 0 $ luego, o $I_i = I_j \cup \{ a \}$ para algún $ 0 \leq j \leq i$ tal que $I_j \subseteq S$ y $a \in \mathcal{N}\setminus S$ o $I_i = b + I_j$ para algún $ 0 \leq j \leq i$ y $b \neq 0 $.
+\end{enumerate}
+\end{definition}
+
+Un sunconjunto I de $\mathcal{N}$ es independiente con respecto a S  siempre que I sea un conjunto en una sucesión independiente con respecto a S. Si $S = \mathcal{N}$, entonces solo el conjunto vacío es independiente con respecto de S.
+
+\begin{theorem}[\textbf{técnica de acotación de van Lint-Wilson}]
+Supongamos que $f(x)$ está en $\mathbb{F}q[x]$ y tiene grado como mucho n. Sea I cualquier subconjunto de $\mathcal{N}$ que es independiente con respecto de $S = \{ i \in \mathcal{N} | \thinspace f(\alpha^i) = 0 \}$. Entonces, el peso de $f(x)$ es al menos el tamaño de I.
+\end{theorem}
+
+\begin{proof}
+Sea $f(x) = c_1x^{i_1} + c_2x^{i_2} + \cdots + c_wx^{i_w}$, donde $c_j \neq 0$ para $1 \leq j \leq w$, y sea I cualquier conjunto independiente con respecto a S. Sea $I_0,I_1,I_2, \cdots$ una secuencia independiente con respecto a S tal que $I = I_i$ para algún $i \geq 0$. Si $ J \subseteq \mathcal{N}$, sea $V(J)$ el conjunto de los vectores en $\mathbb{F}_{q^t}^w$ definidos por 
+\[ 
+V(J) = \{ (\alpha^{ki_1},\alpha^{ki_2}, \cdots, \alpha^{ki_w}) | \thinspace k \in J \}
+\]
+
+Si probamos que $V(J)$ son linealmente independientes en $\mathbb{F}_{q^t}^w$, entonces $w \geq |V(I)| = |I|$. Por tanto, es suficiente probar que $V(I_i)$ es linealmente independiente para todo $i \geq 0$, lo cual haremos por inducción. Si $I_0 = \emptyset$, $V(I_0)$ es el conjunto vacío y por tanto es linealmente independiente. Asumimos que $V(I_j)$ es linealmente independiente para algún $0 \leq j < i$. $I_i$ está formado de alguna de las dos siguientes formas. La primera, supongamos que $I_i = I_j \cup \{ a \}$ para algún $0 \leq j < i$, donde $I_j \subseteq S$ y $a \in \mathcal{N}\setminus S$. Por hipótesis de inducción, $V(I_j)$ es linealmente independiente. Si $ 0 = f(\alpha^k) = c_1\alpha^{ki_1} + c_2\alpha^{ki_2} + \cdots + c_w\alpha^{ki_w} $ para $k \in I_j$ , el vector $c = ( c_1, c_2 , \cdots , c_w ) $ es ortogonal a $V(I_j)$. Si $V(I_i)$ es linealmente independiente, entonces $(\alpha^{ai_1},\alpha^{ai_2}, \cdots, \alpha^{ai_w})$ recorre $V(I_j)$ y por tanto, es ortogonal a $(c_1,c_2, \cdots, c_w)$. Así que, $ 0 = f(\alpha^k) = c_1\alpha^{ki_1} + c_2\alpha^{ki_2} + \cdots + c_w\alpha^{ki_w} = f(\alpha^a)$, que es una contradicción ya que $a \not\in S$. Supongamos ahora que $I_i = \{ b \} + I_j$ para algún $0 \leq j < i$ donde $ b \neq 0 $. Entonces $V(I_i) =  \{ (\alpha^{(b+k)i_1},\alpha^{(b+k)i_2}, \cdots, \alpha^{(b+k)i_w}) | \thinspace k \in I_j \} = V(I_j)D$, donde D es la matriz regular diagonal $diag(\alpha^{bi_1},\alpha^{bi_2}, \cdots, \alpha^{bi_w})$. Como $V(I_j)$ es independiente, también lo es $V(I_i)$.
+\end{proof}
+
+
+\begin{corollary}
+Sea $\mathcal{C}$ un código cíclico de loongitud n sobre $\mathbb{F}_q$. Supongamos que $f(x)$ es una palabra código no-nula tal que $f(\alpha^b) = f(\alpha^{b+1}) = \cdots = f(\alpha^{b+w-1}) = 0$ pero $f(\alpha^{b+w}) \neq 0 $. Entonces $ wt(f(x)) \geq w +1 $
+\end{corollary}
+
+\begin{proof}
+Sea $S = \{ i \in \mathcal{N} | \thinspace f(\alpha^i) = 0 \}$. Así que $\{ b,b+1, \cdots , b+w-1 \} \subseteq S$ pero $b+w \not\in S$. Por inducción, definimos la sucesión $I_0,I_1, \cdots , I_{2w+1}$ como sigue: Sea $I_0 = \emptyset$. Sea $I_{2i+1} = I_{2i} \cup \{ b+w \}$ para $ 0 \leq i \leq w$ y $I_{2i} = \{ -1 \} + I_{2i-1}$ para $ 1 \leq i \leq w$. Por inducción, $I_{2i} = \{ b+w-i,b+w-i+1, \cdots , b+w-1 \} \subseteq S$ para $ 0 \leq i \leq w$. Además $I_0,I_1, \cdots , I_{2w+1}$ es una sucesión independiente de S. Como $I_{2w+1} = \{ b,b+1, \cdots , b+w-1 \}$, la técnica de acotación van Lint-Wilson implica que $wt(f(x)) \geq |I_{2w+1} | = w+1$.
+\end{proof}
+
+\begin{exampleth}
+Sea $\mathcal{C}$ el $[17,9,d]$ código cíclico binario con conjunto de definición $T = \{ 1,2,4,8,9,13,15,16 \}$. En el ejemplo \ref{ex:cota_Hartmann} vimos que la cota BCH implicaba que $ d \geq 3$ y la cota Hartmann-Tzeng lo mejoraba dando $d \geq 5$ usando $A = \{ 1,2 \}$ y $B = \{ 0,7,14 \}$. La técnica de van Lint-Wilson nos da la misma cota usando el siguiente argumento. 
+
+Sea $f(x) \in \mathcal{C}$ una palabra código no-nula de peso menor que 5. T es la clase 2-ciclotómica $\mathcal{C}_1$. Si $f(\alpha^i) = 0$ para algún $ i \in \mathcal{C}_3$, entonces $f(x)$ es una palabra código no-nula del código cíclico definido por $\mathcal{C}_1 \cup \mathcal{C}_3$ y por tanto, $wt(f(x)) = 17$, lo que es una contracción. Sea $S = \{ i \in \mathcal{N} | \thinspace f(\alpha^i) = 0 \}$, asumimos que S no tiene elementos en $\mathcal{C}_3 = \{ 3,5,6,7,10,11,12,14 \}$. Entonces la siguiente sucesión de subconjuntos de $\mathcal{N}$ es independiente con respecto a S:
+
+\begin{itemize}
+	\item $I_0 = \emptyset$
+	\item $I_1 = I_0 \cup \{ 6 \} = \{ 6 \}$
+	\item $I_2 = \{ -7 \} + I_1  = \{ 16 \} \subseteq S$
+	\item $I_3 = I_2 \cup \{ 6 \} = \{ 6,16 \}$
+	\item $I_4 = \{ -7 \} + I_3  = \{ 9, 16 \} \subseteq S$
+	\item $I_5 = I_4 \cup \{ 6 \} = \{ 6,9,16 \}$
+	\item $I_6 = \{ -7 \} + I_5  = \{ 2,9,16 \} \subseteq S$
+	\item $I_7 = I_6 \cup \{ 6 \} = \{ 2,3,9,16 \}$
+	\item $I_8 = \{ -7 \} + I_7  = \{ 1,2,8,15 \} \subseteq S$
+	\item $I_9 = I_8 \cup \{ 6 \} = \{ 1,2,3,8,15 \}$
+\end{itemize}
+
+Como $wt(f(x)) \geq | I_9 | = 5$, la técnica de van Lint-Wilson muestra que $ d \geq 5$.
+
+\end{exampleth}
+
+Como podemos observar en el ejemplo la técnica de van Lint-Wilson es difícil de aplicar y además, en este caso, produce la misma cota que usando la cota de Hartmann-Tzeng.
+
+\section{Códigos BCH y Reed-Solomon}
+
+
+
+
