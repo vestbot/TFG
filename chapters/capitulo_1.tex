@@ -518,6 +518,7 @@ Sea $d(x) = mcd(e(x),x^n-1)$ en $\mathbb{F}_q[x]$ y sea $g(x)$ el polinomio gene
 \end{proof}
 
 \begin{exampleth}
+\label{ex:idempotente_siete}
 Vamos a calcular las clases \textit{2-ciclotómicas} para $n=7$ y ver cuáles son sus códigos cíclicos, dando su polinomio generador e idempotente.
 
 Las clases \textit{2-ciclotómicas} son : $\mathcal{C}_0 = \{ 0 \} $, $\mathcal{C}_1 = \{ 1*2^r \equiv 1 \thinspace (mod \thinspace 7) \} = \{ 1,2,4 \} $ , $\mathcal{C}_3 = \{ 3*2^r \equiv 3 \thinspace (mod \thinspace 7) \} = \{ 3,6,5 \} $. 
@@ -688,3 +689,120 @@ Si probamos que $e(x)\mu_q = e(x)$, luego por 1), $\mathcal{C}\mu_q = \mathcal{C
 \end{proof}
 
 \subsection{Ceros de un código cíclico}
+
+\begin{definition}
+Sea $\mathcal{C}$ un código cíclico en $\mathcal{R}_n$ con polinomio generador $g(x)$. Luego, $g(x) = \prod_{s} \mathcal{M}_{\alpha^s}(x) = \prod_{s} \prod_{i \in \mathcal{C}_s} (x-\alpha^i) $ donde \textit{s} recorre un subconjunto de los representantes de las clases \textit{q-ciclotómicas} $\mathcal{C}_s$ módulo n. Sea T $ = \cup_s \mathcal{C}_s$ la unión de estas clases \textit{q-ciclotómicas}. Llamaremos \textbf{ceros} de un código cíclico a $\mathcal{Z} = \{ \alpha^i \thinspace | \thinspace i \in T \}$ y \textbf{no-ceros} a $\{ \alpha^i \thinspace | \thinspace i \not\in T \}$ . Al conjunto T, lo llamaremos \textbf{conjunto de definición} de $\mathcal{C}$
+\end{definition}
+
+Nos damos cuenta de que T y por tanto, el conjunto de ceros y no-ceros, determina completamente al polinomio generador $g(x)$. Por el teorema \ref{th:base_ciclicos} , la dimensión de $\mathcal{C}$ es $ n - \mid T \mid$ y $\mid T \mid$ es el grado de $g(x)$
+
+
+\begin{exampleth}
+Utilizaremos los polinomios generadores e idempotentes calculados en el ejemplo \ref{ex:idempotente_siete} pero además, mostraremos el conjunto de definición para cada código cíclico relativo a la raíz primitiva $\alpha$ 
+
+\begin{tabular}{ c | c | c | }
+	i & dimensión & $g_i(x)$ \\ \hline
+	0 & 0 & $ x^7 + 1$  \\
+	1 & 1 & $  x^6+x^5+x^4+x^3+x^2+x+1$  \\ 
+	2 & 3 & $  x^4+x^2+x+1$ \\
+	3 & 3 & $  x^4+x^3+x^2+1$  \\
+	4 & 4 & $ x^3+x^2+1$  \\
+	5 & 4 & $ x^3+x+1$ \\
+	6 & 6 & $x+1$  \\ 
+	7 & 7 & 1 
+
+	\end{tabular}
+	
+	\begin{tabular}{ c | c | c | c |}
+	i & dimensión & $e_i(x)$ & conjunto de definición\\ \hline
+	0 & 0  & 0 & $\{ 0,1,2,3,4,5,6 \}$ \\
+	1 & 1 & $x^6+x^5+x^4+x^3+x^2+x+1$  & $\{ 1,2,3,4,5,6 \}$\\ 
+	2 & 3  & $x^6+x^5+x^3+1$ & $\{ 0,1,2,4 \}$\\
+	3 & 3  &  $x^4+x^3+x^2+1$ & $\{ 0,3,5,6 \}$ \\
+	4 & 4  & $x^4+x^2+x$ & $\{ 1,2,4 \}$ \\
+	5 & 4  & $x^6+x^5+x^3$ & $\{ 3,5,6 \}$ \\
+	6 & 6  & $x^6+x^5+x^4+x^3+x^2+x$ & $\{ 0 \}$ \\ 
+	7 & 7  & 1 & $ \emptyset $
+
+	\end{tabular}
+\end{exampleth}
+
+El siguiente teorema nos da propiedades básicas de los códigos cíclicos en relación a los conjuntos de definición.
+
+\begin{theorem}
+\label{th:prop_conj_def}
+
+Sea $\alpha$ la n-ésima raíz primitiva de la unidad en un cuerpo de extensión de $\mathbb{F}_q$. Sea $\mathcal{C}$ un código cíclico de longitud n en $\mathbb{F}_q$ con conjunto de definición T y polinomio generador $g(x)$. Se verifica lo siguiente:
+\begin{enumerate}
+	\item T es la unión de las clases q-ciclotómicas módulo n
+	\item $g(x) = \prod_{i \in T} (x-\alpha^i)$
+	\item $c(x) \in \mathcal{R}_n \Leftrightarrow \thinspace c(\alpha^i) = 0 \thinspace \forall i \in T$
+ 	\item La dimensión de $\mathcal{C}$ es $ n - \mid T \mid$
+\end{enumerate}
+\end{theorem}
+
+
+Los ceros de un código cíclico nos pueden servir para obtener una matriz de control de paridad, como la definimos en el siguiente teorema.
+
+\begin{theorem}
+Sea $\mathcal{C}$ un $[n,k]$ código cíclico sonre $\mathbb{F}_q$ con ceros $\mathcal{Z}$ en el cuerpo de extensión $\mathbb{F}_q^t$ de $x^n-1$ sobre $\mathbb{F}_q$. Sea $ \alpha \in \mathbb{F}_q^t$ la n-ésima raíz primitiva de la unidad en $\mathbb{F}_q^t$ y sea $\mathcal{Z} = \{ \alpha^j \thinspace | \thinspace j \in \mathcal{C}_{i_1} \cup \cdots \cup \mathcal{C}_{i_w} \} $, donde $\mathcal{C}_{i_1}, \cdots , \mathcal{C}_{i_w}$ son las distintas clases q-ciclotómicas módulo n. Sea L la matriz $w \times n$ sobre $\mathbb{F}_q^t$ definida por:
+
+$ L = \begin{pmatrix}
+			1 & \alpha^{i_1} & \alpha^{2i_1} & \cdots & \alpha^{(n-1)i_1} \\
+			1 & \alpha^{i_2} & \alpha^{2i_2} & \cdots  & \alpha^{(n-1)i_2} \\
+			\vdots & \vdots & \vdots & \vdots & \vdots  \\
+			1 & \alpha^{i_w} & \alpha^{2i_w} & \cdots  & \alpha^{(n-1)i_w} \\
+	\end{pmatrix}$
+	
+	
+Entonces, \textbf{c} está en $\mathcal{C} \Leftrightarrow Lc^T = 0$. Escogiendo una base de $\mathbb{F}_q^t$ sobre $\mathbb{F}_q$, podemos representar cada elemento de $\mathbb{F}_q^t$ como el vector columna $t \times 1$ sobre $\mathbb{F}_q$. Reemplazando cada entrada de L por su correspondiente vector columna, obtenemos una $tw \times n$  matriz H sobre $\mathbb{F}_q$, que tiene la propiedad de que  $ c \in \mathcal{C} \Leftrightarrow Hc^T = 0$. En particular, $ k \geq n - tw$.
+\end{theorem}
+
+\begin{proof}
+Tenemos que $ c(x) \in \mathcal{C} \Leftrightarrow c(\alpha^j) = 0 \thinspace \forall j \in \mathcal{C}_{i_1} \cup \cdots \cup \mathcal{C}_{i_w}$ y esto es equivalente a ver que $c(\alpha^{i_j})$ para $1 \leq j \leq w$. Además, esto es equivalente a ver que $Lc^T = 0$, que es un sistema de ecuaciones lineales homogéneo cuyos coeficientes son las potencias de $\alpha$. Expandiendo cada una de estas potencias en la base escogida de $\mathbb{F}_q^t$ sobre $\mathbb{F}_q$ nos da un sistema equivalente $Hc^T = 0$. Como las filas de H puede que sean dependientes, $k \geq n -tw$.
+\end{proof}
+
+Para cada código cíclico $\mathcal{C}$ en $\mathcal{R}_n$, hay varios polinomios $v(x)$ tal que $\mathcal{C} = < v(x) >$, pero hemos visto que solo hay uno que sea mónico y de mínimo grado al que llamamos polinomio generador. En el siguiente teorema vamos a caracterizar todos los polinomios $v(x)$ que generan a $\mathcal{C}$.
+
+\begin{theorem}
+Sea $\mathcal{C}$ un código cíclico de longitud n sobre $\mathbb{F}_q$ con polinomio generador $g(x)$. Sea $v(x)$ un polinomio en $\mathcal{R}_n$.
+\begin{enumerate}
+	\item $\mathcal{C} = <v(x)> \Leftrightarrow \thinspace mcd(v(x),x^n-1) = g(x)$
+	\item $v(x)$ genera $\mathcal{C} \Leftrightarrow $ las n-ésimas raíces de la unidad que son ceros de $v(x)$ son precisamente los ceros de $\mathcal{C}$
+\end{enumerate}
+\end{theorem}
+
+
+\begin{proof}
+Primero asumimos que $mcd(v(x),x^n-1) = g(x)$. Como $g(x) | v(x)$, los múltiplos de $v(x)$ son múltiplos de $g(x)$ en $\mathcal{R}_n$ y por tanto $<v(x)> \subseteq \mathcal{C}$. Por el algoritmo de Euclides, existen los polinomios $a(x)$ y $b(x)$ en $\mathbb{F}_q[x]$ tal que $g(x) = a(x)v(x) + b(x)(x^n-1)$. Por tanto, $g(x) = a(x)v(x)$ está en  $\mathcal{R}_n$ y además, los múltiplos de $g(x)$ son múltiplos de $v(x)$ en $\mathcal{R}_n$ lo que implica que $\mathcal{C} \subseteq <v(x)>$ . Por tanto, $\mathcal{C} = <v(x)>$.
+
+Por el contrario, ahora asumimos que $\mathcal{C} = <v(x)>$. Sea $d(x) =  mcd(v(x),x^n-1)$. Como $g(x) | v(x)$ y $g(x) | (x^n-1) $, enotnces $g(x) | d(x)$. Como $g(x) \in \mathcal{C} = <v(x)>$, existe un polinomio $a(x)$ tal que $g(x) = a(x)v(x)$ está en  $\mathcal{R}_n$. Así que existe un polinomio $b(x)$ tal que  $g(x) = a(x)v(x) + b(x)(x^n-1)$ en $\mathbb{F}_q[x]$. Así, $d(x) | g(x)$. Tanto como $d(x)$ como $g(x)$ son mónicos y se dividen entre ellos, $d(x) = g(x)$ y hemos probado 1).
+
+Como las únicas raíces tanto de $g(x)$ como de $x^n-1$ son las n-ésimas raíces  de la unidad, $g(x) = mcd(v(x),x^n-1) \Leftrightarrow  $ las n-ésimas raíces de la unidad que son ceros de $v(x)$ son precisamente los ceros de $g(x)$ que son los mismo que los ceros de $\mathcal{C}$ y así hemos probado 2).
+
+\end{proof}
+
+\begin{corollary}
+Sea $\mathcal{C}$ un código cíclido de longitud n sobre $\mathbb{F}_q$ con ceros $\{ \alpha^i \thinspace | \thinspace i \in T \}$ para alguna n-ésima raíz primitiva $\alpha$ donde T es un conjunto de definición de $\mathcal{C}$. Sea a un entero tal que $mcd(a,n)=1$ y sea $a^{-1}$ el inverso multiplicativo de a en los enteros módulo n. Entonces  $\{ \alpha^{a^{-1}i} \thinspace | \thinspace i \in T \}$ son los ceros del código cíclico  $\mathcal{C}\mu_a$ y $a^{-1}T \thinspace mod \thinspace n$ es le conjunto de definición para $\mathcal{C}\mu_a$,
+\end{corollary}
+
+ \begin{proof}
+ Sea $e(x)$ el generador idempotente $\mathcal{C}$ . Por el teorema \ref{th:idempotentes primitivos}, el generador idempotente de un código cíclico $\mathcal{C}\mu_a$ es $e(x)\mu_a$. Por el teorema anterior, los ceros de $\mathcal{C}$  y de $\mathcal{C}\mu_a$ son las n-ésimas raíces de la unidad que también son raíces de $e(x)$ y $e'(x) = e(x)\mu_a$, respectivamente. Como  $e'(x) = e(x)\mu_a \equiv e(x^a) \thinspace (mod \thinspace x^n-1), e'(x) = e(x^a) + b(x)(x^n-1)$ en $\mathbb{F}_q[x]$. Terminamos sabiendo que la n-ésima raíz de la unidad $\alpha^j$ es una raíz de $e'(x) \Leftrightarrow \alpha^{aj}$ es raíz de $e(x)$.
+ \end{proof}
+ 
+ 
+ 
+ 
+ 
+ \subsection{Mínima distancia de códigos cíclicos}
+ 
+ Es importante saber cual es la mínima distancia que puede alcanzar cualquier código, para así poder determinar su capacidad de corrección de errores. Luego, es útil encontrar cotas inferiores para la mínima distancia. Una de las cotas más antiguas es la cota de \textit{Bose-Ray-Chaudhuri-Hocquenghem}, normalmente conocida como la \textit{cota BCH} que nos servirá para definir los códigos BCH más adelante. 
+ 
+ Antes de definir la cota BCH, vamos a dar un lema sobre el determinante de la matriz de Vandermonde que nos servirá para probar dicha cota.
+ 
+ \begin{lemma}
+ \label{le:vandermonde}
+ $det \thinspace V = \prod_{1 \leq i < j \leq s} (\alpha_j - \alpha_i)$ . En particular, V es regular si los elementos $\alpha_1, \cdots, \alpha_s$ son distintos.
+ \end{lemma}
+
+
