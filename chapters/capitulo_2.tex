@@ -1,0 +1,303 @@
+% Capítulo 2
+% Explicación y resultados sobre los polinomios torcidos
+
+\chapter{Polinomios torcidos}
+
+
+El desarrollo de este capítulo está basado en los siguientes artículos y libros: \cite{CodingTheory}, \cite{Jacobson1996}, \cite{Ore1993}, \cite{alon2020structure}
+%TODO AÑADIR LOS ARTICULOS
+
+
+\section{Propiedades básicas del anillo de los polinomios torcidos}
+
+
+En esta sección introduciremos los anillos de polinomios torcidos con coeficientes en un cuerpo. Daremos una breve explicación de resultados teóricos sobre anillos para, en el siguiente capítulo, introducir los códigos cíclicos torcidos.
+
+\begin{definition}
+Sea F cualquier cuerpo y $\sigma \in Aut(F)$. El \textbf{anillo de los polinomios torcidos } $F[x;\sigma]$ se define como el conjunto de los polinomios usuales sobre $F$ dotado por la suma usual y la multiplicación definida por la siguiente regla:
+
+\[ xa = \sigma(a)x \thinspace \forall a \in F . \]
+
+Entonces $(F[x;\sigma],+,\cdot)$ es un anillo, donde el elemento neutro es $x^0 = 1$. A sus elementos los llamaremos \textbf{polinomios torcidos}.
+\end{definition}
+
+\begin{remark}
+En general, el anillo de polinomios podemos definirlo como $F[x;\sigma;\delta]$, donde $\delta$ es una $\sigma$-derivación y entonces  $ xa = \sigma(a)x + \delta(a)$ . 
+\end{remark}
+
+Si $\sigma = id$, entonces $F[x;\sigma] = F[x]$ y tenemos el anillo de los polinomios conmutativos sobre F. Este caso es el que se ha desarrollado en el capítulo anterior. En el caso general, los grupos aditivos de $F[x;\sigma]$ y $F[x]$ son idénticos, mientras que la multiplicación viene dada por,
+
+
+\[ (\sum_{i=0}^N f_ix^i)(\sum_{j=0}^M f_jx^j) = \sum_{i,j} f_i\sigma^i(g_j)x^{i+j}  \]
+
+Otra forma de escribir los polinomios es $\{ \sum_{i=0}^N x^if_i \mid \thinspace N \in \mathbb{N}_0 , \thinspace f_i \in F \}$, es decir, los coeficientes a la derecha y la diferencia se encuentra en que cuando aplicamos $\sigma$, los coeficientes los cambiamos de derecha a izquierda aplicando $\sigma^{-1}$. En este capítulo tomaremos la notación de los coeficientes a la izquierda, por ello el \textbf{coeficiente líder} es el coeficiente a la izquierda del término de mayor grado.
+
+ Un polinomio se dice que es \textbf{mónico} si su coeficiente líder es $1$.
+
+Considerando $F[x;\sigma]$ el anillo de los polinomios torcidos, podemos definir también el cuerpo invariante por $\sigma$ como $F^{\sigma}$ que son los elementos de $a \in F$ tal que $\sigma(a) = a$. Si $\sigma$ es de orden finito, digamos $m$, el centro de $F[x;\sigma]$ viene dado por el anillo de los polinomios conmutativos $F^{\sigma}[x^m]$, ya que, cualquier $f$ que esté en el centro, satisface $xf = fx$ y $af = fa$ para todo $a \in F$.
+
+
+\begin{definition}
+El \textbf{grado} de una polinomio torcido se define de manera usual como el mayor exponente de $x$ en el polinomio y $deg(0) = - \infty$. Además, el grado no depende de donde se encuentre el coeficiente ya que $\sigma$ es un automorfismo, por lo que tenemos las siguientes operaciones:
+
+$deg(f+g) \leq max\{deg(f),deg(g)\} $ y $ deg(f*g) = deg(f) + deg(g)$.
+
+\end{definition}
+
+Como consecuencia, las unidades de $F[x;\sigma]$ son $F^* = F \setminus \{0 \}$.
+
+\begin{definition}
+Sean los polinomios $g$ y $f$ no nulos en $F[x;\sigma]$. Diremos que $g$ es \textbf{un divisor por la derecha} de $f$, denotado por, $g \mid_r f$ si $f = gh$ para algún $h \in F[x;\sigma]$. Diremos que $f$ es \textbf{irreducible} si todos sus divisores por la derecha son unidades o polinomios del mismo grado que $f$. Es claro que los polinomios de grado $1$ son irreducibles.
+\end{definition}
+
+
+A diferencia de como ocurría en el caso conmutativo, la factorización de un polinomio no tiene por qué ser única. 
+
+\begin{exampleth}
+Sea $F = \mathbb{F}_{4} = \{ 0,1,\alpha,\alpha^2 \}$. Sea $\sigma$ el  automorfismo de Frobenius. Entonces $\sigma^{-1} = \sigma$ y en $\mathbb{F}_4[x,\sigma]$ tenemos que,
+
+\begin{eqnarray*}
+    x^2+1 & = & (x+\alpha^2)(x+\alpha) \\
+          & = & (x+1)(x+1) \\
+          & = & (x+\alpha)(x+\alpha^2)
+\end{eqnarray*}
+
+Luego, no tenemos una única descomposición.
+\end{exampleth}
+
+En $F[x;\sigma]$ también tenemos división, por tanto, podemos definir el máximo común divisor y el mínimo común múltiplo pero en este anillo tenemos que tener en cuenta el lado por el que dividimos.
+
+\begin{theorem}
+Sea $F[x,\sigma]$ un dominio Euclídeo a izquierda y a derecha. Se verifica lo siguiente:
+\begin{enumerate}
+	\item \textbf{División a derecha con resto:} Para todo $f,g \in F[x;\sigma]$ con $g \neq 0$, existen polinomios únicos $s,r \in F[x;\sigma]$ tal que $f = gs + r$ y $deg(r) < deg(g)$. Si $r=0$, entonces $g$ es un divisor a derecha de $f$.
+	
+	\item Para cualesquiera dos polinomios $f_1,f_2 \in F[x;\sigma]$, siendo al menos uno de ellos no nulo, existe un polinomio mónico único $d \in F[x;\sigma]$ tal que $d \mid_r f_1$, $d \mid_r f_2$ y cuando haya un polinomio $ h \in F[x;\sigma]$ que cumpla que $h \mid_r f_1$, $h \mid_r f_2$ entonces $h \mid_r d$. Al polinomio $d$ se le llama el \textbf{máximo común dividor a derecha} de $f_1$ y $f_2$, lo denotaremos por $(f_1,f_2)_r$. Además, satisface la identidad de Bezout a la derecha,
+	\[ d = f_1 u + f_2 v \] para algunos $u,v \in F[x;\sigma]$.
+	
+Claramente el $deg(u) < deg(f_2)$ y $deg(v) < deg(f_1)$. Si $d=1$, entonces diremos que $f_1$ y $f_2$ son \textbf{primos relativos a derecha}.
+	\item Para cualesquiera dos polinomios $f_1,f_2 \in F[x;\sigma]$, siendo al menos uno de ellos no nulo, existe un polinomio mónico único $l \in F[x;\sigma]$ tal que $f_1 \mid_r l$, $f_2 \mid_r l$ y cuando haya un polinomio $ h \in F[x;\sigma]$ que cumpla que $f_1 \mid_r h$, $f_2 \mid_r h$ entonces $l \mid_r h$. Al polinomio $l$ se le llama \textbf{mínimo común múltiplo a izquierda} de $f_1$ y $f_2$, lo denotaremos por $[f_1,f_2]_l$. Además, $l = uf_1 = vf_2$ para algún $u,v \in F[x;\sigma]$ con $deg(u) \leq deg(f_2)$ y $deg(b) \leq deg(f_1)$.
+
+     \item  Para cualesquiera $f_1,f_2 \in F[x;\sigma]$ no nulos, \[ deg((f_1,f_2)_r) + deg([f_1,f_2]_l) = deg(f_1) + deg(f_2)\].
+\end{enumerate}
+\end{theorem}
+
+Dadas estas definiciones podemos definir el Algoritmo de la División por la Derecha del anillo.
+
+\begin{theorem}
+    Sean dos polinomios $f,g \in F[x;\sigma]$ con $g \neq 0$.
+    \begin{enumerate}
+        \item Existen dos polinomios $q,r \in F[x;\sigma]$ tales que $f = gq + r$ con $deg(r) < deg(g)$.
+        \item Repetimos la siguiente secuencia hasta que $deg(g) > deg(r)$ suponiendo que $q=0$ y $r=f$ :
+            \[ a = \sigma^{-deg(g)}(lc(g)^{-1}\cdot lc(r))\]
+            \[ q = q + aX^{deg(r)-deg(g)}\]
+            \[ r = r - gaX^{deg(r)-deg(g)}\]
+    \end{enumerate}
+\end{theorem}
+
+A los polinomios $q$ y $r$ los llamaremos \textbf{cociente a derecha}, denotado por $rquo(f,g)$, y \textbf{resto a derecha}, denotado por $rrem(f,g)$.
+
+\begin{exampleth}
+\label{ex:division_torcida}
+    Sea $F = \mathbb{F}_{8} = \{ 0,1,\alpha,\alpha+1, \alpha^2, \alpha^2 +1,\alpha^2 + \alpha, \alpha^2 + \alpha + 1 \}$ donde $\alpha^3 = \alpha^2 + 1$. Sea $\sigma$ el $\sigma_2$ automorfismo de Frobenius.
+
+Vamos a dividir $f= x^3 + \alpha^2 x^2 + x +\alpha$ entre $g = x + 1$.
+
+Empezamos definiendo $r=f$ y $q=0$.
+
+\[ a = \sigma^{3-1}(1^{-1} \cdot 1) = 1 \]
+\[ q = 0 + 1 \cdot x^{3-1} = x^2\]
+\[ r = x^3 + \alpha^2 x^2 + x +\alpha +  (x+1) \cdot 1 \cdot x^2 \] 
+\[ = (\alpha^2 +1)x^2 + x + \alpha\]
+
+Como $deg(r) \geq deg(g)$ repetimos la secuencia.
+\[ a = \sigma(1^{-1} \cdot (\alpha^2 +1) ) = \alpha + 1\]
+\[ q = x^2 + (\alpha +1) \cdot x \]
+\[ r = (\alpha^2 +1)x^2 + x + \alpha + (x+1) \cdot (\alpha^2 +1) \cdot x  \] 
+\[= \alpha x + \alpha\]
+
+Como $deg(r) \geq deg(g)$ repetimos la secuencia.
+\[ a =  \sigma^{0}(1^{-1} \cdot \alpha) = \alpha^2 + \alpha \]
+\[ q = x^2 + (\alpha +1) \cdot x + \alpha^2 + \alpha\]
+\[ r = \alpha x + \alpha + (x+1) \cdot (\alpha^2) = \alpha^2 \]
+
+Se verifica que $deg(r) < deg(g)$, por tanto, hemos terminado. Concluimos diciendo que $rquo(f,g) =x^2 + (\alpha +1) \cdot x + \alpha^2 + \alpha $ y que $rrem(f,g) = \alpha^2$.
+\end{exampleth}
+
+Como consecuencia de este algoritmo, dado un ideal por la derecha $I \subseteq F[x;\sigma]$, es decir, $I$ es un ideal en donde la multiplicación por la derecha es cerrada por elementos de $F[x;\sigma]$, y dado $f \in I$ un polinomio de grado mínimo no nulo en $I$, tenemos que $f$ es un generador de $I$. A $fF[x,\sigma]$ lo llamamos el \textbf{ideal a la derecha generado por f}. Luego, cada ideal por la derecha es principal y por tanto, $F[x;\sigma]$ es un dominio de ideales principales o DIP para abreviar.
+
+\begin{remark}
+    Todos estos resultados vistos son también ciertos a la izquierda, es decir, tenemos un Algoritmo de la División a Izquierda y por tanto, los ideales por la izquierda de $F[x;\sigma]$ que son $F[x,\sigma]f$ son también principales.
+\end{remark}
+
+Dado $f,g \in F[x;\sigma]$, $Rf \subseteq Rg$ significa que $f$ es un múltiplo a izquierda de $g$ o que $g$ es un divisor a derecha de $f$. Un argumento típico prueba que $Rf + Rg = Rd$ si y solo si $d$ es el máximo común divisor de $f$ y $g$. De la misma manera, $Rf \cap Rg = Rm$ si y solo si $m$ es el mínimo común múltiplo a izquierda de $f$ y $g$. Podemos calcular $(f,g)_r$ y $[f,g]_l$ usando el Algoritmo Extendido de Euclides.
+
+\begin{theorem}[Algoritmo Extendido de Euclides a Derecha]
+Sean dos polinomios $f,g \in F[x;\sigma]$ con $f \neq 0$ y $g \neq 0$.
+    \begin{enumerate}
+        \item Para $n \in \mathbb{N}$ existen los polinomios  $u_i,v_i,r_i \in F[x;\sigma]$ tal que $r_i = fu_i + gv_i$, $r_h = (f,g)_l , f u_{h+1} = [f,g]_r$ para $ 0 \leq i \leq h+1$.
+    \item Repetimos la siguiente secuencia hasta que $r_{i} = 0$ suponiendo que $u_0 = v_1 = 1$,$u_1 = v_0  = 1$, $r_0 = f$, $r_1 = g$, $q = 0$,$rem = 0$ y $i = 1$ :
+    \[ q,rem = right-quo-rem(r_{i-1},r_i)\]
+    \[ r_{i+1} = rem \]
+    \[ u_{i+1} = u_{i-1} - u_iq\]
+    \[ v_{i+1} = v_{i-1} - v_iq\]
+    \[ i = i + 1\]
+    \end{enumerate}
+    
+\end{theorem}
+
+\begin{exampleth}
+    Utilizaremos los mismos polinomios que usamos en el Ejemplo \ref{ex:division_torcida}
+
+Empezamos definiendo $u_0 = v_1 = 1$,$u_1 = v_0  = 1$, $f_0 =  x^3 + \alpha^2 x^2 + x +\alpha $, $f_1 = x + 1$, $i = 1$.
+
+\[ q = rquo(r_0,r_1) = x^2+(\alpha+1)x+\alpha^2 + \alpha \]
+\[ r_2 = rem = rrem(r_0,r_1) = \alpha^2  \]
+\[ u_2 = u_0 - u_1q = 1 - 0q = 1 \]
+\[ v_2 = v_0 - v_1q = 0-1q = x^2 + (\alpha + 1)x + \alpha^2 + \alpha \]
+\[ i = 2\]
+
+Como $r_2 \neq 0$, repetimos la secuencia.
+\[ q = rquo(r_1,r_2) = (\alpha^2 + \alpha + 1)x + \alpha^2 + \alpha + 1\]
+\[ r_3 = rem = rrem(r_1,r_2) = 0\]
+\[ u_3 = u_1 - u_2q = (\alpha^2 + \alpha + 1)x + \alpha^2 + \alpha + 1 \]
+\[ v_3 = v_1 - v_2q = (\alpha^2 + 1)x^3 + x + \alpha^2 + 1 \]
+\[ i = 3\]
+
+Como $r_3 = 0$, hemos terminado.
+
+Además, sabemos que $r_2 = \alpha^2 = (f,g)_l$ y $ f u_3 = (\alpha^2 + \alpha + 1)x^4 + (\alpha^2 + 1)x^3 + x^2 + (\alpha^2 + \alpha)x + \alpha^2 + 1 = [f,g]_r$.
+\end{exampleth}
+
+
+\section{Evaluar polinomios torcidos}
+
+En este sección veremos lo que son las raíces de los polinomios torcidos ya que hemos visto que la factorización no tiene por qué ser única, por tanto, puede haber más raíces que el grado del polinomio. Además, veremos como evaluar los polinomios con los elementos del cuerpo.
+
+En el caso conmutativo vimos que si tenemos un polinomio $f = \sum_{i=0}^N f_ix^i$, evaluarlo simplemente sería $f(a) = \sum_{i=0}^N f_ia^i$. Sin embargo, en $F[x;\sigma]$, esa evaluación no está bien definida si $\sigma \neq id$ ya que no estamos en un anillo conmutativo. Por ejemplo, si tenemos $f=xk = \sigma(k)x$ y si evaluamos tenemos $f(a) = ak = \sigma(k)a$ y no hay seguridad de la igualdad.
+
+Una manera de definir la evualuación de polinomios torcidos es haciendo uso de la División a Derecha.
+
+\begin{definition}
+    Sea $f \in F[x;\sigma]$ y $ a \in F$. Definimos $f(a) = r$, donde $r \in F$ es el resto al dividir por la derecha $f$ por $x-a$, esto es, $f = g(x-a) + r$ para algún $g \in F[x;\sigma]$. Si $f(a) = 0$, diremos que $a$ es una \textbf{raíz a derecha} de $f$, por tanto, $a$ es una raíz de $f$ si y solo si $(x-a) \mid_r f$.
+    \end{definition}
+
+Sin embargo, podemos encontrar otra forma de evaluar $f(a)$ sin recurrir a la división por la derecha.
+
+\begin{definition}
+    Para cualquier $i \in \mathbb{N}_0$, definimos $N_i : F \rightarrow F$ como $N_0(a) = 1$ y $N_i(a) = \prod_{j=0}^{i-1}\sigma^j(a)$ para $i > 0$. Llamaremos a $N_i$ la \textbf{i-ésima norma en F}.
+\end{definition}
+
+Si nos fijamos, en el caso conmutativo $\sigma = id$ y tenemos que $N_i(a) = a^i$, luego, podemos dar una definición de cómo evaluar polinomios más generalizada.
+
+\begin{proposition}
+\label{pro: evaluar polinomios}
+Sea $f = \sum_{i=0}^N f_ix^i \in F[x;\sigma]$ y $a \in F$. Entonces :
+\[ f(a) = \sum_{i=0}^N f_iN_i(a)\]
+\end{proposition}
+
+\begin{proof}
+    Vamos a demostrar que $x^n - N_n(a) \in R(x-a)$ por inducción.
+
+    Supongamos que es cierto para $n$, veamos si se cumple para $n+1$.
+    
+    \[ x^{n+1} - N_{n+1}(a) = x^{n+1} - \sigma(N_{n}(a))a \]
+    \[ = x^{n+1} + \sigma(N_{n}(a))(x-a) - \sigma(N_{n}(a))x  \]
+    \[  = \sigma(N_{n}(a))(x-a) + x(x^n - N_n(a)). \]
+
+Por tanto, usando este resultado tenemos que
+
+\[ f - \sum_{i=0}^N f_i N_i(a) = \sum_{i=0}^N f_i(x^i - N_i(a)) \in R(x-a) . \]
+
+Por la unicidad del Algoritmo de Euclides obtenemos que $f(a) = \sum_{i=0}^N f_iN_i(a)$. \cite{Vandermonde}
+\end{proof}
+
+
+\begin{exampleth}
+\label{ex:f(a)}
+  Sea $F = \mathbb{F}_{8} = \{ 0,1,\alpha,\alpha+1, \alpha^2, \alpha^2 +1,\alpha^2 + \alpha, \alpha^2 + \alpha + 1 \}$ donde $\alpha^3 = \alpha^2 + 1$. Sea $\sigma$ el $\sigma_2$ automorfismo de Frobenius.
+
+  Vamos a evaluar el polinomio $f = x^3 + \alpha x^2 + \alpha^2 x +1$ en $\alpha \in \mathbb{F}_{8}$.
+
+Por la Proposición \ref{pro: evaluar polinomios}, sabemos que :
+\[ f(\alpha) = N_3(\alpha) + \alpha N_2(\alpha) + \alpha^2 N_1(\alpha) + 1.\]
+
+Calculamos los distintos $N_i$:
+
+$ N_1(\alpha) = \alpha$ ,$N_2(\alpha) = N_1(\alpha)\sigma(\alpha) = \alpha \cdot \alpha^2 = \alpha^3$, $N_3(\alpha) = N_2(\alpha)\sigma^2(\alpha) = \alpha^3 \cdot \alpha^4  = \alpha^7$.
+
+Sustituimos y nos queda :
+
+\[ f(\alpha) = \alpha^7 + \alpha \cdot \alpha^3 + \alpha^2 \cdot \alpha + 1 = \alpha .\]
+\end{exampleth}
+
+En el caso de que $F= \mathbb{F}$ sea un cuerpo finito y $\sigma$ sea el automorfimo de Frobenius, podemos encontrar una manera más rápida de calcular los $N_i$. La i-ésima norma en $\mathbb{F}$ es,
+
+$N_i(a) = a^{q^0+q^1+ \cdots + q^{i-1}} = a^{[[i]]}$, donde $[[i]] = \dfrac{q^i-1}{q-1}$ para $i \geq 0$.
+
+\begin{exampleth}
+ Evaluamos el mismo polinomio que en el Ejemplo \ref{ex:f(a)} pero ahora usando la definición anterior.
+
+ \[N_1(\alpha) = \alpha .\]
+ \[[[2]] = \dfrac{2^2-1}{2-1} = 3 \rightarrow N_2(\alpha) = \alpha^3.\]
+ \[[[3]] = \dfrac{2^3-1}{2-1} = 7 \rightarrow N_3(\alpha) = \alpha^7.\]
+
+Nos queda que $f(\alpha) = \alpha^7 + \alpha \cdot \alpha^3 + \alpha^2 \cdot \alpha + 1 $ como en el Ejemplo \ref{ex:f(a)}.
+\end{exampleth}
+
+Tras definir la evaluación de polinomios, podemos estudiar ahora las propiedades que tiene la aplicación $ev_a : F[x;\sigma] \rightarrow F$ tal que $f \longmapsto f(a)$. Resulta que es $F$-lineal y aditiva, sin embargo, no es multiplicativa, ya que puede ocurrir que $f(a) = 0$ mientras que $(bf)(a) \neq 0$ para algún $b \in F$. 
+
+Para resolver este problema, empezamos dando la siguiente definición.
+
+\begin{definition}
+    Sea $a \in F$. Para $c \in F^*$, definimos $a^c = \sigma(c)ac^{-1}$ . Decimos que $a,b \in F$ son \textbf{$\sigma$-conjugados} si $b = a^c$ para algún $c \in F^*$. La clase de $\sigma$-conjugación de $a$ es 
+    \[
+    \Delta(a) = \{ a^c \mid c \in F \}.
+    \]
+\end{definition}
+
+Destacar de la notación que si $c = -1 \in F^*$, entonces $a^c$ no es el inverso de $a$.
+
+\begin{proposition}
+    La conjugación define una relación de equivalencia.
+\end{proposition}
+
+\begin{proof}
+ \begin{itemize}
+    \item Reflexiva: $a$ está relacionado con $a$ ya que $c = 1 \in F$ entonces $a^c = a$.
+    \item Simetría: $b$ está relacionado con $a$ si $b = a^c = \sigma(c)ac^{-1}$ entonces $ \sigma(c)^{-1}b(c^{-1})^{-1} = a$ y por tanto, $a$ está relacionado con $b$. 
+    \item Transitiva: si $b$ está relacionado con $a$ y $c$ está relacionado con $b$ entonces $c = b^c = \sigma(c)bc^{-1} = \sigma(c)\sigma(d)ad^{-1}c^{-1}$ y por tanto, $c$ está relacionado con $a$.
+\end{itemize} 
+\end{proof}
+
+Esta definición es importante ya que obtenemos la siguiente equivalencia :
+
+\[ b = a^c \Leftrightarrow (x -b)c = \sigma(c)(x-a) \]
+
+y de aquí podemos obtener las siguientes igualdades:
+
+$ [x-a,x-b]_l = (x-b^{b-a})(x-a) = (x-a^{a-b})(x-b)$ para cualquier $a \neq b$ , lo que nos dice que los factores pueden ser reordenados por conjugación.
+
+
+Ahora sí, podemos formular el producto a la hora de evaluar polinomios.
+
+\begin{theorem}
+\label{th: eva_prod}
+    Sea $f,g \in F[x;\sigma]$ y $a \in F$. Entonces,
+
+   \[ (fg)(a)= \left\{ \begin{array}{lcc}
+             0 &   si  & g(a) = 0 \\
+             \\ f(a^{g(a)})g(a) &  si & g(a) \neq 0 
+             \end{array}
+   \right. \]
+En particular, si $a$ es raíz de $fg$, pero no de $g$, entonces el conjugado $a^{g(a)}$ es raíz de f.
+\end{theorem}
+
+Teniendo en cuenta la relación de conjugación y el Teorema \ref{th: eva_prod} podemos encontrar un resultado para las raíces de un polinomio torcido que como hemos visto pueden exceder el grado del polinomio.
+
+\begin{theorem}
+Sea $f \in F[x;\sigma]$ con grado N. Entonces las raíces de $f$ se encuentran como mucho en $N$ clases de conjugación distintas. Además, si $f=(x-a_1)\cdots (x-a_N)$  para algún $a_i \in F$ y $f(a) = 0$, entonces $a$ es conjugado con $a_i$.
+\end{theorem}
+
+Esto no quiere decir que cada clase de conjugación contenga una raíz de $f$, podría ocurrir que estén todas en la misma clase de conjugación, sin embargo, esto sí es cierto en el caso que $F$ sea un cuerpo finito.
+

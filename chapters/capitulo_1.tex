@@ -231,7 +231,7 @@ Esto sugiere que para un mejor estudio de los códigos cíclicos, desarrollemos 
 Queremos encontrar los factores irreducibles de $x^n-1$. Encontramos dos posibilidades: que $x^n-1$ tenga factores irreducibles repetidos o no los tenga. En el caso de los códigos cíclicos, se centra más en el segundo caso, por ello, hacemos la asumpción de que $x^n-1$ no tiene factores repetidos si y solo si \textit{q} y \textit{n} son primos relativos.
 
 Como ayuda para factorizar $x^n-1$ sobre $\mathbb{F}_q^n$, es útil encontrar una extensión del cuerpo $\mathbb{F}_{q^t}^n$ sobre $\mathbb{F}_q^n$ que contiene todas las raíces del polinomio. En otras palabras, $\mathbb{F}_{q^t}^n$ debe contener las raíces primitivas \textit{n-ésimas} de la unidad, que ocurre cuando $ n \mid (q^t-1)$.  Definimos el orden, $ord_n(q)$ de \textit{q} módulo \textit{n}, como el entero positivo más pequeño \textit{a} tal que $q^a \equiv 1 \thinspace ( mod \thinspace n)$. Notemos que si $t = ord_n(q)$, entonces $\mathbb{F}_{q^t}^n$ contiene la raíz primitiva \textit{n-ésima} de la unidad $\alpha$ , pero ninguna extesión del cuerpo $\mathbb{F}_q^n$ contiene esa raíz. Como los $\alpha^i$ son distintos para $0 \leq i < n $ y $(\alpha^i)^n = 1$ , entonces $\mathbb{F}_{q^t}^n$ contiene todas las raíces de $x^n-1$. Consecuentemente, llamaremos a $\mathbb{F}_{q^t}^n$ el \textit{cuerpo de descomposición} de $x^n-1$ sobre $\mathbb{F}_q^n$. Así que los factores irreducibles de $x^n-1$ sobre $\mathbb{F}_q^n$ deben de ser productos de los distintos polinomios mínimos de las raíces \textit{n-ésimas} en $\mathbb{F}_{q^t}^n$.  Supongamos que $\gamma$ es un elemento primitivo, es decir, el elemento generador de $\mathbb{F}_{q^t}^n$, entonces $\alpha = \gamma^d$ es una raíz primitiva \textit{n-ésima} de la unidad en donde $d = (q^t-1)/n$. Las raíces de $\mathcal{M}_{\alpha^s}(x)$ son $\{ \gamma^{ds}, \gamma^{dsq},\gamma^{dsq^2} ,\cdots, \gamma^{dsq^{r-1}} \} = \{ \alpha^s,\alpha^{sq},\alpha^{sq^2},\cdots,\alpha^{sq^{r-1}} \}$ donde \textit{r} es el entero positivo más pequeño que cumple que $dsq^r \equiv ds \thinspace ( mod \thinspace q-1 )$ pero esto solo se verifica si y solo si $sq^r \equiv s \thinspace ( mod \thinspace n )$
-% n | (q t − 1) by Theorem 3.3.3. Define the order ord n (q) of
+
 
 \begin{definition}
 Sea $\mathbb{F}_q^n$ un cuerpo finito y $\mathbb{F}_{q^t}^n$ un cuerpo de extensión suyo, llamaremos \textit{clase q-ciclotómica de s módulo n} al conjunto :
@@ -308,17 +308,17 @@ Podemos afirmar que los factores irreducibles de $x^9-1$ tienen grado 1,2 y 6. E
  \end{exampleth}
  
 \begin{exampleth}
-Ahora vamos a factorizar $x^13-1$ para ello, cogemos las clases \textit{3-ciclotómicas} calculadas en el ejemplo \ref{ex:clase_mod_trece} que son $\mathcal{C}_0 = \{ 0 \}$ , $\mathcal{C}_1 = \{ 1,3,9 \}$, $\mathcal{C}_2 = \{ 2,6,5 \}$,  $\mathcal{C}_4 = \{ 4,12,10 \}$ y  $\mathcal{C}_7 = \{ 7,8,11 \}$ . Luego el $ord_13(3) = 3$ y la \textit{trece-ésima} raíz primitiva de la unidad reside en el cuerpo de extensión $\mathbb{F}_{27}$ y no en ningún otro más pequeño cuerpo de extensión de $\mathbb{F}_3$.
+Ahora vamos a factorizar $x^{13}-1$ para ello, cogemos las clases \textit{3-ciclotómicas} calculadas en el ejemplo \ref{ex:clase_mod_trece} que son $\mathcal{C}_0 = \{ 0 \}$ , $\mathcal{C}_1 = \{ 1,3,9 \}$, $\mathcal{C}_2 = \{ 2,6,5 \}$,  $\mathcal{C}_4 = \{ 4,12,10 \}$ y  $\mathcal{C}_7 = \{ 7,8,11 \}$ . Luego el $ord_{13}(3) = 3$ y la \textit{trece-ésima} raíz primitiva de la unidad reside en el cuerpo de extensión $\mathbb{F}_{27}$ y no en ningún otro más pequeño cuerpo de extensión de $\mathbb{F}_3$.
 
-Podemos afirmar que los factores irreducibles de $x^13-1$ tienen grado 1,3,3,3 y 3. Estos polinomios son $\mathcal{M}_{1}(x) = x -1 $ , $\mathcal{M}_{\alpha}(x)$ y $\mathcal{M}_{\alpha^2}(x)$,  $\mathcal{M}_{\alpha^4}(x)$ y  $\mathcal{M}_{\alpha^7}(x)$ donde $\alpha$ es la \textit{trece-ésima} raíz primitiva de la unidad en $\mathbb{F}_{27}$. 
+Podemos afirmar que los factores irreducibles de $x^{13}-1$ tienen grado 1,3,3,3 y 3. Estos polinomios son $\mathcal{M}_{1}(x) = x -1 $ , $\mathcal{M}_{\alpha}(x)$ y $\mathcal{M}_{\alpha^2}(x)$,  $\mathcal{M}_{\alpha^4}(x)$ y  $\mathcal{M}_{\alpha^7}(x)$ donde $\alpha$ es la \textit{trece-ésima} raíz primitiva de la unidad en $\mathbb{F}_{27}$. 
 
-Como el único polinomio irreducible de grado dos en $\mathbb{F}_2$ es $x^2+x+1$ no queda otra que sea $\mathcal{M}_{\alpha^3}(x)$. Por tanto, así tenemos la factorización que es $x^9-1 = (x-1)(x^2+x+1)(x^6+x^3+1)$ y $\mathcal{M}_{\alpha}(x) = x^6+x^3+1$.
 
 \end{exampleth}
  
 Viendo estos ejemplos podemos sacar que el tamaño de cada clase \textit{q-ciclotómica} es un divisor del $ord_n(q)$.
 
 \begin{theorem}
+\label{th:tamaño_ciclotomicos}
 El tamaño de cada clase \textit{q-ciclotómica} es un divisor del $ord_n(q)$. Además, el tamaño de $\mathcal{C}_1$ es justamente el  $ord_n(q)$.
 \end{theorem}
 
@@ -342,7 +342,7 @@ Para distinguir el ideal principal $(g(x))$ de $\mathbb{F}_q[x]$ del ideal princ
 
 \begin{theorem}
 \label{th:base_ciclicos}
-Sea $\mathcal{C} $ un código cíclico no-nulo en $\mathcal{R}_n$. Existe un polinomio $(x) \in \mathcal{C}$ que cumple las siguientes propiedades:
+Sea $\mathcal{C} $ un código cíclico no-nulo en $\mathcal{R}_n$. Existe un polinomio $g(x) \in \mathcal{C}$ que cumple las siguientes propiedades:
 \begin{enumerate}
 	\item $g(x)$ es el único polinomio mónico de menor grado en $\mathcal{C}$.
 	\item $\mathcal{C} = <g(x)>$
@@ -892,7 +892,7 @@ Si probamos que $V(J)$ son linealmente independientes en $\mathbb{F}_{q^t}^w$, e
 
 
 \begin{corollary}
-Sea $\mathcal{C}$ un código cíclico de loongitud n sobre $\mathbb{F}_q$. Supongamos que $f(x)$ es una palabra código no-nula tal que $f(\alpha^b) = f(\alpha^{b+1}) = \cdots = f(\alpha^{b+w-1}) = 0$ pero $f(\alpha^{b+w}) \neq 0 $. Entonces $ wt(f(x)) \geq w +1 $
+Sea $\mathcal{C}$ un código cíclico de longitud n sobre $\mathbb{F}_q$. Supongamos que $f(x)$ es una palabra código no-nula tal que $f(\alpha^b) = f(\alpha^{b+1}) = \cdots = f(\alpha^{b+w-1}) = 0$ pero $f(\alpha^{b+w}) \neq 0 $. Entonces $ wt(f(x)) \geq w +1 $
 \end{corollary}
 
 \begin{proof}
@@ -924,6 +924,559 @@ Como $wt(f(x)) \geq | I_9 | = 5$, la técnica de van Lint-Wilson muestra que $ d
 Como podemos observar en el ejemplo la técnica de van Lint-Wilson es difícil de aplicar y además, en este caso, produce la misma cota que usando la cota de Hartmann-Tzeng.
 
 \section{Códigos BCH y Reed-Solomon}
+
+En esta parte examinaremos una de las muchas importantes familias de códigos cíclicos que se conocen como los códigos BCH junto a una subfamilia que se la conoce como códigos Reed-Solomon.
+
+\subsection{Códigos BCH}
+
+Los códigos BCH son códigos cíclicos diseñados para aprovecharse de la cota BCH. Queremos construir un código cíclico $\mathcal{C}$ de longitud $n$ sobre $\mathbb{F}_q$ que tenga simultáneamente un peso mínimo alto y una alta dimensión. Tener un peso mínimo alto, con la cota BCH , se puede obtener elegiendo un conjunto de definición T de $\mathcal{C}$ con un número grande de elementos consecutivos. Ya que la dimensión de $\mathcal{C}$ es $n - \mid T \mid$, si tiene mínima distancia al menos $\delta$, podemos elegir un conjunto de definición tan pequeño como nos sea posible tal que sea la unión de las clases q-ciclotómicas con $\delta -1$ elementos consecutivos. 
+
+
+\begin{definition}
+Sea $\delta$ un entero tal que $ 2 \leq \delta \leq n$. Un \textbf{código BCH} $\mathcal{C}$ en $\mathbb{F}_q$ con longitud $n$ y distancia $\delta$ es un código cíclico con conjunto de definición 
+\[
+T = \mathcal{C}_b \cup \mathcal{C}_{b+1} \cup \cdots \cup \mathcal{C}_{b+\delta -2}
+\]
+
+donde $\mathcal{C}_i$ es la clase q-ciclotómica módulo n que contiene a $i$. Por la cota BCH, este código tiene al menos mínima distancia $\delta$.
+\end{definition}
+
+
+\begin{theorem}
+\label{th:bch_dist_min}
+Un código BCH con distancia $\delta$ tiene mínimo peso al menos $\delta$.
+\end{theorem}
+\begin{proof}
+El conjunto de definición T que hemos definido anteriormente tiene $\delta -1$ elementos consecutivos, luego el resultado lo obtenemos de aplicar la cota BCH.
+\end{proof}
+
+Si variamos el valor de $b$ en el conjunto de definición, podemos obtener una variedad de códigos con diferentes distancias mínimas y dimensiones. Cuando $b=1$, $\mathcal{C}$ se le conoce como \textbf{código BCH en sentido estricto}. Como con cualquier código cíclico, si $n = q^t-1$, entonces $\mathcal{C}$ se le conoce como \textbf{código BCH primitivo}.
+
+\begin{exampleth}
+\label{ex:construir_BCH}
+Vamos a ver como construir varios códigos BCH sobre $\mathbb{F}_3$ de longitud $13$. Las clases 3-ciclotómicas módulo $13$ son las calculadas en el ejemplo \ref{ex:clase_mod_trece} :
+
+$\mathcal{C}_0 =  \{ 0 \} $, $\mathcal{C}_1 =  \{1,3,9\} $, $\mathcal{C}_2 =  \{2,6,5\} $ , $\mathcal{C}_4 = \{4,12,10\} $, $\mathcal{C}_7 = \{7,8,11\} $
+
+
+Como $ord_13(3) = 3$, $x^{13}-1$ tiene todas sus raíces en $\mathbb{F}_{3^3}$. Hay un elemento primitivo $\alpha$ en $\mathbb{F}_{3^3}$ que satisface $\alpha^3 + 2\alpha + 1 = 0$. Entonces, $\beta = \alpha^2$ es la $13$-ésima raíz primitiva de la unidad en $\mathbb{F}_{3^3}$. Usando $\beta$ tenemos que el código BCH en sentido estricto $\mathcal{C}_1$ con distancia designada 2, tiene de conjunto de definición $ T = \mathcal{C}_1 = \{ 1,3,9 \}$ y de polinomio generador $g_1(x) = x^3 + x^2 +x +2$. Por el teorema \ref{th:bch_dist_min}, $\mathcal{C}_1$ tiene peso mínimo 2.
+
+\end{exampleth}
+
+
+Vamos a dar una cota inferior en la dimensión de los códigos BCH en términos de $delta$ y $ord_n(q)$. Por supuesto, la dimensión exacta viene determinada por el tamaño del conjunto de definición.
+
+\begin{theorem}
+Sea  $\mathcal{C}$ un $[n,k]$ código BCH sobre $\mathbb{F}_q$ con distancia designada $\delta$. Tenemos lo siguiente:
+\begin{enumerate}
+	\item $ k \geq n - ord_n(q)(\delta -1)$
+	\item Si $q = 2$ y $\mathcal{C}$ es un código BCH en sentido estricto, entonces podemos asumir que $\delta$ es impar, además si $\delta = 2w+1$, entonces $ k \geq n - ord_n(q)w$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Por el teorema \ref{th:tamaño_ciclotomicos}, cada clase q-ciclotómica tiene por tamaño un divisor de $ord_n(q)$. El conjunto de definición de un código BCH tiene distancia designada $\delta$ y es la unión de como mucho $\delta-1$ clases q-ciclotómicas, cada una de tamaño como mucho $ord_n(q)$. Por tanto, la dimensión del código es al menos $ n-ord_n(q)(\delta -1)$, por lo que tenemos 1). 
+
+Si el código es en sentido estricto y binario, entonces $\{ 1,2, \cdots, \delta-1 \} \subseteq T$. Supongamos que $\delta$ es par, entonces $\delta \in \mathcal{C}_{\delta/2} \in T$, lo que implica que T está contenido en el conjunto $\{ 1,2, \cdots, \delta \}$ con $\delta$ elementos consecutivos. Por tanto, podemos incrementar la distancia designada en 1 cuando la distancia designada es par. Asumimos que $\delta$ es impar. Si $\delta = 2w+1$, entonces $ T = \mathcal{C}_1 \cup \mathcal{C}_2 \cup \cdots \cup \mathcal{C}_{2w} = \mathcal{C}_1 \cup \mathcal{C}_3 \cup \cdots \cup \mathcal{C}_{2w-1}$ con $\mathcal{C}_{2i} = \mathcal{C}_i$. Por tanto, T es la unión de al menos $w$ clases q-ciclotómicas de tamaño como mucho $ord_n(q)$, por lo que tenemos $k \geq n - ord_n(q)w$.
+\end{proof}
+
+Luego, como vemos en este teorema, es posible construir el mismo código BCH para más de un valor $\delta$.
+
+\subsection{Códigos Reed-Solomon}
+
+Definiremos los códigos Reed-Solomon como una subfamilia de los códigos BCH. Además, daremos otra definición equivalente para los códigos Reed-Solomon en sentido estricto que nos permitirá generalizar estos códigos tan importantes.
+
+\begin{definition}
+
+Un \textbf{código Reed-Solomon}, abreviado como \textit{código RS}, sobre $\mathbb{F}_q$ es un código BCH de longitud $n = q-1$. 
+\end{definition}
+
+Luego, $ord_n(q) = 1$ lo que implica que todos los factores irreducibles de $x^n-1$ son de grado $1$ y todas sus clases q-ciclotómicas tienen tamaño $1$. De hecho,las raíces de $x^n-1$ son exactamente los elementos no-nulos de $\mathbb{F}_q$, y una n-ésima raíz primitiva de la unidad es un elemento primitivo de $\mathbb{F}_q$. Así que, si $\mathcal{C}$ tiene distancia designada $\delta$, el conjunto de definición de $\mathcal{C}$ tiene tamaño $\delta-1$ y es $T = \{ b, b+1,\cdots, b+\delta-2 \}$ para algún entero $b$. Por el teorema \ref{th:bch_dist_min} y la cota de Singleton, la dimensión $k$ y la mínima distancia $d$ de $\mathcal{C}$ satisfacen que $k = n -\delta + 1 \geq n-d+1 \geq k$. Luego, ambas inigualdades son igualdades lo que implica que $ d = \delta$ y $k = n-d+1$.
+
+
+\begin{theorem}
+Sea $\mathcal{C}$ un código RS sobre $\mathbb{F}_q$ de longitud $n = q-1$ y con distancia designada $\delta$. Entonces :
+\begin{enumerate}
+	\item $\mathcal{C}$ tiene como conjunto de definición $T = \{ b, b+1,\cdots, b+\delta-2 \}$ para algún entero $b$
+	\item $\mathcal{C}$ tiene mínima distancia $ d = \delta$ y dimensión $k = n-d+1$
+\end{enumerate}
+\end{theorem}
+
+\begin{exampleth}
+Un elemento primitivo de $\mathbb{F}_{13}$ es $2$. Sea $\mathcal{C}$ el código RS en sentido estricto con distancia designada $5$ sobre $\mathbb{F}_{13}$. Es un código de longitud $12$ con conjunto de definición $\{ 1,2,3,4 \}$ y polinomio generador $(x-2)(x-2^2)(x-2^3)(x-2^4) = x^4+9x^3+7x^2+2x+10$. Luego, $\mathcal{C}$ tiene distancia mínima $5$ y es un $[12,8,5]$ código.
+\end{exampleth}
+
+Vamos a presentar ahora otra forma para los códigos Reed-Solomon en sentido estricto, esta alternativa es importante para definir las bases de los códigos Reed-Solomon generalizados, los códigos Goppa, etc . Para $k \geq 0$, sea $\mathcal{P}_k$ el conjunto de los polinomios con grado menos que $k$, incluyendo el polinomio cero, en $\mathbb{F}_q[x]$.
+
+
+\begin{theorem}
+Sea $\alpha$ un elemento primitivo de $\mathbb{F}_q$ y sea $k$ un entero tal que $ 0 \leq k \leq n = q-1$. Entonces:
+\[
+\mathcal{C} = \{ (f(1),f(\alpha),f(\alpha^2),\cdots,f(\alpha^{q-2})) \mid \thinspace f \in \mathcal{P}_k \}
+ \]
+
+es el $[n,k,n-k+1]$ código RS en sentido estricto sobre $\mathbb{F}_q$.
+\end{theorem}
+
+\begin{proof}
+Es claro que $\mathcal{C}$ es un código lineal sobre $\mathbb{F}_q$ ya que $\mathcal{P}_k$ es un subespacio lineal sobre $\mathbb{F}_q$ de $\mathbb{F}_q[x]$. Como $\mathcal{P}_k$ es k-dimensional, $\mathcal{C}$ también lo es si podemos probar que $f$ y $f_1$ son distintos elementos de $\mathcal{P}_k$, entonces los correspondientes elementos en $\mathcal{C}$ son distintos. Si fueran iguales, entonces su diferencia sería $0$ lo que implica que $f-f_1$, que es un polinomio no-nulo de grado como mucho $k-1$, tiene $n \geq k$ raíces, algo que no puede ocurrir. Luego, $\mathcal{C}$ es k-dimensional.
+
+Sea $\mathcal{D}$  el $[n,k,n-k+1]$ código RS en sentido estricto sobre $\mathbb{F}_q$. Así que, $\mathcal{D}$ tiene de conjunto de definición $T = \{ 1,2,\cdots,n-k \}$. Probaremos que $\mathcal{C} = \mathcal{D}$, basta probar que $\mathcal{C} \subseteq \mathcal{D}$ ya que ambos códigos son k-dimensionales. Sea $c(x) = \sum_{j=0}^{n-1} c_jx^j \ in \mathcal{C}$. Entonces, existe algún $f(x) = \sum_{m=0}^{k-1} f_mx^m \in \mathcal{P}_k$ tal que $c_j=f(\alpha^j)$ para $ 0 \leq j \leq n$ . Para probar que $c(x) \in \mathcal{D}$ tenemos que probar que $c(\alpha^i) = 0$ para $i \in T$ por el teorema \ref{th:prop_conj_def}. Si $i \in T$, entonces 
+
+\[ 
+c(\alpha^i) = \sum_{j=0}^{n-1} c_j\alpha{ij} =\sum_{j=0}^{n-1} (\sum_{m=0}^{k-1}f_m\alpha^{jm})\alpha{ij} = \sum_{m=0}^{k-1}f_m  \sum_{j=0}^{n-1}\alpha^{(i+m)j}  =\sum_{m=0}^{k-1} \frac{\alpha^{(i+m)n} -1 }{\alpha^{i+m} -1  }
+\]
+
+Pero $\alpha^{(i+m)n} = 1$ y $\alpha^{i+m} \neq 1$ ya que $ 1 \leq i+m \leq n-1 = q-2$ y $\alpha$ es la n-ésima raíz primitiva de la unidad. Por lo tanto, $c(\alpha^i) = 0$ para $i \in T$ lo que implica que $\mathcal{C} \subseteq \mathcal{D}$ y por consiguiente, $\mathcal{C} = \mathcal{D}$ como queríamos demostrar.
+\end{proof}
+
+Nos damos cuenta que el código RS en sentido estricto definido con esta alternativa tal que $k=0$ es justamente el código cero.
+
+\subsection{Algoritmo de Decodificación de Peterson-Gorensein-Zierler}
+
+Sea $\mathcal{C}$ un código BCH sobre $\mathbb{F}_q$ con longitud $n$ y distancia designada $\delta$. Como la mínima distancia de $\mathcal{C}$ es al menos $\delta$, podemos corregir al menos $t = \lfloor (\delta-1)/2 \rfloor$ errores. El algoritmo de decodificación Peterson-Gorenstein-Zierler puede corregir hasta $t$ errores. Mientras que el algoritmo se puede aplicar a cualquier código BCH, podemos simplicarlo si asumimos que $\mathcal{C}$ es en sentido estricto. Por lo tanto, el conjunto de definición T de $\mathcal{C}$ asumimos que contiene $\{ 1,2,\cdots,\delta-1 \}$, con $\alpha$ siendo la n-ésima raíz primitiva de la unidad en un cuerpo de extensión $\mathbb{F}_{q^m}$ de $\mathbb{F}_q$, donde $m = ord_n(q)$, usado para determinar este conjunto de definición. El alogritmo requiere cuatro pasos que vamos a describir  en orden y más tarde, resumir.
+
+
+Supongamos que recibimos $y(x)$, asumimos que $y(x)$ difiere de una palabra código $c(x)$ en al menos $t$ coordenadas. Por tanto, $y(x) = c(x) + e(x)$, donde $c(x) \in \mathcal{C}$ y $e(x)$ es el vector de error con peso $v \leq t$. Supongamos que los errores ocurren en coordenadas desconocidas $k_1,k_2,\cdots,k_v$. Luego,
+
+\[
+e(x) = e_{k_1}x^{k_1} + e_{k_2}x^{k_2} + \cdots + e_{k_v}x^{k_v}
+\]
+
+Una vez determinamos $e(x)$, nos falta encontrar donde ocurren los errores $k_j$ y sus magnitudes $e_{k_j}$, entonces podemos decodificar el vector recibido como $c(x) = y(x) - e(x)$. Recordemos que por el teorema \ref{th:prop_conj_def} $c(x) \in \mathcal{C}$ si y solo si $c(\alpha^i) = 0 \thinspace \forall i \in T$. En particular, $y(\alpha^i) = c(\alpha^i) + e(\alpha^i) = e(\alpha^i) \thinspace \forall 1 \leq i \leq 2t$, ya que $2t \leq \delta-1$. Para $1 \leq i \leq 2t$, definimos el \textbf{síndrome} $S_i$ de $y(x)$ como un elemento $S_i = y(\alpha^i)$ en $\mathbb{F}_{q^m}$
+
+El \textit{primer paso} del algoritmo es calcular los síndromes $S_I = y(\alpha^i)$ para $1 \leq i \leq 2t$ del vector recibido.
+
+\begin{theorem}
+\label{th:sindromes}
+$S_{iq} = S_i^q \thinspace \forall i \geq 1$
+\end{theorem}
+
+Los síndromes dan lugar a un sistema de ecuaciones que envuelven las localizaciones desconocidas de los errores y sus magnitudes. Además, los síndromes satisfacen :
+
+\[ 
+S_i = y(\alpha^i) = \sum_{j=1}^v e_{k_j}(\alpha^i)^{k_j} = \sum_{j=1}^v e_{k_j}(\alpha^{k_j})^i
+\]
+
+para $1 \leq i \leq 2t$. Para simplicar la notación, para los $1 \leq j \leq v$, llamaremos $E_j = e_{k_j}$ a \textit{la magnitud del error en la coordenada $k_j$} y a $X_j = \alpha^{k_j}$ como \textit{el número de localización correspondiente a la localización del error $k_j$}. Por el teorema  %ESTA EN EL CAPITULO 0, 
+si $\alpha^i = \alpha^k$ para $i$ y $k$ entre $0$ y $n-1$, entonces $i = k$. Por tanto, sabiendo que $X_j$ determina únicamente la localización del error $k_j$. Con esta notación tenemos :
+
+\begin{equation}
+\label{eq:paso_uno}
+S_i =  \sum_{j=1}^v E_jX_j^i \quad para \quad 1 \leq i \leq 2t
+\end{equation} 
+
+
+
+del cual podemos obtener el siguiente sistema de ecuaciones:
+\begin{equation}
+\label{eq:sistema_paso_uno} S_1 = E_1X_1 + E_2X_2 + \cdots + E_vX_v 
+ \end{equation}
+ 
+  $\hspace{5cm} S_2 = E_1X_1^2 + E_2X_2^2 + \cdots + E_vX_v^2$ 
+ 
+  $\hspace{5cm} S_3 = E_1X_1^3 + E_2X_2^3 + \cdots + E_vX_v^3 $
+  
+   $\hspace{8cm} \vdots $
+     
+  $\hspace{5cm} S_{2t} = E_1X_1^{2t} + E_2X_2^{2t} + \cdots + E_vX_v^{2t}$
+
+
+
+
+Este sistema es no-lineal en las $X_j$s con coeficientes desconocidos $E_j$. La estrategia es usar \ref{eq:paso_uno} para crear un sistema lineal que envuelve nuevas variables $\sigma_1,\sigma_2, \cdots, \sigma_v$ por las que obtendremos directamente los números de localización de los errores. Luego, tenemos el sistema \ref{eq:sistema_paso_uno} que es lineal en las $E_j$s y lo resolvemos para obtener las magnitudes.
+
+\begin{definition}
+Llamamos \textbf{polinomio localizador de errores} a 
+\[ 
+\sigma(x) = (1-xX_1)(1-xX_2)\cdots(1-xX_v) = 1 + \sum_{i=1}^v \sigma_ix^i
+\]
+\end{definition}
+
+Las raíces de $\sigma(x)$ son los inversos de los números de localización de los errores y por tanto, 
+
+\[ 
+\sigma(X_j^{-1}) = 1 + \sigma_1X_j^{-1} + \sigma_2X_j^{-2} + \cdots + 	\sigma_vX_j^{-v} = 0
+\]
+ para $ 1 \leq j \leq v$. Multiplicando por $E_jX_j^{i+v}$ tenemos,
+ 
+ \[ 
+ E_jX_j^{i+v} + \sigma_1E_jX_j^{i+v-1} + \cdots + \sigma_vE_jX_j^{i} = 0
+ \]
+
+para cualquier $i$. Sumando esto para $j$ con $1 \leq j \leq v$, obtenemos 
+
+\begin{equation}
+\label{eq:sumatorio_paso_uno}
+ \sum_{j=1}^v E_jX_j^{i+v} + \sigma_1\sum_{j=1}^v E_jX_j^{i+v-1} + \cdots + \sigma_v\sum_{j=1}^v E_jX_j^{i} = 0
+\end{equation}
+
+Siempre que $ 1 \leq i$ y $i+v \leq 2t$, estas sumas son los síndromes obtenidos en \ref{eq:paso_uno}. Porque $ v \leq t$, \ref{eq:sumatorio_paso_uno} se convierte en :
+
+\[ 
+S_{i+v} + \sigma_1S_{i+v-1} + \sigma_2S_{i+v-2} + \cdots + \sigma_vS_i = 0
+\]
+
+o 
+
+\begin{equation}
+\label{eq:sindromes_paso_uno}
+ \sigma_1S_{i+v-1} + \sigma_2S_{i+v-2} + \cdots + \sigma_vS_i = - S_{i+v} 
+\end{equation}
+
+válido para $ 1 \leq i \leq v$. Por tanto, podemos encontrar los $\sigma_k$s si resolvemos la siguiente ecuación matricial.
+\begin{equation}
+\label{eq:sistema_matricial}
+\begin{pmatrix}
+			S_1 & S_2 & S_3 & \cdots & S_{v-1} & S_v \\
+			S_2 & S_3 & S_4 & \cdots  & S_v & S_{v+1} \\
+			S_3 & S_4 & S_5 & \cdots & S_{v+1} & S_{v+2} \\ 
+ 			\vdots & \vdots & \vdots & \vdots & \vdots &\vdots & \vdots & \vdots \\
+			S_v & S_{v+1} & S_{v+2} & \cdots  & S_{2v-2} & S_{2v-1} \\
+	\end{pmatrix}
+	\begin{pmatrix}
+			\sigma_v \\
+			\sigma_{v-1} \\
+			\sigma_{v-2}  \\ 
+ 			\vdots \\
+			\sigma_1  \\
+	\end{pmatrix} = \begin{pmatrix}
+			-S_{v+1} \\
+			-S_{v+2} \\
+			-S_{v+3}  \\ 
+ 			\vdots \\
+			-S_{2v}  \\
+	\end{pmatrix}
+\end{equation}
+
+El \textit{segundo paso} del algoritmo será resolver \ref{eq:sistema_matricial} para $\sigma_1,\cdots,\sigma_v$. Cuando este paso esté completado, los $\sigma(x)$ estarán determinados. Sin embargo, determinar los $\sigma(x)$ es complicado ya que no conocemos $v$, y por tanto, no podemos saber el tamaño del sistema involucrado. Queremos buscar la solución que tenga el menor valor de $v$ posible y por ello, tenemos el siguiente lema.
+
+\begin{lemma}
+Sea $\mu \leq t$ y sea 
+$M_\mu = \begin{pmatrix}
+			S_1 & S_2  \cdots &  S_\mu \\
+			S_2 & S_3  & \cdots  S_{\mu+1} \\
+ 			\vdots & \vdots & \vdots & \vdots  \\
+			S_\mu & S_{\mu+1} & \cdots & S_{2\mu-1} \\
+	\end{pmatrix}$
+
+Entonces $M_\mu$ es invertible si $\mu = v$ y singular si $\mu > v$, donde $v$ es el número de errores que han ocurrido.
+\end{lemma}
+
+\begin{proof}
+Si $\mu > v$, sea $X_{v+1} = X_{v+2} = \cdots = X_\mu = 0$ y $E_{v+1} = E_{v+2} = \cdots = E_\mu = 0$. Tenemos $A_\mu$ y $B_\mu$ que son 
+
+$A_\mu = \begin{pmatrix}
+			1 & 1  \cdots &  1 \\
+			X_1 & X_2  & \cdots  X_\mu \\
+ 			\vdots & \vdots & \vdots & \vdots  \\
+			X_1^{\mu-1} & X_2^{\mu-1} & \cdots & X_\mu^{\mu-1} 
+	\end{pmatrix}$ 
+	y $B_\mu = \begin{pmatrix}
+			E_1X_1 & 0  \cdots &  0 \\
+			0 & E_2X_2  & \cdots  0 \\
+ 			\vdots & \vdots & \vdots & \vdots  \\
+			0 & 0 & \cdots & E_\mu X_\mu 
+	\end{pmatrix}$
+
+entonces $M_\mu = A_\mu B_\mu A_\mu^T$. Por tanto, $det(M_\mu) = det(A_\mu) det(B_\mu) det(A_\mu)$. Si $\mu > v$, $det(B_\mu) = 0$ ya que $B_\mu$ es una matriz diagonal con $0$ en la diagonal. Si $\mu = v$, entonces $det(B_\mu) \neq 0$, ya que $B_\mu$ es una matriz diagonal con elementos no-nulos en la diagonal. Además $det(A_\mu) \neq 0$ por el lema \ref{le:vandermonde} porque $A_\mu$ es una matriz de Vandermonde con $X_1,\cdots,X_\mu$ distintos. Por tanto, $M_\mu$ es invertible si $\mu = v$.
+\end{proof}
+
+Para ejecutar el segundo paso del algoritmo, intentamos adivinar el número $v$ de errores. Llamaremos $\mu$ a ese intento y empezaremos con $\mu = t$ que es el número más grande que puede tomar $v$. La matriz de coeficientes del sistema lineal \ref{eq:sistema_matricial} que intentamos resolver es $M_\mu = M_t$ por el lema anterior. Si $M_\mu$ es singular, entonces reducimos $\mu$ a $\mu = t-1$ y vemos si $M_\mu = M_{t-1}$ es singular. Continuamos con este proceso hasta encontrar alguna $M_\mu$ invertible. Con $v = \mu$, resolvemos \ref{eq:sistema_matricial} y por tanto, obtenemos $\sigma(x)$. 
+
+El \textit{tercer paso} es encontrar las raíces de $\sigma(x)$ e invertirlas para determinar los números de localización de los errores. Se suele completar haciendo una busca exhaustiva comprobando $\sigma(\alpha^i)$ para $ 0 \leq i < n$.
+
+El \textit{cuarto paso} es insertar los números obtenidos en el paso tres en \ref{eq:sistema_paso_uno} y resolver el sistema lineal para las magnitudes de los errores $E_j$. De hecho, solo necesitamos considerar las primeras $v$ ecuaciones en \ref{eq:sistema_paso_uno} por el siguiente motivo. La matriz de coeficientes de las primeras $v$ ecuaciones tiene por determinante 
+
+
+$det \begin{pmatrix}
+			X_1 & X_2  \cdots &  X_v \\
+			X_1^2 & X_2^2  & \cdots  X_v^2 \\
+ 			\vdots & \vdots & \vdots & \vdots  \\
+			X_1^v & X_2^v & \cdots & X_v^v 
+	\end{pmatrix} = X_1X_2\cdots X_\mu \begin{pmatrix}
+			1 & 1  \cdots &  1 \\
+			X_1 & X_2  & \cdots  X_v \\
+ 			\vdots & \vdots & \vdots & \vdots  \\
+			X_1^{v-1} & X_2^{v-1} & \cdots & X_\mu^{v-1} 
+	\end{pmatrix}  $
+
+El determinante de la matriz de la derecha es el determinante de una matriz de Vandermonde, luego es no-nulo y los $X_j$ son distintos.
+
+
+Resumiendo, el \textbf{Algoritmo de Decodificación Peterson-Gorenstein-Zierler} para códigos BCH sigue los siguientes pasos: 
+
+\begin{enumerate}
+	\item Calcular los síndromes $S_i = y(\alpha^i)$ para $ 1 \leq i \leq 2t$.
+	\item En el orden $\mu = t$, $\mu = t-1$, $\cdots$ decidir si $M_\mu$ es singular, parando para el primer valor de $\mu$ en el que $M_\mu$ es invertible. Cogemos $v = \mu$ y resolvemos \ref{eq:sistema_matricial} para obtener $\sigma(x)$.
+	\item Encontramos las raíces de $\sigma(x)$, calculando $\sigma(\alpha^i)$ para $ 0 \leq i < n$. Invertimos esas raíces para obtener los número de localización de errores $X_j$.
+	\item Resolvemos las primeras $v$ ecuaciones de \ref{eq:sistema_paso_uno} para obtener las magnitudes de los errores $E_j$. 
+\end{enumerate}
+
+\begin{exampleth}
+\label{ex:algoritmo_pgz}
+Sea $\mathcal{C}$ el $[15,7]$ código binario BCH en sentido estricto con distancia designada $\delta = 5$, que tiene como conjunto de definición $T = \{ 1,2,3,4,6,8,9,12 \}$. Usando la $15$-ésima raíz primitiva de la unidad $\alpha$ que podemos ver en la siguiente tabla,
+\begin{table}[H]
+\begin{tabular}{ c | c | c | c | c | c | c | c }
+
+	 
+$0000$ & $0$  & $1000$ & $\alpha^3$ & $1011$ & $\alpha^7$ & $1110$ & $\alpha^{11}$ \\$0001$ & $1$  & $0011$ & $\alpha^4$ & $0101$ & $\alpha^8$ & $1111$ & $\alpha^{12}$ \\
+$0010$ & $\alpha$  & $0110$ & $\alpha^5$ & $1010$ & $\alpha^9$ & $1101$ & $\alpha^{13}$ \\
+$0100$ & $\alpha^2$  & $1100$ & $\alpha^6$ & $0111$ & $\alpha^{10}$ & $1001$ & $\alpha^{14}$ \\
+	\end{tabular}
+\caption{$\mathbb{F}_{16}$ con elemento primitivo $\alpha$ donde $\alpha^4 = \alpha +1$}
+\end{table}
+
+Tenemos que el polinomio generador de $\mathcal{C}$ es $g(x) = x^8+x^7+x^6+x^4+1$.
+Supongamos que $\mathcal{C}$ va a transmitir una palabra código y recibimos $y(x) = x^{10}+x^9+x^6+x^5+x+1$. Usando la tabla anterior y el teorema \ref{th:sindromes}, aplicando el primer paso obtenemos,
+
+$S_1 = 1 + \alpha + \alpha^5 + \alpha^6 + \alpha^9 + \alpha^{10} = \alpha^2$  
+
+$S_2 = S_1^2 = (\alpha^2)^2 = \alpha^4$
+
+$S_3 = S_1^3 = 1 + \alpha^3 + \alpha^{15} + \alpha^{18} + \alpha^{27} + \alpha^{30} = \alpha^{11}$
+
+$S_4 = S_2^2 = (\alpha^4)^2 = \alpha^8$
+
+Para el paso dos, denotamos
+
+$M_2 = \begin{pmatrix}
+			S_1 & S_2  \\
+			S_2 & S_3
+	\end{pmatrix} = \begin{pmatrix}
+			\alpha^2 & \alpha^4  \\
+			\alpha^4 & \alpha^{11}
+	\end{pmatrix}$
+
+que es invertible y su inversa es 
+
+$M_2^{-1} = \begin{pmatrix}
+			\alpha^8 & \alpha  \\
+			\alpha & \alpha^{14}
+	\end{pmatrix}$
+	
+Luego $v=2$, por tanto, es el número de errores cometidos y tenemos que resolver :
+
+$\begin{pmatrix}
+			S_1 & S_2  \\
+			S_2 & S_3
+	\end{pmatrix} \begin{pmatrix}
+			\sigma_2 \\
+			\sigma_1
+	\end{pmatrix} = \begin{pmatrix}
+			 -S_3  \\
+			 -S_4
+	\end{pmatrix} $ o $\begin{pmatrix}
+			\alpha^2 & \alpha^4  \\
+			\alpha^4 & \alpha^{11}
+	\end{pmatrix} \begin{pmatrix}
+			\sigma_2 \\
+			\sigma_1
+	\end{pmatrix} = \begin{pmatrix}
+			 \alpha^{11}  \\
+			 \alpha^8
+	\end{pmatrix} $
+	
+La solución es $[\sigma_2 \thinspace \sigma_1 ]^T = M_2^{-1}[\alpha^{11} \thinspace \alpha^8]^T = [\alpha^{14} \thinspace \alpha^2]^T$. Por tanto, el paso dos produce el polinomio de locaclización de errores $\sigma(x) = \alpha^{14}x^2 + \alpha^2 x + 1$. Por el paso tres, tenemos las raíces de $\sigma(x)$ que son $\alpha^{11}$ y $\alpha^5$, por tanto, los números de localización de errores son $X_1 = \alpha^6$ y $X_2 =\alpha^5$.
+ Como el código es binario, entonces todas sus magnitudes son $1$ y podemos omitir el paso cuatro. Así que, el vector de error es $e(x) = x^{10} + x^4$, y la palabra código transmitida es $c(x) = x^9+x^6+x^5+x^4+x+1$, que es $(1+x)g(x)$.
+\end{exampleth}
+
+\subsection{Algoritmo de Sugiyama}
+
+El Algoritmo de Sugiyama es otro método para encontrar el polinomio de localización de errores, luego vamos a presentar una alternativa al paso dos del Algoritmo de Peterson-Gorenstein-Zierler. Este algoritmo es una aplicación relativamente simple pero ingeniosa del Algoritmo de Euclides.
+
+\begin{definition}
+Definimos el \textbf{polinomio evaluador de errores $\omega(x)$} como
+
+\[
+\omega(x) = \sum_{j=1}^v E_jX_j \prod_{j=1}^v (1-xX_i) = \sum_{j=1}^v E_jX_j \frac{\sigma(x)}{1-xX_j}
+\]
+
+\end{definition}
+
+Notamos que $deg(\sigma(x)) = v$ y $deg(\omega(x)) \leq v-1$. Definimos los polinomios $S(x)$ con grado como mucho $2t-1$ como 
+
+\[
+S(x) = \sum_{i=0}^{2t-1} S_{i+1}x^i
+\]
+
+donde los $S_i$ con $ 1 \leq i \leq 2t$ son los síndromes del vector recibido.
+
+Expandiendo la parte derecha de la definición de polinomio evaluador de errores como una serie formal de potencias y usando \ref{eq:paso_uno} junto a la definición de $S(x)$, obtenemos,
+
+\[ 
+\omega(x) = \sigma(x)\sum_{j=1}^v E_jX_j \frac{\sigma(x)}{1-xX_j} = \sigma(x) \sum_{j=1}^v E_jX_j \sum_{i=0}^\infty (xX_j)^i 
+\]
+\[
+ = \sigma(x) \sum_{i=0}^\infty ( \sum_{j=1}^v E_jX_j^{i+1})x^i \equiv \sigma(x) \sum_{i=0}^{2t-1} ( \sum_{j=1}^v E_jX_j^{i+1})x^i \thinspace (mod \thinspace x^{2t})  \]
+ 
+ \[ \equiv \sigma(x)S(x) \thinspace (mod \thinspace x^{2t}) \]
+
+Por tanto, tenemos a lo que llamamos \textbf{ecuación clave}
+
+
+\[ \omega(x) \equiv \sigma(x)S(x) \thinspace (mod \thinspace x^{2t}) \]
+
+La siguiente observación sobre $\sigma(x)$ y $\omega(x)$ será importante más adelante.
+
+\begin{lemma}
+\label{le:primos_ec_clave}
+Los polinomios $\sigma(x)$ y $\omega(x)$ son primos relativos.
+\end{lemma}
+
+\begin{proof}
+Las raíces de $\sigma(x)$ son precisamente los $X_j^{-1}$ para $ 1 \leq j \leq v$. Pero 
+\[
+\omega(X_j^{-1}) = E_jX_j \prod_{i=1 \thinspace i \neq j}^v (1-X_j^{-1}X_i) \neq 0
+\]
+
+lo que prueba el lema.
+\end{proof}
+
+El Algoritmo de Sugiyama usa el Algoritmo de Euclides para resolver la ecuación clave, luego sigue de esta forma.
+
+\begin{enumerate}
+\item Supongamos que $f(x) = x^{2}$ y $s(x) = S(x)$. Sea $r_{-1}(x) = f(x)$,$r_0(x) = s(x)$,$b_{-1}(x) = 0$ y $b_0(x) = 1$. 
+\item  Repetimos las siguientes dos operaciones para encontrar $h_i(x)$,$r_i(x)$ y $b_i(x)$ por inducción para $i = 1,2,\cdots , I$ satisfaciendo que $deg(r_{I-1}(x)) \geq t$ y $deg(r_{I}(x)) < t$ :
+
+
+$r_{i-2}(x) = r_{i-1}h_i(x) + r_i(x)$ , donde  $deg(r_i(x)) < deg(r_{i-1}(x))$
+
+
+$ b_i(x) = b_{i-2}(x) - h_i(x)b_{i-1}(x)$
+\item $\sigma(x)$ es algún múliplo escalar no-nulo de $b_I(x)$
+\end{enumerate}
+
+Notamos que la $I$ del paso dos está bien definida ya que $deg(r_i(x))$ decrece estrictamente con $deg(r_{-1}(x)) > t$. Con el fin de probar que el Algoritmo de Sugiyama funciona, necesitamos el siguiente lema.
+
+\begin{lemma}
+\label{le:tocho_sugiyama}
+Usando la notación del Algoritmo de Suigyama, sea $a_{-1}(x) = 0$,$a_0(x) = 1$ y $ a_i(x) = a_{i-2}(x) - h_i(x)a_{i-1}(x)$ para $ i \geq 1$. Tenemos lo siguiente:
+\begin{enumerate}
+	\item $a_i(x)f(x) + b_i(x)s(x) = r_i(x)$ para $ i \geq -1$
+	\item $b_i(x)r_{i-1}(x) - b_{i-1}(x)r_i(x) = (-1)^i f(x)$ para $ i \geq 0$
+	\item $a_i(x)b_{i-1}(x) - a_{i-1}(x)b_i(x) = (-1)^{i+1} $ para $ i \geq 0$
+	\item $deg(b_i(x)) + deg(r_{i-1}(x)) = deg(f(x))$ para $ i \geq 0$
+\end{enumerate}
+
+\end{lemma}
+
+\begin{proof}
+Vamos a probar todos los puntos por inducción. Para 1), los casos $I0-1$ y $i=0$ se obtienen directamente del conjunto de valores iniciales del paso uno del Algoritmo de Sugiyama y los valores $a_{-1}(x)=1$ y $a_0(x) = 0$. Asumimos que se cumple 1) para $i-1$ veamos que se cumple para $i$, tenemos, 
+
+$a_i(x)f(x) + b_i(x)s(x) = [a_{i-2}(x) -h_i(x)a_{i-1}(x)]f(x) + [b_{i-2}(x) -h_i(x)b_{i-1}(x)]s(x)$
+
+$ = a_{i-2}(x)f(x) + b_{i-2}(x)s(x) - h_i(x)[a_{i-1}(x)f(x) + b_{i-1}(x)s(x) $
+
+$ = r_{i-2}(x)-h_i(x)r_{i-1}(x) = r_i(x)$
+
+completando 1).
+
+De nuevo, cuando $i=0$, 2) se obtiene del paso uno del Algoritmo de Sugiyama. Asumimos que se cumple 2) para $i-1$ veamos que es cierto para $i$,
+
+$b_i(x)r_{i-1}(x) - b_{i-1}(x)r_i(x) = [b_{i-2}(x) -h_i(x)b_{i-1}(x)]r_{i-1}(x)-b_{i-1}(x)r_i(x)$
+
+$ = b_{i-2}(x)r_{i-1}(x) - b_{i-1}(x)[h_i(x)r_{i-1}(x) + r_i(x)]$
+
+$ = b_{i-2}(x)r_{i-1}(x) - b_{i-1}(x)r_{i-2}(x) $ 
+
+$ = -(-1)^{i-1}f(x) = (-1)^if(x)$
+
+lo que prueba 2).
+
+Cuando $i=0$, 3) se obtiene del paso uno del Algoritmo de Sugiyama y los valores $a_{-1}(x)=1$ y $a_0(x) = 0$. Asumimos que se cumple 3) para $i-1$ veamos que es cierto para $i$,
+
+$a_i(x)b_{i-1}(x) - a_{i-1}(x)b_i(x) = [a_{i-2}(x) -h_i(x)a_{i-1}(x)]b_{i-1}(x) - a_{i-1}(x)[b_{i-2}(x) -h_i(x)b_{i-1}(x)]$
+
+$ = -[a_{i-1}(x)b_{i-2}(x) - a_{i-2}(x)b_{i-1}(x)] = -(-1)^i = (-1)^{i+1}$
+
+lo que prueba 3).
+
+Cuando $i=0$, 4) se obtiene del paso uno del Algoritmo de Sugiyama. Asumimos que se cumple 4) para $i-1$ veamos que es cierto para $i$, esto es,  $deg(b_{i-1}(x)) + deg(r_{i-2}(x)) = deg(f(x))$. En el paso dos del Algoritmo de Sugiyama, tenemos que $   deg(r_i(x)) < deg(r_{i-2}(x))$. Así que, $deg(b_{i-1}(x)r_i(x)) = deg(b_{i-1}(x) + deg(r_i(x)) < deg(f(x))$ lo que implica 4) para el caso $i$ usando el apartado 2).
+
+\end{proof}
+
+Ahora verificamos que el Algoritmo de Sugiyama funciona. Por el lema \ref{le:tocho_sugiyama} apartado 1), tenemos, 
+\begin{equation}
+\label{sugiyama_trece}
+a_I(x)x^{2t} + b_I(x)S(x) = r_I(x)
+\end{equation}
+
+Por la ecuación clave, también sabemos que,
+
+\begin{equation}
+\label{sugiyama_catorce}
+a_I(x)x^{2t} + \sigma(x)S(x) = \omega(x)
+\end{equation}
+
+para algún polinomio $a(x)$. Multiplicando \ref{sugiyama_trece} por $\sigma(x)$ y \ref{sugiyama_catorce} por $b_I(x)$ para obtener,
+
+\begin{equation}
+\label{sugiyama_quince}
+a_I(x)\sigma(x)x^{2t} + b_I(x)\sigma(x)S(x) = r_I(x)\sigma(x)
+\end{equation}
+
+y
+
+\begin{equation}
+\label{sugiyama_dieciseis}
+a_I(x)b_I(x)x^{2t} + \sigma(x)b_I(x)S(x) = \omega(x)b_I(x)
+\end{equation}
+
+
+Módulo $x^{2t}$ implica que 
+
+\begin{equation}
+\label{sugiyama_diecisiete}
+r_I(x)\sigma(x) \equiv \omega(x)b_I(x) \thinspace (mod \thinspace x^{2t})
+\end{equation}
+
+
+Como $deg(\sigma(x)) \leq t$, por la elección de $I$, $deg(r_I(x)\sigma(x)) = deg(r_I(x)) + deg(\sigma(x)) < t + t = 2t$. Por el lema \ref{le:tocho_sugiyama} apartado 4), la elección de $I$ y el hecho de que $deg(\omega(x)) < t$, $deg(\omega(x) \times b_I(x)) = deg(\omega(x)) + deg(b_I(x)) = t + (deg(x^{2t}) -deg(r_{I-1}(x)) \leq 3t -t = 2t$. Por eso, \ref{sugiyama_diecisiete} implica que $r_I(x)\sigma(x) = \omega(x)b_I(x)$. Esto, junto a \ref{sugiyama_quince} y \ref{sugiyama_dieciseis}, prueba que 
+
+
+\begin{equation}
+\label{sugiyama_dieciocho}
+a_I(x)\sigma(x) = a(x)b_I(x)
+\end{equation}
+
+Sin embargo, el lema \ref{le:tocho_sugiyama} apartado 3), implica que $a_I(x)$ y $b_I(x)$ son primos relativos y por tanto, $a(x) = \lambda(x)a_I(x)$ por  \ref{sugiyama_dieciocho}. Sustituyendo esto en \ref{sugiyama_dieciocho} tenemos,
+
+\begin{equation}
+\label{sugiyama_diecinueve}
+\sigma(x) = \lambda(x)b_I(x)
+\end{equation}
+
+Si ponemos esto en \ref{sugiyama_catorce} obtenemos $\lambda(x)a_I(x)x^{2t} + \lambda(x)b_I(x)S(x) = \omega(x)$. Luego, \ref{sugiyama_trece} implica que
+
+\begin{equation}
+\label{sugiyama_veinte}
+\omega(x) = \lambda(x)r_I(x)
+\end{equation}
+
+Por el lema \ref{le:primos_ec_clave}, \ref{sugiyama_diecinueve} y \ref{sugiyama_veinte}, $\lambda(x)$ debe ser una constante no-nula, lo que verifica el paso tres del Algoritmo de Sugiyama.
+
+Como solo nos interesan las raíces de $\sigma(x)$, es suficiente encontrar las raíces de $b_I(x)$ del paso dos, ya que así obtenemos los números de localización de errores.
+
+\begin{exampleth}
+\label{ex:algoritmo_sugiyama}
+
+Vamos a obtener un múltiplo escalar del $\sigma(x)$ del ejemplo \ref{ex:algoritmo_pgz}, usando ahora el Algoritmo de Sugiyama. En el otro ejemplo, teníamos que $t=2$ y los síndromes eran $S_1 = \alpha^2$, $S_2 = \alpha^4$, $S_3 = \alpha^{11}$ y $S_4 = \alpha^8$. La siguiente tabla resume los resultados.
+
+\begin{tabular}{ c | c | c | c |}
+	i & $r_i(x)$ & $h_i(x)$ & $b_i(x)$\\ \hline
+	-1 & $x^4$  &  & $0$ \\
+	0 & $\alpha^8x^3 + \alpha^{11}x^2+\alpha^4x + \alpha^2$ &  & $1$ \\ 
+	1 & $\alpha x^2 + \alpha^4 x + \alpha^{12}$ & $\alpha^7 x + \alpha^{10}$ & $\alpha^7 x + \alpha^{10}$ \\
+	2 & $\alpha^2$  &  $\alpha^7 x$ & $\alpha^{14}x^2 + \alpha^2 x + 1$ 
+	\end{tabular}
+
+Luego, el primer índice $I$ donde $deg(r_I(x)) < t = 2$ es $I = 2$. Por tanto, $\sigma(x)$ es múltiplo de $b_2(x) = \alpha^{14}x^2 + \alpha^2 x + 1 $, de hecho, $b_2(x) = \sigma(x)$ calculado en el ejemplo \ref{ex:algoritmo_pgz}.
+\end{exampleth}
+
+Podemos concluir con que tanto el Algoritmo de Peterson-Gorenstein-Zierler y el de Sugiyama se pueden usar para decodificar cualquier código cíclico hasta la cota BCH. Sea $\mathcal{C}$ un código cíclico con conjunto de definición T y supongamos que T contiene $\delta$ elementos consecutivos $\{ b, b+1, \cdots , b + \delta -2 \}$. Sea $\mathcal{B}$ el código BCH con conjunto de definición $\mathcal{C}_b \cup \mathcal{C}_{b+1} \cup \cdots \cup \mathcal{C}_{b + \delta -2}$, que es un subconjunto de T , luego $\mathcal{C} \subseteq \mathcal{B}$. Sea $t = \lfloor (\delta -1)/2 \rfloor$. Supongamos que transmitimos una palabra código $c(x) \in \mathcal{C}$ y recibimos $y(x)$ donde se han cometido $t$ o menos errores. Entonces $ c(x) \in \mathcal{B}$ y cualquier de los algoritmos que apliquemos a $\mathcal{B}$ corregirá $y(x)$ para obtener $c(x)$. Luego, estos algoritmos corregirán una palabra recibida de cualquier código cíclico si se comenten $v$ errores y $2v+1$ no supera la cota BCH del código. Por supuesto, el número de errores es menor que el número actual de errores que $\mathcal{C}$ es capaz de corregir. 
+
+
 
 
 

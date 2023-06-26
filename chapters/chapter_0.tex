@@ -1,2 +1,350 @@
-%TODO definir ideal,anillo,cuerpo finito y algunas implicaciones
-%TODO definir M_\alpha^s(x) viene en el libro en la sección 3
+% Capítulo donde expongo conceptos de cuerpos finitos, incluyendo
+% definiciones como ideal, polinomio irreducible, polinomio mínimo...
+
+\chapter{Preliminares}
+
+En el desarrollo de este capítulo se explicarán conceptos que nos resultarán útiles durante los demás capítulos. Se ha tomado como referencia \cite{Huffman_Pless_2010}.
+
+
+\section{Cuerpos finitos}
+
+\begin{definition}
+
+Un \textit{cuerpo} es un conjunto $\mathbb{F}$ con dos operaciones: la suma, +, y el producto, $\cdot$ que satisface las siguientes propiedades.
+\begin{enumerate}
+	\item Conmutatividad: $a+b = b+a$ y $a \cdot b = b \cdot a$ para $a,b \in \mathbb{F}$.
+	\item Existencia de elemento neutro: existen $0,1 \in \mathbb{F}$ tal que  $a+0 = a$ y $a \cdot 1 = a$ para todo $a \in \mathbb{F} $.
+	\item Existencia de elemento inverso: existe $a^{-1}$ tal que $a \cdot a^{-1} = 1$ para todo $a \neq 0 \in \mathbb{F}$ y existe $-a$ tal que $a + (-a) = 0$ para todo $a \in \mathbb{F}$.
+    \item Asociatividad: $(a+b)+c = a+(b+c)$ y $(a \cdot b) \cdot c = a \cdot (b \cdot c)$ para todo $a,b,c \in \mathbb{F}$.
+    \item Distributividad: $a \cdot (b+c) = (a \cdot b) + (a \cdot c)$ para todo $a,b,c \in \mathbb{F}$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+Diremos que un cuerpo $\mathbb{F}$ es \textbf{finito} si $\mathbb{F}$ tiene un número finito de elementos y llamaremos \textbf{orden} de $\mathbb{F}$ al número de elementos. En general, denotaremos un cuerpo con $q$ elementos como $\mathbb{F}_q$
+\end{definition}
+
+Si $p$ es primo, los enteros módulos $p$ forman un cuerpo, al que denotaremos $\mathbb{F}_p$. Estos son los ejemplos más sencillos de cuerpos finitos.
+
+
+La finitud de $\mathbb{F}_q$ implica que existe un entero positivo $p$ tal que $1+1+\cdots + 1$ (p $1$s) es $0$. Este entero $p$ es primo y lo denominaremos la \textit{característica} de $\mathbb{F}_q$. Si $a$ es un entero positivo, denotamos la suma de $1$s en el cuerpo como $a$. Además, si queremos escribir la suma de $\alpha$ $a$ veces en el cuerpo, escribiremos $a\alpha$ o $a \cdot \alpha$, por tanto, vemos que $p\alpha = 0 \thinspace \forall \alpha \in \mathbb{F}_q$. El conjunto de $p$ elementos distintos $\{ 0,1,2,\cdots , (p-1) \}$ de $\mathbb{F}_q$ es isomorfo al cuerpo $\mathbb{F}_p$ de los enteros módulo $p$. Como un cuerpo isomorfo a $\mathbb{F}_p$ está contenido en $\mathbb{F}_q$ , diremos que $\mathbb{F}_p$ es un subcuerpo de $\mathbb{F}_q$. A este subcuerpo $\mathbb{F}_p$ lo llamaremos \textit{subcuerpo primo} de $\mathbb{F}_q$. El cuerpo $\mathbb{F}_q$ es además un espacio de dimensión finita sobre $\mathbb{F}_p$, digamos de dimensión $m$. Por lo tanto, $q = p^m$ ya que es el número de vectores en el espacio vectorial de dimensión $m$ sobre $\mathbb{F}_p$.
+
+Resumimos ahora en un teorema los resultados que acabamos de ver.
+
+\begin{theorem}
+Sea $\mathbb{F}_q$ un cuerpo finito con q elementos. Entonces :
+\begin{enumerate}
+	\item $q = p^m$ para algún primo p.
+	\item $\mathbb{F}_q$ contiene al subcuerpo $\mathbb{F}_p$.
+	\item $\mathbb{F}_q$ es un espacio vectorial sobre $\mathbb{F}_p$ de dimensión m.
+	\item $p\alpha = 0 \thinspace \forall \alpha \in \mathbb{F}_q$.
+	\item $\mathbb{F}_q$ es único salvo isomorfismo.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Polinomios y el Algoritmo de Euclides}
+
+El conjunto de los polinomios en $x$ con coeficientes en $\mathbb{F}_q$ lo denotaremos como $\mathbb{F}_q[x]$. Este conjunto forma un anillo conmutativo unitario bajo la suma y multiplicación de polinomios. Un anillo conmutativo unitario satisface los mismos axiomas que un cuerpo excepto que los elementos no nulos no es necesario que tengan inversos multiplicativos. De hecho, $\mathbb{F}_q[x]$ es un dominio de integridad, es decir, no tiene divisores de cero ya que es un anillo conmutativo unitario tal que el producto de dos elementos no nulos en el anillo es también no nulo. El anillo $\mathbb{F}_q[x]$ es importante tanto para la construcción de cuerpos finitos como para la construcción de códigos.
+
+Denotaremos a los polinomios en $\mathbb{F}_q[x]$ como $f(x) = \sum_{i=0}^n a_ix^i$, donde $a_i$ son coeficientes del término $a_ix^i$ de grado $i$. El \textit{grado de un polinomio} es el grado más alto de cualquier término con coeficiente no nulo, lo denotaremos como $deg(f(x))$. El coeficiente del término con mayor grado se le conoce como \textit{coeficiente líder}. Diremos que un polinomio es \textit{mónico} si su coeficiente líder es $1$.
+
+
+Sea $f(x)$ y $g(x)$ polinomios en $\mathbb{F}_q[x]$. Decimos que \textit{f(x) divide a g(x)}, denotado por $f(x) \mid g(x)$, si existe un polinomio $h(x) \in \mathbb{F}_q[x]$ tal que $g(x) = f(x)h(x)$. Al polinomio $f(x)$ se le dice factor o divisor de $g(x)$. El \textit{máximo común divisor} de $f(x)$ y $g(x)$, siendo al menos uno de ellos no nulo, es el polinomio mónico de $\mathbb{F}_q[x]$ con coeficiente más alto que divide tanto a $f(x)$ como a $g(x)$. El máximo común divisor es único y lo denotaremos como $mcd(f(x),g(x))$. Si el $mcd(f(x),g(x)) = 1$, entonces diremos que $f(x)$ y $g(x)$ son primos relativos.
+
+Como con los enteros, también podemos dividir polinomios y obtener un cociente y un resto.
+
+\begin{theorem}[\textbf{Algoritmo de la División}]
+Sea $f(x)$ y $g(x)$ polinomios en $\mathbb{F}_q[x]$ con $g(x)$ no nulo.
+\begin{enumerate}
+	\item Existen dos polinomios únicos $h(x),r(x) \in \mathbb{F}_q[x]$ tales que $f(x) = g(x)h(x) + r(x)$ donde $deg(r(x)) < deg(g(x))$ o $r(x) = 0$.
+	\item Si $f(x) = g(x)h(x) + r(x)$ entonces $mcd(f(x),g(x)) = mcd(g(x),r(x))$.
+\end{enumerate}
+\end{theorem}
+
+Si usamos el Algoritmo de la División recursivamente, podemos encontrar el mcd de dos polinomios cualesquiera, a este método se le conoce como el Algoritmo de Euclides.
+
+\begin{theorem}[\textbf{Algoritmo de Euclides}]
+Sea $f(x)$ y $g(x)$ polinomios en $\mathbb{F}_q[x]$ con $g(x)$ no nulo.
+\begin{enumerate}
+	\item Repetimos la siguiente secuencia hasta que $r_n(x) = 0$ para algún n:
+	
+	$f(x) = g(x)h_1(x) + r_1(x)$ donde $deg(r_1(x)) < deg(g(x))$
+	
+	$g(x) = r_1(x)h_2(x) + r_2(x)$ donde $deg(r_2(x)) < deg(r_1(x))$
+	
+	$r_1(x) = r_2(x)h_3(x) + r_3(x)$ donde $deg(r_3(x)) < deg(r_2(x))$
+	
+	\[ \vdots \]
+	
+	$r_{n-3}(x) = r_{n-2}(x)h_{n-1}(x) + r_{n-1}(x)$ donde $deg(r_{n-1}(x)) < deg(r_{n-2}(x))$
+	
+	$r_{n-2}(x) = r_{n-1}(x)h_{n}(x) + r_{n}(x)$ donde $deg(r_{n}(x)) = 0$
+	
+	donde el $mcd(f(x),g(x)) = cr_{n-1}(x)$, donde $c \in \mathbb{F}_q$ es escogido tal que $cr_{n-1}(x)$ sea mónico.
+	\item Existen polinomios $a(x),b(x) \in \mathbb{F}_q[x]$ tales que 
+	
+	$a(x)f(x) + b(x)g(x) = mcd(f(x),g(x))$.
+		
+\end{enumerate}
+\end{theorem}
+
+\begin{exampleth}
+Vamos a calcular el $mcd(x^8+x^6+x^5+x^3+x^2+1,x^4+x^3+1)$ en el anillo $\mathbb{F}_2[x]$ usando el Algoritmo de Euclides. La parte 1) del algoritmo produce lo siguiente:
+
+	$x^8+x^6+x^5+x^3+x^2+1 = (x^4+x^3+1)(x^4+x^3+x) + (x^2+x+1)$
+	
+	$x^4+x^3+1 = (x^2+x+1)(x^2+1) + x $
+	
+	$x^2+x+1 = x(x+1) + 1$
+	
+	$x = 1x + 0$
+	
+Por tanto, $ 1 = mcd(x,1) = mcd(x^2+x+1,x) = mcd(x^4+x^3+1,x^2+x+1) = mcd(x^8+x^6+x^5+x^3+x^2+1,x^4+x^3+1)$. Ahora encontramos $a(x),b(x)$ tales que $a(x)(x^8+x^6+x^5+x^3+x^2+1) + b(x)(x^4+x^3+1) = 1$ haciendo a la inversa los pasos anteriores. Luego, tenemos que :
+
+$ (x^2+x+1) - x(x+1) = 1$
+
+Ahora, despejamos $x$ de la segunda ecuación y lo sustituimos en la tercera lo que quedaría de la siguiente forma,
+
+$ (x^2+x+1) - [(x^4+x^3+1) - (x^2+x+1)(x^2+1)](x+1) = 1$
+
+$(x^2+x+1)(x^3+x^2+x) + (x^4+x^3+1)(x+1) = 1$
+
+Despejamos $(x^2+x+1)$ de la primera ecuación y lo sustituimos en lo que hemos obtenido en el paso anterior, quedando de la siguiente forma,
+
+$[(x^8+x^6+x^5+x^3+x^2+1) - (x^4+x^3+1)(x^4+x^3+x)](x^3+x^2+x) + (x^4+x^3+1)(x+1) = 1 $
+
+$(x^3+x^2+x)(x^8+x^6+x^5+x^3+x^2+1) + (x^7+x^3+x^2)(x^4+x^3+1) = 1$
+
+Por tanto, tenemos que $a(x) = (x^3+x^2+x)$ y $b(x) = (x^7+x^3+x^2)$.
+\end{exampleth}
+
+\subsection{Elementos primitivos}
+
+Queremos encontrar una forma sencilla de poder sumar y multiplicar los elementos de un cuerpo $\mathbb{F}_q$. Vimos que $\mathbb{F}_q$ es un espacio vectorial sobre $\mathbb{F}_p$ de dimensión m, luego una forma sencilla de sumar es escribir los elementos como m-tuplas de $\mathbb{F}_p$, sin embargo, la multiplicación no es tan sencilla. Por ello, presentamos el siguiente teorema en donde escribiremos los elementos de otra forma que nos facilite la multiplicación.
+
+\begin{theorem}
+\label{th:elementos_primitivos}
+Se verifica lo siguiente:
+\begin{enumerate}
+	\item El grupo $\mathbb{F}_q^*$ es cíclico de orden $q-1$ bajo la multiplicación en $\mathbb{F}_q$.
+	\item Si $\gamma$ es un generador de ese grupo cíclico, entonces
+	\[  \mathbb{F}_q = \{ 0, 1 = \gamma^0, \gamma, \gamma^2 , \cdots, \gamma^{q-2} \}\]
+	
+	donde $\gamma^i = 1$ si y solo si $(q-1) \mid i $.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Por el Teorema Fundamental de Grupos Abelianos Finitos, sabemos que $\mathbb{F}_q^*$ es producto directo de grupos cíclicos de orden $m_1,m_2, \cdots , m_a$, donde $m_i \mid m_{i+1}$ para $1 \leq i < a$ y $m_1m_2 \cdot \cdot \cdot m_a = q-1$. En particular, $\alpha^{m_a} = 1 \thinspace \thinspace \forall \alpha \in \mathbb{F}_q^*$. Luego, el polinomio $x^{m_a} - 1$ tiene al menos $q-1$ raíces, lo cual no es posible a menos que $a = 1$ y $m_a = q-1$. Por tanto, $\mathbb{F}_q^*$ es cíclico, dando lugar a 1).  2) se obtiene como propiedades de los grupos cíclicos.
+\end{proof}
+ 
+\begin{definition}
+Llamaremos \textbf{elemento primitivo} de $\mathbb{F}_q$ a cada generador $\gamma$ de $\mathbb{F}_q^*$
+\end{definition}
+
+Cuando los elementos no nulos de un cuerpo finito son expresados como potencias de $\gamma$, la multiplicación en el cuerpo se puede realizar fácilmente de la siguiente manera, $\gamma^i\gamma^j = \gamma^{i+j} = \gamma^s$, donde $0 \leq s \leq q-2$ y $i+j \equiv s \thinspace ( mod \thinspace q-1)$.
+
+
+
+Sea $\gamma$ un elemento primitivo de $\mathbb{F}_q$, entonces $\gamma^{q-1} = 1$ por definición. Por tanto, $(\gamma^s)^{q-1} = 1$ para $0 \leq s \leq q-2$, mostrando que los elementos de $\mathbb{F}_q^*$ son raíces de $x^{q-1}-1 \in \mathbb{F}_q[x]$ y por tanto, de $x^q-x$. Como $0$ es una raíz de $x^q-x$, los elementos de $\mathbb{F}_q$ son precisamente las raíces de $x^q-x$.
+
+\begin{theorem}
+\label{th:elementos_cuerpo}
+Los elementos de $\mathbb{F}_q$ son precisamente las raíces de $x^q-x$.
+\end{theorem}
+
+
+Para analizar la estructura de un cuerpo, será útil saber el número de elementos primitivos que hay en $\mathbb{F}_q$ y como encontrarlos todos conociendo uno de ellos. Ya que $\mathbb{F}_q^*$ es cíclico, vamos a recordar algunos hechos de los grupos cíclicos finitos.
+
+En cualquier grupo cíclico finito $\mathcal{G}$ de orden n con generador g,  los generadores de $\mathcal{G}$ son precisamente los elementos $g^i$ donde $mcd(i,n) = 1$. Sea $\phi(n)$ el número de enteros i con $ 1 \leq i \leq n$ tal que $mcd(i,n) = 1$. A $\phi$ se le conoce como \textbf{función $\phi$ de Euler} o \textbf{función totiente de Euler}. Así que, $\phi(n)$ generadores de $\mathcal{G}$. El orden de un elemento   $\alpha \in \mathcal{G}$  es el entero positivo más pequeño tal que $\alpha^i = 1$. Un elemento de $\mathcal{G}$ tiene orden $d$ si y solo si $d \mid n$. Además $g^i$ tiene orden $d = n/mcd(i,n)$ y hay tantos $\phi(d)$ elementos de orden $d$. Cuando hablamos de elementos de un cuerpo $\alpha \in \mathbb{F}_q^*$, el orden de $\alpha$ es su orden en el grupo multiplicativo $\mathbb{F}_q^*$. En particular, los elementos primitivos de $\mathbb{F}_q$ son aquellos con orden $q-1$.
+
+
+\begin{theorem}
+Sea $\gamma$ un elemento primitivo de $\mathbb{F}_q$.
+\begin{enumerate}
+	\item Hay $\phi(q-1)$ elementos primitivos en $\mathbb{F}_q$, esos son los elementos $\gamma^i$ donde $mcd(i,q-1)=1$.
+	\item Para cualquier d donde $d \mid (q-1)$, hay $\phi(d)$ elementos en $\mathbb{F}_q$ de orden d y esos son los elementos $\gamma^{(q-1)i/d}$ donde $mcd(i,q) = 1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}
+Un elemento $\tau \in \mathbb{F}_q$ es una \textbf{raíz n-ésima de la unidad} si $\tau^n = 1$ y es una \textbf{raíz n-ésima primitiva de la unidad} si además $\tau^s \neq 1$ para $ 0 < s < n$.
+\end{definition}
+
+\subsection{Construcción de cuerpos finitos}
+
+Un polinomio no contante $f(x) \in \mathbb{F}_q[x]$ es irreducible sobre $\mathbb{F}_q$ si no factoriza en un producto de dos polinomios no constantes en $\mathbb{F}_q[x]$ de menor grado. Los polinomios irreducibles en $\mathbb{F}_q[x]$ toman el rol de los números primos en el anillo de los enteros. Por ejemplo, cada entero mayor que $1$ se puede descomponer de forma única en producto de primos positivos. Un resultado similar ocurre en $\mathbb{F}_q[x]$, por lo que tenemos un \textbf{dominio de factorización única}.
+
+
+\begin{theorem}
+\label{th:factorizar_f}
+Sea $f(x) \in \mathbb{F}_q[x] $ un polinomio no constante. Entonces, 
+\[
+f(x) = p_1(x)^{a_1}p_2(x)^{a_2}\cdot \cdot \cdot p_k(x)^{a_k} ,
+\]
+donde cada $p_i(x)$ es irreducible, los $p_i(x)$s son únicos salvo multiplicación escalar y los $a_i$s son únicos.
+\end{theorem}
+
+Además de ser un dominio de factorización única, es un dominio de ideales principales. Un \textbf{ideal} $\mathcal{I}$ en un anillo conmutativo $\mathcal{R}$ es un subconjunto no vacío del anillo el cual es cerrado para la suma, y para el producto por elementos de $\mathcal{I}$ por un elemento de $\mathcal{R}$ siempre se queda en $\mathcal{I}$. El ideal $\mathcal{I}$ es \textbf{principal} si hay un $ a \in \mathcal{R}$ tal que $\mathcal{I} = \{ ra \mid \thinspace r \in \mathcal{R} \}$. Un dominio de ideales principales es un dominio de integridad en donde cada ideal es principal.
+
+ Para construir un cuerpo con característica $p$, empezamos con un polinomio $f(x) \in \mathbb{F}_p[x]$ que sea irreducible en $\mathbb{F}_p$. Supongamos que $f(x)$ es de grado $m$. Usando el Algoritmo de Euclides podemos probar que el anillo cociente $ \mathbb{F}_p[x]/(f(x))$ es un cuerpo y por tanto, $\mathbb{F}_q$ es un cuerpo finito con $q = p^m$ elementos. 
+ 
+ Cada elemento del anillo cociente es una clase de equivalencia $g(x)+f(x)$, donde $g(x)$ está determinado por un grado a lo sumo $m-1$. Podemos comprimir la notación escribiendo las clases como un vector en $\mathbb{F}_p^m$ con la siguiente correspondencia : 
+ \[
+ g_{m-1}x^{m-1} + g_{m-2}x^{m-2} + \cdots + g_1x + g_0 + (f(x)) \Leftrightarrow g_{m-1}g_{m-2}\cdots g_1g_0 
+ \]
+ 
+Con esta notación podemos sumar usando la operación de adición ordinario de los vectores.
+
+Para multiplicar $g_1 + (f(x)) \cdot g_2 + (f(x))$, primero usamos el Algoritmo de la División, obteniendo $g_1(x)g_2(x) = f(x)h(x)+r(x)$ con $deg(r(x)) \leq m-1$ o $r(x) = 0$. Entonces $(g_1 + (f(x)))(g_2 + (f(x))) = r(x) + (f(x))$. La notación es un poco engorrosa así que la vamos a simplificar reemplazando $x$ por $\alpha$ tal que $f(\alpha) = 0$. Así tenemos la correspondencia anterior de la siguiente manera :
+
+\[
+g_{m-1}g_{m-2}\cdots g_1g_0  \Leftrightarrow g_{m-1}\alpha^{m-1} + g_{m-2}\alpha^{m-2} + \cdots + g_1\alpha + g_0 
+ \]
+
+Así que para multiplicar en $\mathbb{F}_q$, simplemente multiplicamos polinomios en $\alpha$ de manera ordinaria y usamos que $f(\alpha) = 0$ para reducir las potencias de $\alpha$ mayores que $m-1$ a polinomios en $\alpha$ con menor grado que $m$.
+
+\begin{exampleth}
+El polinomio $f(x) = x^3+x^2+1$ es irreducible en $\mathbb{F}_2$, si fuese reducible habría un factor de grado 1 que además sería raíz en $\mathbb{F}_2$ y no lo hay. Así que $\mathbb{F}_8 = \mathbb{F}_2/(f(x))$ y usando ambas correspondencias obtenemos que los elementos de $\mathbb{F}_8$ son los que se encuentran en la Tabla \ref{ta:uno}.
+
+\begin{table}
+\begin{tabular}{ c | c | c | c}
+	Clases & Vectores & Polinomios en $\alpha$ & Potencias de $\alpha$ \\ \hline
+	$0+(f(x))$ & 000 & 0 & 0 \\
+	$1+(f(x))$ & 001 & 1 & $1=\alpha^0$ \\ 
+	$x+(f(x))$ & 010 & $\alpha$ & $\alpha$ \\
+	$x+1 +(f(x))$ & 011 & $\alpha +1$ & $\alpha^5$ \\
+	$x^2+(f(x))$ & 100 & $\alpha^2$ & $\alpha^2$ \\
+	$x^2+1 +(f(x))$ & 101 & $\alpha^2+1$ & $\alpha^3$ \\
+	$x^2+x +(f(x))$ & 110 & $\alpha^2+\alpha$ & $\alpha^6$ \\ 
+	$x^2+x+1 +(f(x))$ & 111 & $\alpha^2+\alpha+1$ & $\alpha^4$
+
+\end{tabular}
+\caption{\label{ta:uno} Elementos de $\mathbb{F}_8$}
+\end{table}
+	
+	Las potencias de $\alpha$ las hemos obtenido de $f(\alpha) = \alpha^3+\alpha^2+1 = 0$ lo que implica que $\alpha^3 = \alpha^2 + 1$, así $\alpha^4 = \alpha\alpha^3 = \alpha(\alpha^2 +1) = \alpha^3+\alpha = \alpha^2 +\alpha + 1$, $\alpha^5 = \alpha\alpha^4 = \alpha(\alpha^2 +\alpha + 1) = \alpha^3+\alpha^2 + \alpha = \alpha^2 + 1 + \alpha^2 +\alpha = \alpha + 1$ y $\alpha^6 = \alpha \alpha^5 = \alpha(\alpha + 1) = \alpha^2 + \alpha$.
+
+Luego, si queremos sumar $x^2+(f(x))$ y $x^2+1+(f(x))$ eso nos da $1+(f(x))$ que corresponde a sumar $100$ y $101$ que da $001$ en $\mathbb{F}_2^3$.
+
+Si ahora queremos multiplicar $x^2+x +(f(x))$ y $x^2+x+1+(f(x))$, multiplicamos $\alpha^6 \cdot \alpha^4  = \alpha^3 = \alpha^2 + 1$ lo que nos da $x^2+1 + (f(x))$.
+
+\end{exampleth}
+
+Describimos la construcción diciendo que $\mathbb{F}_q$ se obtiene a partir de $\mathbb{F}_p$ ``adjuntando'' una raíz $\alpha$ de $f(x)$ a $\mathbb{F}_p$. Esta raíz $\alpha$ normalmente viene dada por $\alpha = x + (f(x))$ en el anillo cociente $\mathbb{F}_p[x]/(f(x))$ y por tanto, $g(x) + (f(x)) = g(\alpha)$ y $f(\alpha) = f(x + (f(x))) = f(x) + (f(x)) = 0 + (f(x))$. 
+
+En general, $\alpha$ no tiene que ser un elemento primitivo. Decimos que un polinomio irreducible en $\mathbb{F}_p$ con grado $m$ es primitivo, si tiene una raíz que es un elemento primitivo de $\mathbb{F}_q = \mathbb{F}_{p^m}$. Idealmente, queremos empezar con un polinomio primitivo para construir nuestro cuerpo, pero no es un requisito. Además, el polinomio con el que empezamos si lo multiplicamos por una constante para hacerlo mónico, no influye en el ideal generado por el polinomio o el anillo cociente. Tenemos el siguiente resultado:
+
+\begin{theorem}
+Para cualquier primo p y cualquier entero positivo m, existe un cuerpo finito, único salvo isomorfismos, tal que tiene $q = p^m$ elementos. 
+\end{theorem}
+
+\subsection{Automorfismos}
+
+
+Los automorfismos de $\mathbb{F}_q$ forma un grupo con la composición.
+
+\begin{definition}
+Un \textbf{automorfismo} $\sigma$ de $\mathbb{F}_q$ es una aplicación biyectiva $\sigma : \mathbb{F}_q \rightarrow \mathbb{F}_q$ tal que $\sigma(\alpha+\beta) = \sigma(\alpha) + \sigma( \beta)$ y $\sigma(\alpha \beta) =\sigma(\alpha)\sigma(\beta) \thinspace \forall \alpha , \beta \in \mathbb{F}_q$. 
+
+\end{definition}
+
+
+Definimos $\sigma_p : \mathbb{F}_q \rightarrow \mathbb{F}_q$ como 
+\[ 
+\sigma_p (\alpha) = \alpha^p \thinspace \forall \alpha \in \mathbb{F}_q
+\]
+
+Obviamente, $\sigma_p(\alpha \beta) =\sigma_p(\alpha)\sigma_p(\beta)$ y $\sigma_p(\alpha+\beta) = \sigma_p(\alpha) + \sigma_p( \beta)$. Como $\sigma_p$ tiene núcleo $\{ 0 \}$, $\sigma_p$ es un automorfismo de $\mathbb{F}_q$, al que llamaremos \textbf{automorfismo de Frobenius}. Análogamente, definimos $\sigma_{p^r} (\alpha) = \alpha^{p^r}$.
+
+El grupo de los automorfimos de $\mathbb{F}_q$, denotado por $Gal(\mathbb{F}_q)$, se le llama grupo de Galois de $\mathbb{F}_q$. Con el siguiente teorema vamos a caracterizar ese grupo.
+
+\begin{theorem}
+\begin{enumerate}
+	\item $Gal(\mathbb{F}_q)$ es cíclico de orden $m$ y está generado por el automorfismo de Frobenius $\sigma_p$.
+	\item El subcuerpo primo de $\mathbb{F}_q$ es precisamente el conjunto de elementos de $\mathbb{F}_q$ tal que $\sigma_p(\alpha) = \alpha$.
+	\item El subcuerpo $\mathbb{F}_q$ de $\mathbb{F}_{q^t}$ es precisamente el conjunto de elementos de $\mathbb{F}_{q^t}$ tal que $\sigma_p(\alpha) = \alpha$.
+\end{enumerate}
+\end{theorem}
+
+Usamos $\sigma_p$ para denotar al automorfismo de Frobenius de cualquier cuerpo con característica $p$. Si $\mathbb{E}$ y $\mathbb{F}$ son cuerpos de característica $p$ con $\mathbb{E}$ siendo un cuerpo de extensión de $\mathbb{F}$, entonces el automorfismo de Frobenius de $\mathbb{E}$ restringido a $\mathbb{F}$ es el automorfismo de Frobenius de $\mathbb{F}$ 
+
+
+\begin{definition}
+Un elemento $\alpha \in \mathbb{F}$ es \textbf{fijo} si $\sigma(\alpha) = \alpha$ por el automorfismo $\sigma$ de $\mathbb{F}$.
+\end{definition}
+
+Sea $ r \mid m$. Entonces $\sigma_{p^r}$ genera un subgrupo cíclico de $Gal(\mathbb{F}_q)$ de orden $m/r$
+
+
+\subsection{Polinomios mínimos}
+
+Sea $\mathbb{E}$ un cuerpo de extensión finito de $\mathbb{F}_q$, entonces $\mathbb{E}$ es un espacio vectorial sobre $\mathbb{F}_q$ y por tanto, $\mathbb{E} = \mathbb{F}_{q^t}$ para algún entero positivo $t$. Cada elemento $\alpha$ de $\mathbb{E}$ es una raíz del polinomio $x^{q^t}-x$ como dijimos anteriormente. Por consiguiente, hay un polinomio mónico $\mathcal{M}_\alpha(x)$ en $\mathbb{F}_q[x]$ de menor grado el cual tiene a $\alpha$ como raíz. A este polinomio lo llamaremos \textbf{polinomio mínimo} de $\alpha$ sobre $\mathbb{F}_q$. Veamos unas cuantas propiedades sobre los polinomios mínimos. 
+
+\begin{theorem}
+\label{th:prop_pol}
+Sea $\mathbb{F}_{q^t}$ un cuerpo de extensión de $\mathbb{F}_q$ y sea $\alpha$ un elemento de $\mathbb{F}_{q^t}$ con polinomio mínimo $\mathcal{M}_\alpha(x)$ en $\mathbb{F}_q[x]$. Tenemos lo siguiente:
+\begin{enumerate}
+	\item $\mathcal{M}_\alpha(x)$ es irreducible sobre $\mathbb{F}_q$.
+	\item Si $g(x)$ es cualquier polinomio en $\mathbb{F}_q[x]$  satisfaciendo que $g(\alpha) = 0$, entonces $\mathcal{M}_\alpha(x) \mid g(x)$.
+	\item $\mathcal{M}_\alpha(x)$ es único, es decir, solo hay un polinomio mónico en $\mathbb{F}_q[x]$ de menor grado que tiene a $\alpha$ como raíz.
+\end{enumerate}
+\end{theorem}
+
+Si empezamos con un polinomio irreducible $f(x)$ en $\mathbb{F}_q$ de grado $r$, podemos adjuntar una raíz de $f(x)$ a $\mathbb{F}_q$ para obtener el cuerpo $\mathbb{F}_{q^r}$, en el cual, todas sus raíces se quedan en $\mathbb{F}_{q^r}$ 
+
+\begin{theorem}
+\label{th:raices_minimo}
+Sea $f(x)$ un polinomio mónico irreducible en $\mathbb{F}_q$ con grado r. Entonces :
+\begin{enumerate}
+	\item Todas las raíces de $f(x)$ se encuentran en $\mathbb{F}_{q^r}$ y en cualquier cuerpo que contenga a $\mathbb{F}_q$ junto a una raíz de $f(x)$.
+	\item $f(x) = \prod_{i=1}^r (x - \alpha^i)$, donde $\alpha^i \in \mathbb{F}_{q^r}$ para $ 1 \leq i \leq r$.
+	\item $f(x) \mid x^{q^r}-x$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Sea $\alpha$ una raíz de $f(x)$ que adjuntamos a $\mathbb{F}_q$ para formar el cuerpo $\mathbb{E}_\alpha$ con $q^r$ elementos. Si $\beta$ es una raíz de $f(x)$, que no está en $\mathbb{E}_\alpha$, es raíz de algún factor irreducible en $\mathbb{E}_\alpha$ de $f(x)$. Adjuntando $\beta$ a $\mathbb{E}_\alpha$ formamos un cuerpo de extensión $\mathbb{E}$ de $\mathbb{E}_\alpha$. Sin embargo, dentro de $\mathbb{E}$, hay un subcuerpo $\mathbb{E}_\beta$ obtenido al adjuntar $\beta$ a $\mathbb{F}_q$. $\mathbb{E}_\beta$ debe tener $q^r$ elemenetos ya que $f(x)$ es un irreducible de grado $r$ en $\mathbb{F}_q$
+. Como $\mathbb{E}_\alpha$ y $\mathbb{E}_\beta$ son subcuerpos de $\mathbb{E}$ del mismo tamaño, entonces $\mathbb{E}_\alpha = \mathbb{E}_\beta$, probando que todas las raíces de $f(x)$ se encuentran en $\mathbb{F}_{q^r}$. Luego, como cualquier cuerpo que contenga a $\mathbb{F}_q$ y una raíz de $f(x)$ contiene a $\mathbb{F}_{q^r}$, queda demostrado 1). Para 2), como las $\alpha_i$ son las raíces de $f(x)$ es simplemente su descomposición en factores. Para el apartado 3) lo sacamos a partir del 2) ya que $x^{q^r}-x = \prod_{\alpha \in \mathbb{F}_{q^r}} (x - \alpha)$ por el Teorema \ref{th:elementos_cuerpo}
+\end{proof}
+ 
+
+En particular, este teorema se puede aplicar a polinomios mínimos ya que estos polinomios son mónicos irreducibles.
+
+\begin{lemma}
+\label{le:divisible}
+Sea $s = p^r$ y $q = p^m$, entonces $(x^s-x) \mid (x^q-x)$ si y solo si $r \mid m $.
+\end{lemma}
+
+\begin{theorem}
+Sea $\mathbb{F}_{q^t}$ una extensión de $\mathbb{F}_{q}$ y sea $\alpha$ un elemento de $\mathbb{F}_{q^t}$ con polinomio mínimo $\mathcal{M}_\alpha(x)$ en $\mathbb{F}_q[x]$. Tenemos lo siguiente:
+\begin{enumerate}
+	\item $\mathcal{M}_\alpha(x) \mid (x^q-x)$.
+	\item $\mathcal{M}_\alpha(x)$ tiene raíces distintas todas en $\mathbb{F}_{q^t}$.
+	\item El grado de $\mathcal{M}_\alpha(x)$ divide a t.
+	\item  $x^{q^t} - x = \prod_\alpha \mathcal{M}_\alpha(x)$, donde $\alpha$ recorre un subconjunto de $\mathbb{F}_{q^t}$ que enumera los polinomios mínimos de todos los elementos de $\mathbb{F}_{q^t}$ exactamente una vez.
+	\item $x^{q^t}-x = \prod_f f(x)$, donde f recorre todos los polinomios mónicos irreducibles de $\mathbb{F}_q$ cuyos grados dividen a t.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+El apartado 1) sale del Teorema \ref{th:prop_pol}, ya que $\alpha^{q^t}-\alpha = 0$ por el Teorema \ref{th:elementos_cuerpo}. Como las raíces de $x^{q^t}-x$ son los $q^t$ elementos de $\mathbb{F}_{q^t}$, $x^{q^t}-x$ tiene raíces distintas, luego 1) y por el Teorema \ref{th:raices_minimo} se tiene 2). Por el Teorema \ref{th:factorizar_f}, $x^{q^t}-x = \prod_{i=1}^n p_i(x)$ , donde $p_i(x)$ es irreducible en $\mathbb{F}_{q}$.Como $x^{q^t}-x$ tiene raíces distintas, los factores $p_i(x)$ son distintos. Si los escalamos, podemos asumir que cada uno es mónico ya que $x^{q^t}-x$ es mónico. Así que $p_i(x) = \mathcal{M}_\alpha(x)$ para cualquier $\alpha \in \mathbb{F}_{q^t}$ con $p_i(\alpha) = 0$. Por tanto, tenemos 4). Pero si $\mathcal{M}_\alpha(x)$ tiene grado $r$, adjuntando $\alpha$ a $\mathbb{F}_{q}$ obtenemos el subcuerpo $\mathbb{F}_{q^r} = \mathbb{F}_{p^{mr} }$ o $\mathbb{F}_{q^t} = \mathbb{F}_{p^{mt}}$ lo que implica que $ mr \mid mt$ y por tanto 3). El apartado 5) se obtiene del 4) si demostramos que cada polinomio mónico irreducible de $\mathbb{F}_{q}$ de grado $r$ que divide a $t$ es un factor de $x^{q^t}-x$. Pero $f(x) \mid (x^{q^r}-x)$ por el Teorema \ref{th:raices_minimo}. Y como $mr \mid mt$, $(x^{q^r}-x) | (x^{q^t}-x)$ por el Lema \ref{le:divisible}.
+
+\end{proof}
+
+Dos elementos de $\mathbb{F}_{q^t}$ que tienen el mismo polinomio mínimo en $\mathbb{F}_{q}[x]$ se les llama \textbf{conjugados} en $\mathbb{F}_{q}$. Será importante encontrar todos los conjugados de $\alpha \in \mathbb{F}_{q}$, ya que, estos son todas las raíces de $\mathcal{M}_\alpha(x)$. Podemos encontrarlos con el siguiente teorema.
+
+\begin{theorem}
+Sea $f(x)$ un polinomio en $\mathbb{F}_{q}[x]$ y sea $\alpha$ una raíz de $f(x)$ en una extensión $\mathbb{F}_{q^t}$. Entonces:
+\begin{enumerate}
+	\item $f(x^q) = f(x)^q$.
+	\item $\alpha^q$ es también una raíz de $f(x)$ en $\mathbb{F}_{q}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Sea $f(x) = \sum_{i=0}^n a_ix^i$. Como $q = p^m$, donde $p$ es la característica de $\mathbb{F}_{q}$, $f(x)^q = \sum_{i=0}^n a_i^qx^{iq}$. Sin embargo, $a_i^q = a_i$, porque $a_i \in \mathbb{F}_{q}$ y los elementos de $\mathbb{F}_{q}$ son raíces de $x^q-x$ por el Teorema \ref{th:elementos_cuerpo}, hemos probado 1). En particular, $f(\alpha^q) = f(\alpha)^q = 0 $ lo que implica 2). 
+\end{proof}
+
+Si repetimos este teorema vemos que $\alpha,\alpha^q,\alpha^{q^2},\cdots $ son todas las raíces de $\mathcal{M}_\alpha(x)$. Este proceso termina tras el término $r$ ya que $\alpha^{q^r} = \alpha$.
+

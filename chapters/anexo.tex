@@ -1,0 +1,245 @@
+\chapter[Implementación en SageMath de los códigos Reed-Solomon torcidos y el Algoritmo de Sugiyama]{Implementación en SageMath de los códigos Reed-Solomon torcidos y el Algoritmo de Sugiyama}
+\label{annex:sage-Reed-Solomon}
+
+El código desarrollado lo podemos encontrar en
+
+\begin{center}
+    \url{https://github.com/vestbot/Codigo-TFG}.
+\end{center}
+
+\section{Funciones necesarias para implementar códigos torcidos}
+
+%\begin{minted}[breaklines=true,breakanywhere=true]{r}
+
+\begin{verbatim}
+def right_quo_rem(a,b): # a = b*q+r
+    q,r = a.left_quo_rem(b)
+    return q,r
+
+def left_quo_rem(a,b): #a = q*b+r
+    q,r = a.right_quo_rem(b)
+    return q,r
+
+
+def left_gcd(a,b): 
+    mayor = a
+    menor = b
+    if b.degree() > a.degree():
+        menor = a
+        mayor = b
+    quo, rem = right_quo_rem(mayor,menor)
+    while rem != R(0):
+        mayor = menor
+        menor = rem
+        quo, rem = right_quo_rem(mayor,menor)
+    return menor
+
+
+def right_gcd(a,b): 
+    mayor = a
+    menor = b
+    if b.degree() > a.degree():
+        menor = a
+        mayor = b
+    quo, rem = left_quo_rem(mayor,menor)
+    while rem != R(0):
+        mayor = menor
+        menor = rem
+        quo, rem = left_quo_rem(mayor,menor)
+    return menor
+
+def right_lcm(a,b):
+    f0 = a
+    f1 = b
+    v0,v1=F(0),F(1)
+    qq,rr = right_quo_rem(f0,f1)
+    f0=f1
+    f1=rr
+    v=-qq
+    v0=v1
+    v1=v
+    while f1!=0:
+        qq,rr = right_quo_rem(f0,f1)
+        f0=f1
+        f1=rr
+        v=v0 - v1 * qq
+        v0=v1
+        v1=v
+        
+    output= b * v1
+    return output
+
+
+def left_lcm(a,b):
+    f0 = a
+    f1 = b
+    v0,v1=F(0),F(1)
+    qq,rr = left_quo_rem(f0,f1)
+    f0=f1
+    f1=rr
+    v=-qq
+    v0=v1
+    v1=v
+    while f1!=0:
+        qq,rr = left_quo_rem(f0,f1)
+        f0=f1
+        f1=rr
+        v=v0 - qq * v1
+        v0=v1
+        v1=v
+    output= -v1 * b
+    output = output.leading_coefficient()^(-1)*output
+    return output
+
+def generalized_right_lcm(ele):
+    output = ele[0]
+    aux = F(0)
+    for ii in range(1,len(ele)):
+        aux = right_lcm(output,ele[ii])
+        output = aux
+    return output
+
+def generalized_left_lcm(ele):
+    output = ele[0]
+    aux = F(0)
+    for ii in range(1,len(ele)):
+        aux = left_lcm(output,ele[ii])
+        output = aux
+    return output
+
+def norma(i,a,sigma):
+    norma_i = 1
+    #Caso base
+    if i == 0:
+        return norma_i 
+    norma_i = norma(i-1,a,sigma)*(sigma^(i-1))(a)
+    return norma_i
+
+def REEA(f,g):
+    r = []
+    r.append(f) ; r.append(g)
+    u = []
+    u.append(1) ; u.append(0)
+    v = []
+    v.append(0) ; v.append(1)
+    q = 0; rem = 0
+    i = 1
+    while r[i] != 0:
+        q,rem = right_quo_rem(r[i-1],r[i])
+        r.append(rem)
+        u.append(u[i-1] - u[i]*q)
+        v.append(v[i-1] - v[i]*q)
+        i = i+1  
+    return u,v,r
+
+\end{verbatim}   
+%\end{minted}
+
+\section{Generar códigos Reed-Solomon torcidos y Algoritmo de Sugiyama}
+
+\begin{verbatim}
+def generar_codigoRS_torcido(alpha,delta,sigma):
+    beta = sigma(alpha)*alpha^(-1)
+
+    v = [P(x-(sigma^i)(beta)) for i in range(0,delta-1)] 
+    generador = P(generalized_left_lcm(v))
+    return generador
+
+def algoritmo_sugiyama(y,delta,sigma,alpha):
+    beta =  sigma(alpha)*alpha^(-1)
+    t = floor((delta-1)/2) # número de errores que podemos corregir
+    y_j = y.coefficients(sparse=False)
+
+    n = y.degree()
+    pol_S = 0
+    for i in range(0,2*t): #calculo de los síndromes
+        S_i = 0
+        auxil = 0
+        for j in range(0,n+1):
+            aux = 0
+            aux = y_j[j]*norma(j,(sigma^i)(beta),sigma)
+            S_i = S_i + aux
+        auxil = (sigma^i)(alpha)*S_i*x^i 
+        pol_S = pol_S + auxil # polinomio sindrome
+
+    
+    if pol_S == 0:
+        return y
+    # REEA para obtener el polinomio localizador
+    # corresponde a la posicion que deg(r_i) < t
+    u,v,r = REEA(x^(2*t),pol_S)
+    
+    
+    # Calculamos el j que satsiface deg(r_i) < t
+    j = 0
+
+    while r[j].degree() >= t: 
+        j = j+1
+    
+    
+    pos_div=[P(x-(sigma^(i-1))(beta^(-1))) for i in range(n+1)]
+    pos = []
+
+    for i in range(n+1): # si es una raiz a izquierda añadimos la posicion
+        q,m = right_quo_rem(v[j],pos_div[i])
+        if m == 0 :
+            pos.append(i)
+    
+    if v[j].degree() > len(pos):
+        return 'key equation failure'
+    p_j = []
+    pol_coefs = []
+    for i in pos:
+        quotient,rem = right_quo_rem(v[j],1-(sigma^i)(beta)*x)
+        p_j = quotient
+        pol_coefs.append((sigma^i)(alpha)*p_j)
+    
+    
+    # Resolvemos el sistema lineal
+    A = matrix(F,r[j].degree()+1)
+
+    for i in range(r[j].degree()+1):
+        for k in range(r[j].degree()+1):
+            A[k,i] = pol_coefs[i].coefficients(sparse=False)[k]
+
+    VV  = VectorSpace(F,r[j].degree()+1)
+    b = VV(r[j].coefficients(sparse=False))
+
+    solution = A.solve_right(b)
+    
+    # Calculamos el error
+    e = 0
+    for i in range(len(pos)):
+        e = e + solution[i]*x^(pos[i])
+    return y-e
+\end{verbatim}
+
+\section{Funciones para resolver fallo en la ecuación clave}
+
+\begin{verbatim}
+def encuentra_posicion(pol,pos,sigma):
+    pol_f = P(pol)
+    grado_e = pol_f.degree()
+    for i in range(n+1):
+        if i not in pos:
+            pol_f = right_lcm(pol_f,P(1-(sigma^i)(beta)*x))
+            if pol_f.degree() == grado_e:
+                return i
+            else:
+                grado_e = grado_e +1
+                
+def ecuacion_clave_falla(v,r,pos,sigma,alpha,n):
+    beta =  sigma(alpha)*alpha^(-1)
+    pol_f = P(v)
+    while pol_f.degree() > len(pos):
+        posicion = encuentra_posicion(pol_f,pos)
+        pol_f = right_lcm(pol_f,P(1-(sigma^(posicion))(beta)*x))
+        for i in range(n+1):
+            if i not in pos:
+                cociente,resto = right_quo_rem(pol_f,P(1-(sigma^(i))(beta)*x))
+                if resto == 0:
+                    pos.append(i)
+    pol_g = right_quo_rem(pol_f,v[j])[0]
+    return f,r*g
+
+\end{verbatim}

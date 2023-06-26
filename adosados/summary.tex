@@ -1,0 +1,55 @@
+
+
+\chapter*{Summary}
+
+
+Coding theory is a discipline that has been increasingly developed in recent years in both mathematics and computer science and is particularly important in the field of communication. Its aim is to be able to correct possible errors that occur during the transmission of a message over a noisy channel. For example, if we have sent a robot to the planet Mars and we want to receive images before its battery runs out, this is a delicate matter, because if these images are influenced by electromagnetic waves on the way, they could be distorted and would be useless, which would cause the mission to fail.
+
+In order to detect and correct errors, codes have been developed together with algorithms for encoding and decoding them. In this proyect, the basic theory of linear codes has been studied, in particular, cyclic codes, since the elements of this type of codes can be expressed polynomially, which makes it easier to work with them. In addition, an important family of codes will be studied, such as the BCH codes and the Reed-Solomon codes, since, due to their construction, codes with a high minimum distance will be obtained, which will result in a better error correction capacity. We will also see the Sugiyama Algorithm that after receiving a message with errors we will be able to obtain the original. 
+
+All this theory will also be developed for skew polynomials, we will study the ring of skew polynomials with its definition and properties since we work in a non-commutative environment, therefore, we have divisions on both sides, non-unique factorization and a new way of evaluating polynomials. Thus, with this ring we will define the concept of skew codes and we will study a family of codes which are the skew Reed-Solomon codes that will also have a high minimum weight. Finally, we will study the Sugiyama Algorithm for these types of codes which has a slight change to the one studied in previous sections since in certain cases it is not able to calculate the error, therefore, we will also study what to do in case this happens.
+
+Finally, this algorithm will be implemented for skew Reed-Solomon codes in addition to the case where we cannot find the error to verify and illustrate that this theory works correctly and the power it has.
+
+\spacedlowsmallcaps{Introduction}
+
+When Claude Shannon published ``A mathematical theory of communication"\ \cite{Shannon} in $1948$, information theory began to emerge. In this publication, Shannon explains that reliable communication is possible in a communication system if we do not exceed the capacity of the channel. In addition, the article gives as an example the correctness of a Hamming code. A couple of years later, in $1950$, Richard Hamming published ``Error detecting and error correcting codes"\ \cite{Hamming} and coding theory began to emerge. The motivation for this publication is that in computers, a single error is a complete failure of the task performed, in the sense that if it is detected, no further computation can be performed until the error is located and corrected, while if it escapes detection then it invalidates all subsequent operations performed. Therefore, Hamming discusses the importance of detecting and correcting errors that can occur when working with large numbers and complex problems as well as how to construct special minimum redundancy codes that solve this problem.
+
+With coding theory we want to achieve the secure sending of messages, being able to encode them before sending them and decode them on receipt, so the problem lies in making sure that the message received is the same as the one sent. Shannon’s Theorem guarantees that our
+hopes will be fulfilled a certain percentage of the time. With the right encoding based on the characteristics of the channel, this percentage can be made as high as we desire, although not $100$\%. Sometimes it is not possible to ask for retransmission of messages and that is why self-correcting codes are so useful and necessary. The proof of Shannon’s Theorem is probabilistic and nonconstructive. In other words, no specific codes were produced in the proof that give the desired accuracy for a given channel. Shannon’s Theorem only guarantees their existence. The goal of research in coding theory is to produce codes that fulfill the conditions of Shannon’s Theorem. \cite{Huffman_Pless_2010}
+
+
+
+\spacedlowsmallcaps{Structure}
+
+In this document we can see several differentiated parts:
+
+\begin{enumerate}
+    \item Bases and necessary tools.
+    \item Basic theory of linear and cyclic codes.
+    \item Skew polynomial ring.
+    \item Skew codes and Sugiyama Algorithm.
+    \item Discussion and future work.
+\end{enumerate}
+
+\spacedlowsmallcaps{Bases and necessary tools}
+
+This chapter serves as an introduction to the tools and concepts that will be used frequently throughout the rest of the sections. It includes the theory that will be necessary for the development of the project. We will introduce the concept of a finite field as this is the algebraic structure on which we will be working. Thus, we will also introduce the ring of polynomials over a finite field as well as its properties. 
+
+\spacedlowsmallcaps{Basic theory of linear and cyclic codes}
+
+In the following, linear and cyclic codes and their properties are presented and explained. We analyse the necessary and most relevant characteristics for good error detection and correction, such as finding a coordinate for the minimum distance of a code. Thus, we will describe a family of cyclic codes that have a well-known bound, which is the BCH bound. In addition, the decoding of this type of codes is performed.
+
+\spacedlowsmallcaps{Skew polynomial ring}
+
+We present the ring of skew polynomials with coefficients in a field, whose difference with the ring of usual polynomials lies in the use of an automorphism of the field that transforms the multiplication and is no longer commutative. Differences are therefore observed both in the factorization of polynomials, which is not unique and in their evaluation. A study of all these properties is carried out.
+
+\spacedlowsmallcaps{Skew codes and Sugiyama Algorithm}
+
+ We will use the theory seen in the previous sections and apply it to obtain a new type of codes which are the skew codes. We will go step by step through the construction of these codes with representative examples. In addition, we will also define the family of skew Reed-Solomon codes and their slight difference in construction with the other skew codes. Finally, a decoding algorithm is studied, the Sugiyama algorithm for these codes and how errors can be corrected in the sending of messages, we will explain it step by step as well as an implementation of this, in addition this algorithm does not always work so it is also studied what to do in case of failure.
+
+\spacedlowsmallcaps{Discussion and future work}
+
+Lastly,aspects of the project will be discussed, as well as the objectives achieved and improvements to this project and additionals works to deepen on this field.
+
+\textbf{Keywords:} coding theory,cyclic codes, skew codes, Reed-Solomon, Sugiyama Algorithm, decoding, decoding, skew polynomial, error correcting. 

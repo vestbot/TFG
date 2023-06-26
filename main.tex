@@ -20,7 +20,7 @@
 %   pdflatex --shell-escape main.tex
 
 % Opciones del tipo de documento
-\documentclass[oneside,openright,titlepage,numbers=noenddot,openany,headinclude,footinclude=true,
+\documentclass[oneside,openright,titlepage,numbers=noenddot,headinclude,footinclude=true,
 cleardoublepage=empty,abstractoff,BCOR=5mm,paper=a4,fontsize=12pt,main=spanish]{scrreprt}
 
 % Paquetes de latex que se cargan al inicio. Cubren la entrada de
@@ -90,22 +90,35 @@ manychapters,pdfspacing]{classicthesis}
 \include{imports/titlepage}
 \usepackage{wallpaper}
 \usepackage[main=spanish]{babel}
-
+\usepackage[ruled]{algorithm2e}
 
 \begin{document}
-
+\renewcommand{\tablename}{Tabla}
 \ThisULCornerWallPaper{1}{ugrA4.pdf}
 \maketitle
+
+\input{adosados/autoria}
+\input{adosados/agradecimientos}
+\input{adosados/resumen}
+\input{adosados/summary}
 \tableofcontents
 
 \phantomsection
-\input{chapters/capitulo_1}
+
+\input{adosados/introduccion}
+\input{chapters/chapter_0}
+\input{chapters/capitulo1_nuevo}
+\input{chapters/capitulo_2}
+\input{chapters/capitulo_3}
+\input{chapters/capitulo_4}
 
 
 % ----------------------- %
 % BIBLIOGRAFÍA
 % ----------------------- %
 
+\appendix
+\input{chapters/anexo}
 % Estilo de cita.
 %\usepackage{natbib} YA SE IMPORTA EN OTRO PUNTO, NO HACE FALTA PONERLO AQUI
 % FUENTE CUSTOM

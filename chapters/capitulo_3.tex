@@ -1,0 +1,670 @@
+% Capitulo 3
+% Introduccion a los códigos cíclicos torcidos
+% Códigos Reed-Solomon Torcidos y Algoritmo de Sugiyama.
+
+\chapter{Códigos torcidos}
+
+El desarrollo de este capítulo ha sido basado en los artículos \cite{GLN2016}, \cite{GLN2017}, \cite{boucher2007skew} y \cite{chaussade2009skew}
+
+\section{Introducción a los códigos torcidos}
+
+Como hemos visto en el desarrollo de los códigos cíclicos, éstos se pueden ver como los ideales del anillo cociente $\mathcal{R}_n = \mathbb{F}_q[x]/(x^n-1)$ y los códigos son generados por los factores de $x^n-1$. Toda esta teoría la podemos desarrollar también en el anillo de los polinomios torcidos $F[x;\sigma]$ donde $F$ es un cuerpo finito y $\sigma$ es un automorfismo de $F$ en $F$. Además, el grupo de los automorfismos es isomorfo a $PGL(2,\mathbb{F})$, el grupo lineal proyectivo de las matrices $2 \times 2$ , así que es un grupo finito.
+
+Queremos definir a los códigos torcidos como un subespacio vectorial asociado al anillo cociente $\mathcal{R}=\mathbb{F}[x;\sigma]/<x^n-1>$, el cual es una anillo si y solo si $x^n-1$ está en el centro. Los elementos que pertenecen al centro generan ideales biláteros y si $ord(\sigma)$ divide a $n$ entonces $x^n-1$ pertenece al centro. Por tanto, como ocurría en el caso conmutativo, este tipo de códigos son también generados por los factores de $x^n-1$ ya que definen ideales principales por la izquierda.
+
+Para entender los códigos debemos explicar la estructura de $\mathcal{R}$. Vamos a ver que este anillo es isomorfo al anillo de las matrices con coeficientes en el centro de $\mathbb{F}[x;\sigma]$ si $n = ord(\sigma)$, por tanto, a partir de ahora suponemos que $n = ord(\sigma)$. El centro de $\mathbb{F}[x;\sigma]$  es justamente el anillo de los polinomios $\mathbb{F}^{\sigma}[x^n]$ donde $\mathbb{F}^{\sigma}$ denota al subcuerpo invariante, es decir, son los elementos $a \in \mathbb{F}^{\sigma} $ tal que $\sigma(a) = a$.
+
+\begin{theorem}
+\label{th:isomorfismo_cuerpo_matrices}
+El anillo $\mathcal{R}$ es isomorfo al anillo de las matrices $\mathcal{M}_n(\mathbb{F}^{\sigma})$. Como consecuencia, por cada $ k \leq n$, existe un código torcido de dimensión $k$.    
+\end{theorem}
+
+\begin{proof}
+El polinomio $x^n-1$ es irreducible en $\mathbb{F}^{\sigma}[x^n]$ ya que $n = ord(\sigma)$, luego $<x^n-1>$ es un ideal bilátero de $R = \mathbb{F}[x;\sigma]$ . Por tanto,$\mathcal{R}$ es un anillo artiniano simple y por el Teorema de Artin-Wedderburn, obtenemos que $\mathcal{R} \cong \mathcal{M}_n(D)$, donde $D$ es una álgebra de división formado por el conjunto de los endomorfismos de un módulo simple a izquierda $M$ de $\mathcal{R}$.
+
+Como $x-1$ es un factor irreducible a derecha de $x^n-1$ en $R$, tomamos $M=R/R(x-1)$. El anillo de los endomorfismos de $M$ es isomorfo a $\mathbb{F}^{\sigma}$.De hecho, podemos dar un isomorfismo de la siguiente manera: dado un endomorfismo $\mathcal{R}$-lineal $f:M \rightarrow M$ como $f(1+R(x-1)) = \phi(f) + R(x-1)$ para un determinado $\phi(f) \in \mathbb{F}$. Obtenemos que $\phi(x) \in \mathbb{F}^{\sigma}$ y por tanto tenemos el isomorfismo buscado $f \rightarrow \phi(f)$. Teniendo ya este isomorfismo podemos concluir que $\mathcal{R} \cong \mathcal{M}_n(\mathbb{F}^{\sigma})$.
+\end{proof}
+
+
+\section{Construcción de códigos torcidos}
+
+Cada ideal por la izquierda de $\mathcal{R}$ es principal, por tanto, cada código torcido está generado por los divisores a derecha de $x^n-1$. Por ello, tenemos que encontrar los divisores a derecha de este polinomio. El problema es que como vimos en el capítulo anterior, no hay una factorización única para estos polinomios por lo que necesitamos encontrar otro procedimiento para $x^n-1$. Comenzaremos dando una forma de encontrar factores a derecha.
+
+\begin{proposition}
+    Sea $\beta \in \mathbb{F}$, entonces $x - \beta$ divide a derecha a $x^n-1$ si y solo si $\beta = \sigma(c)c^{-1}$, para algún $c \in \mathbb{F}$ no nulo.
+\end{proposition}
+
+\begin{proof}
+    Sea $R = \mathbb{F}[x;\sigma] $. Si $x - \beta$ divide a derecha a $x^n-1$ entonces $R/R(x-\beta) \cong R/R(x-1) $ como $R$-módulos por la izquierda y por tanto, $\beta = \sigma(c)c^{-1}$ dado un $c \in \mathbb{F}$ no nulo. 
+    
+    En cambio, dado un $c \in \mathbb{F}$ no nulo y que $\beta = \sigma(c)c^{-1}$, $x-\beta$ será un divisor a derecha de $x^n-1$ si al evaluar $x^n-1$ en $\beta$ nos da cero,  usamos que $\sigma^i(c)c^{-1} = N_i(\sigma(c)c^{-1})$, por tanto si evaluamos $x^n-1$ tenemos que $N_n(\beta)-1 = N_n(\sigma(c)c^{-1}) - 1 = \sigma^n(c)c^{-1} - 1 = cc^{-1} - 1 = 1 - 1 = 0$ ya que $n = ord(\sigma)$ y por tanto, $\sigma^n(c) = c$ . Así, obtenemos que $x -\beta$ es un divisor a derecha de $x^n-1$.
+
+    Demostraremos que $\sigma^i(c)c^{-1} = N_i(\sigma(c)c^{-1})$ por inducción.
+
+    Paso base: $i = 0$ se tiene que $\sigma^0(c)c^{-1} = cc^{-1} = 1 = N_0(\sigma(c)c^{-1})$ por definición de la norma.
+
+    Supongamos que es cierto para $i=k$, veamos que se cumple para $k+1$:
+
+\begin{eqnarray*}
+    N_{k+1}(\sigma(c)c^{-1}) & = & \sigma^{k}(\sigma(c)c^{-1})\sigma^{k-1}(\sigma(c)c^{-1})\cdots \sigma(\sigma(c)c^{-1})\sigma(c)c^{-1} \\
+    & = & \sigma^k(\sigma(c)c^{-1})N_k(\sigma(c)c^{-1})
+\end{eqnarray*}
+
+usamos la hipótesis de inducción.
+
+\begin{eqnarray*}
+    & = & \sigma^k(\sigma(c)c^{-1})\sigma^k(c)c^{-1} \\
+    & = & \sigma^{k+1}(c)\sigma^k(c^{-1})\sigma^k(c)c^{-1} \\
+    & = & \sigma^{k+1}(c)(\sigma^k(c))^{-1}\sigma^k(c)c^{-1} \\
+    & = & \sigma^{k+1}(c)c^{-1}
+\end{eqnarray*}
+\end{proof}
+
+
+Por el Teorema \ref{th:isomorfismo_cuerpo_matrices}, hemos visto que podemos descomponer el polinomio $x^n-1$ como el mínimo común múltiplo a izquierda de polinomios lineales. Por tanto, para encontrar tal descomposición lo que vamos a hacer es calcular $\beta \in \mathbb{F}$ de tal forma que,
+\[ [x-\beta,x-\sigma(\beta),\cdots,x-\sigma^{n-1}(\beta)]_l = x^n-1.\]
+
+Sin embargo, no todo $\beta$ cumple esto aunque es fácil ver que se satisface esa condición si y solo si el determinante de la siguiente matriz es distinto de cero.
+
+\[
+ \left( \begin{array}{ccccc}
+	1 & \beta & \beta\sigma(\beta) & \cdots & \beta\sigma(\beta) \cdots \sigma^{n-2}(\beta)  \\
+	1 & \sigma(\beta) & \sigma(\beta)\sigma^2(\beta) & \cdots & \sigma(\beta)\sigma^2(\beta) \cdots \sigma^{n-1}(\beta)   \\
+	\vdots & \vdots & \vdots & \vdots & \vdots  \\
+	1 & \sigma^{n-1}(\beta) & \sigma^{n-1}(\beta)\beta & \cdots & \sigma^{n-1}(\beta)\beta \cdots \sigma^{n-3}(\beta)   
+			\end{array} 
+	\right)
+\]
+
+Teniendo en cuenta la definición que hemos dado anteriormente de $\beta = \sigma(c)c^{-1}$, es equivalente decir que el determinante de esta matriz es distinto de cero,
+
+\[
+ \left( \begin{array}{ccccc}
+	c & \sigma(c) & \sigma^2(c) & \cdots & \sigma^{n-1}(c)  \\
+	\sigma(c) & \sigma^2(c) & \sigma^c(c) & \cdots & c   \\
+	\vdots & \vdots & \vdots & \vdots & \vdots  \\
+	 \sigma^{n-1}(c) & c & \sigma(c) & \cdots & \sigma^{n-2}(c)
+			\end{array} 
+	\right)
+\]
+
+o equivalente, decir que $\{ c,\sigma(c),\sigma^2(c),\cdots,\sigma^{n-1}(c) \}$ es una base normal de la extensión $\mathbb{F}^{\sigma} \subseteq \mathbb{F}$. La existencia de un $c \in \mathbb{F}$ que produzca tal base viene asegurado por el Teorema de Bases Normales. %Normal Basis Theorem no se cual es exactamente como es en español.
+Este elemento $c$ se puede calcular a través de un algoritmo pero en la práctica es más común escoger un elemento aleatorio y ver si satisface esta propiedad. Claramente, diferentes elecciones de $\beta$ dan lugar a distintas descomposicones de $x^n-1$.
+
+Ya podemos describir un método para construir códigos torcidos de cualquier dimensión: calculamos $\beta$, elegimos cualquier subconjunto $\{ i_1,i_2,\cdots,i_k \} \subset \{ 0,1,\cdots,n-1\}$ y tomamos 
+\[ f = [x-\sigma^{i_1}(\beta),x-\sigma^{i_2}(\beta),\cdots, x-\sigma^{i_k}(\beta)]_l .\]
+
+La imagen del ideal por la izquierda de $f$ es un código torcido de dimensión $n-k$ y longitud $k$.
+
+\begin{exampleth}
+ Sea $F = \mathbb{F}_{2^5} = \mathbb{F}_{32}$. Sea $\sigma$ el automorfismo de Frobenius con $ord(\sigma) = 5$.
+
+Vamos a calcular el elemento $\beta$, para ello, elegimos un elemento $c \in \mathbb{F}_{32}$ cualquiera por ejemplo $c=\alpha^3$. Creamos la matriz vista anteriormente y calculamos su determinante para ver si es distinto de cero. Tenemos que la matriz $C$ es
+
+
+\[
+ \left( \begin{array}{ccccc}
+	\alpha^3 & \alpha^3+\alpha & \alpha^3 + \alpha^2 + \alpha & \alpha^4 +\alpha^3 + \alpha^2 + \alpha & \alpha^4 + \alpha + 1 \\
+	\alpha^3+\alpha & \alpha^3 + \alpha^2 + \alpha & \alpha^4 +\alpha^3 + \alpha^2 + \alpha &  \alpha^4 + \alpha + 1 & \alpha^3  \\ 
+	\alpha^3 + \alpha^2 + \alpha & \alpha^4 +\alpha^3 + \alpha^2 + \alpha & \alpha^4 + \alpha + 1 & \alpha^3 & \alpha^3+\alpha \\ 
+   \alpha^4 +\alpha^3 + \alpha^2 + \alpha & \alpha^4 + \alpha + 1 & \alpha^3 & \alpha^3+\alpha & \alpha^3 + \alpha^2 + \alpha \\
+   \alpha^4 + \alpha + 1 & \alpha^3 & \alpha^3+\alpha & \alpha^3 + \alpha^2 + \alpha & \alpha^4 +\alpha^3 + \alpha^2 + \alpha
+			\end{array} 
+	\right)
+\]
+
+\[ det(C) = 1 \neq 0 \]
+
+Por tanto, este elemento nos sirve y podemos calcular lo que vale $\beta = \sigma(c)c^{-1} = (\alpha^3 + \alpha) \cdot (\alpha^4 + \alpha^2 + \alpha) = \alpha^3$.
+
+Tenemos que 
+\[ [x+\alpha^3,x+(\alpha^3+\alpha),x+(\alpha^3 + \alpha^2 + \alpha),x+(\alpha^4 +\alpha^3 + \alpha^2 + \alpha),x+(\alpha^4 + \alpha + 1)]_l = x^5-1. \]
+
+Por tanto, haciendo combinaciones de estos polinomios podemos obtener los polinomios generadores de los distintos códigos torcidos. Algunos ejemplos los podemos ver en la siguiente tabla.
+
+\begin{table}[h]
+\begin{tabular}{ c | c | c | c |}
+	i & dimensión & longitud & polinomio generador\\ \hline
+	1 & 4  & 1 & $x+\alpha^3$ \\
+	2 & 4 & 1 & $x+(\alpha^4 + \alpha + 1)$ \\ 
+	3 & 3 & 2 & $x^2 + \alpha^3 + \alpha^2$ \\
+	4 & 3 & 2 & $x^2 + (\alpha^2 + \alpha)x + \alpha^3 + 1$ \\
+    5 & 2 & 3 & $ x^3 + (\alpha^4 + \alpha^3 + \alpha^2)x^2 + (\alpha^4 + \alpha^3 + \alpha^2 + \alpha)x + \alpha$ \\
+    6 & 2 & 3 & $ x^3 + (\alpha^3 + \alpha^2 + \alpha)x^2 + (\alpha^4 + \alpha^3 + \alpha^2 + \alpha + 1)x + \alpha^2$ \\
+    7 & 1 & 4 & $x^4 + (\alpha^4 + \alpha^3 + \alpha^2)x^2 + (\alpha^2 + \alpha + 1)x + \alpha^2 + \alpha $
+	\end{tabular}
+ \caption{Polinomios generadores de distintos códigos torcidos.}
+\end{table}
+\end{exampleth}
+
+
+\section{Códigos Reed-Solomon torcidos}
+
+En la sección anterior hemos visto como contruir códigos torcidos, ahora queremos construir una familia de códigos torcidos a los que llamaremos códigos Reed-Solomon torcidos, buscando que tengan un peso mínimo alto y una alta dimensión.
+
+Antes de poder dar una definición, demostraremos unos resultados que serán necesarios.
+
+\begin{lemma}
+\label{le:uno}
+Sea $L$ un cuerpo, $\sigma$ un automorfismo de $L$ de orden $n$ y $K = L^{\sigma}$ subcuerpo de invariantes por $\sigma$. Sea $\{a_0,\cdots,a_{n-1}$ una $K$-base de $lL$. Entonces, para todo $t \leq n$ y cada subconjunto $\{ k_0 < k_1 < \cdots < k_{t-1} \} \subseteq \{ 0,1,\cdots,n-1 \}$,
+
+\[ \left| \begin{array}{cccc}
+	a_{k_0} & a_{k_1} & \cdots & a_{k_{t-1}}  \\
+	\sigma(a_{k_0}) & \sigma(a_{k_1}) & \cdots & \sigma(a_{k_{t-1}})  \\
+    \vdots  & \vdots & \vdots & \vdots  \\
+	\sigma^{t-1}(a_{k_0}) & \sigma^{t-1}(a_{k_1}) & \cdots & \sigma^{t-1}(a_{k_{t-1}})  
+			\end{array} 
+	\right| \neq 0
+\]
+\end{lemma}
+
+\begin{proof}
+    Haremos inducción sobre $t$. El caso $t=1$ es trivial, así que asumimos que el lema es cierto para algún $t \geq 1$. Tenemos que comprobar que para cualquier matriz $(t+1) \times (t+1)$
+
+    \[ \Delta = \left| \begin{array}{cccc}
+	a_{k_0} & a_{k_1} & \cdots & a_{k_t}  \\
+	\sigma(a_{k_0}) & \sigma(a_{k_1}) & \cdots & \sigma(a_{k_t})  \\
+    \vdots & \vdots  & \vdots & \vdots  \\
+	\sigma^{t}(a_{k_0}) & \sigma^{t}(a_{k_1}) & \cdots & \sigma^{t}(a_{k_t})  
+			\end{array} 
+	\right| \neq 0 ,
+\]
+tiene determinante distinto de cero. Lo haremos por el contrarrecíproco, supongamos que su determinante es cero. Por hipótesis de inducción, las primeras $t$ columnas de $\Delta$ son linealmente independientes, así que existe $b_0,\cdots,b_{t-1} \in L$ tal que 
+\[ (a_{k_t},\sigma(a_{k_t}),\cdots,\sigma^t(a_{k_t})) = \sum_{j=0}^{t-1} b_j(a_{k_t},\sigma(a_{k_t}),\cdots,\sigma^t(a_{k_t})).\]
+
+Luego, $b_0,\cdots,b_{t-1}$ satisfacen el siguiente sistema
+ \[  \left\{ \begin{array}{l}
+       a_{k_t} = b_0a_{k_0} + \cdots + b_{t-1}a_{k_{t-1}} \\
+       \sigma(a_{k_t}) = b_0 \sigma(a_{k_0}) + \cdots + b_{t-1} \sigma(a_{k_{t-1}}) \\
+       \vdots \\
+       \sigma^t(a_{k_t}) = b_0 \sigma^t(a_{k_0}) + \cdots + b_{t-1} \sigma^t(a_{k_{t-1}}) \\
+             \end{array}
+   \right. \]
+
+Para cualquier $j = 0,\cdots,t-1$ , restamos en el sistema la ecuación $j+1$ transformada por $\sigma^{-1}$ de la ecuación $j$. Nos queda el siguiente sistema lineal homogéneo
+ \[  \left\{ \begin{array}{l}
+      0 = (b_0-\sigma^{-1}(b_0))a_{k_0} + \cdots + (b_{t-1}-\sigma^{-1}(b_{t-1}))a_{k_{t-1}} \\
+       0 = (b_0-\sigma^{-1}(b_0))\sigma(a_{k_0}) + \cdots + (b_{t-1}-\sigma^{-1}(b_{t-1}))\sigma(a_{k_{t-1}}) \\
+       \vdots \\
+       0 = (b_0-\sigma^{-1}(b_0))\sigma^t(a_{k_0}) + \cdots + (b_{t-1}-\sigma^{-1}(b_{t-1}))\sigma^t(a_{k_{t-1}}) \\
+             \end{array}
+   \right. \]
+
+La matriz correspondiente a este sistema es invertible por hipótesis de inducción, luego para todo $j = 0,\cdots,t-1$, 
+$b_j- \sigma^{-1}(b_j) = 0$ y por tanto, $b_0,\cdots,b_{t-1} \in K$. Consecuentemente, tenemos una dependencia lineal en la $K$-base   $\{a_0,\cdots,a_{n-1} \}$, lo que es una contracción y concluimos que $\mid \Delta \mid \neq 0$.
+\end{proof}
+
+\begin{lemma}
+\label{le:veinticinco}
+  Sea $\alpha \in \mathbb{F}$ y $g = \sum_{i=1}^r g_ix^i \in R$. Entonces:
+  \begin{enumerate}
+      \item El resto de la división a izquierda de $g$ por $x-\alpha$ es $\sum_{i=0}^r g_iN_i(\alpha)$.
+      \item El resto de la división a derecha de $g$ por $x-\alpha$ es $\sum_{i=0}^r \sigma^{-i}(g_i)N_{-i}(\alpha)$.
+      \item $N_j(\sigma^k(\alpha)) = \sigma^k(N_j(\alpha))$ para cualquier $i,k$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    Para demostrar (1) y análogamente (2) vamos a demostrar que $x^n - N_n(\alpha) \in R(x-\alpha)$ por inducción.
+
+    Supongamos que es cierto para $n$, veamos si se cumple para $n+1$.
+    
+    \[ x^{n+1} - N_{n+1}(\alpha) = x^{n+1} - \sigma(N_{n}(\alpha))\alpha \]
+    \[ = x^{n+1} + \sigma(N_{n}(\alpha))(x-\alpha) - \sigma(N_{n}(\alpha))x  \]
+    \[  = \sigma(N_{n}(\alpha))(x-\alpha) + x(x^n - N_n(\alpha)). \]
+
+Por tanto, usando este resultado tenemos que
+
+\[ g - \sum_{i=1}^r g_i N_i(\alpha) = \sum_{i=1}^r g_i(x^i - N_i(\alpha)) \in R(x-\alpha) . \]
+
+Por la unicidad del Algoritmo de Euclides obtenemos que $r = \sum_{i=0}^r g_iN_i(\alpha)$. \cite{Vandermonde}
+
+Para demostrar (3),
+
+$N_j(\sigma^k(\alpha)) = \sigma^k(\alpha)\sigma^{k+1}(\alpha)\cdots \sigma^{k+j-1}(\alpha) = \sigma^k(\alpha\sigma(\alpha)\cdots \sigma^{j-1}(\alpha)) = \sigma^k(N_j(\alpha)). $
+\end{proof}
+
+\begin{lemma}
+\label{le:dos}
+  Sea $\alpha \in \mathbb{F}$ tal que $\{ \alpha, \sigma(\alpha),\cdots,\sigma^{n-1}(\alpha)\}$ es una base de $\mathbb{F}^{\sigma}$. Sea $\beta = \sigma(\alpha)\alpha^{-1}$. Para cualquier subconjunto $T = \{ t_1 < t_2 < \cdots < t_m \} \subseteq \{ 0,1,\cdots,n-1 \}$ y el polinomio 
+ 
+  \[ g^l = [x - \sigma^{t_1}(\beta),x - \sigma^{t_2}(\beta),\cdots, x - \sigma^{t_m}(\beta) ]_l \]
+
+tiene grado $m$. Consecuentemente, cualquier $x - \sigma^s(\beta)$ que sea divisor a derecha de $g^l$ implica que $s \in T$.
+\end{lemma}
+
+\begin{proof}
+    Supongamos que $deg(g^l) < m$, así que $g^l = \sum_{i=0}^{m-1} g_ix^i$. Ya que $g^l$ es un múltiplo a izquierda de $x-\sigma^{t_j}(\beta)$ para cualquier $1 \leq j \leq m$, del Lema \ref{le:veinticinco} (1) tenemos que
+
+    \[ \sum_{i=0}^{m-1} g_iN_i(\sigma^{t_j}(\beta)) = 0 \thinspace \thinspace para \thinspace cualquier \thinspace 1 \leq j \leq m.\]
+
+Tenemos un sistema lineal homogénea cuya matriz de coeficientes es
+
+\[  M =  \left( \begin{array}{cccc}
+	N_0(\sigma^{t_1}(\beta)) & N_0(\sigma^{t_2}(\beta)) & \cdots & N_0(\sigma^{t_m}(\beta))  \\
+	N_1(\sigma^{t_1}(\beta)) & N_1(\sigma^{t_2}(\beta)) & \cdots & N_1(\sigma^{t_m}(\beta))  \\
+    N_2(\sigma^{t_1}(\beta)) & N_2(\sigma^{t_2}(\beta)) & \cdots &  N_2(\sigma^{t_m}(\beta))  \\
+    \vdots & \vdots  & \vdots & \vdots  \\
+	N_{m-1}(\sigma^{t_1}(\beta)) & N_{m-1}(\sigma^{t_2}(\beta)) & \cdots & N_{m-1}(\sigma^{t_m}(\beta))
+			\end{array} 
+	\right) 
+\]
+
+Además, $N_i(\sigma^{t_j}(\beta)) = \sigma^{t_j}(N_i(\beta)) = \sigma^{t_j+i}(\alpha)\sigma^{t_j}(\alpha^{-1})$ para cualquier $1 \leq j \leq m$ y $ 0 \leq i \leq m-1$. Por tanto, $\mid M \mid = 0$ si y solo si el determinante de la matriz $M'$ es cero.
+
+\[  M' =  \left( \begin{array}{cccc}
+	\sigma^{t_1}(\alpha) &\sigma^{t_2}(\alpha) & \cdots & \sigma^{t_m}(\alpha)  \\
+	\sigma(\sigma^{t_1}(\alpha)) & \sigma(\sigma^{t_2}(\alpha)) & \cdots &\sigma(\sigma^{t_m}(\alpha)) \\
+   \sigma^2(\sigma^{t_1}(\alpha)) & \sigma^2(\sigma^{t_2}(\alpha)) & \cdots &\sigma^2(\sigma^{t_m}(\alpha)) \\
+    \vdots & \vdots  & \vdots & \vdots  \\
+	\sigma^{m-1}(\sigma^{t_1}(\alpha)) & \sigma^{m-1}(\sigma^{t_2}(\alpha)) & \cdots &\sigma^{m-1}(\sigma^{t_m}(\alpha)) 
+			\end{array} 
+	\right) 
+\]
+
+Sin embargo, por el Lema \ref{le:uno}, $\mid M' \mid \neq 0$. Así que la única solución al sistema es $g_0 = \cdots = g_{m-1} = 0$ lo que es una contradicción y por tanto $deg(g^l) = m$.
+\end{proof}
+
+
+Ya podemos dar una denifición para los códigos Reed-Solomon torcidos.
+
+\begin{definition}
+\label{def:RS}
+    Sean $\alpha, \beta \in \mathbb{F}$ que verifican las condiciones del Lema \ref{le:dos}. Un \textbf{código Reed-Solomon torcido} o códigos RS torcido con distancia designada $\delta \leq n$ es un código torcido generado por $[x-\sigma^r(\beta), x-\sigma^{r+1}(\beta),\cdots,x-\sigma^{r+\delta-2}(\beta)]_l $, para algún $r \geq 0$.
+\end{definition}
+
+\begin{theorem}
+\label{th:RS-torcido}
+    Sea $\mathcal{C}$ un código RS torcido con distancia designada $\delta$. La distancia de Hamming de $\mathcal{C}$ es $\delta$.
+\end{theorem}
+
+\begin{proof}
+    Denotamos a
+    \[ g = [x-\sigma^r(\beta), x-\sigma^{r+1}(\beta),\cdots,x-\sigma^{r+\delta-2}(\beta)]_l , \]
+como un generador de $\mathcal{C}$ de un ideal por la izquierda de $\mathcal{R}$. Una matriz de paridad de $\mathcal{C}$ es 
+
+\[  H =  \left( \begin{array}{cccc}
+	N_0(\sigma^{r}(\beta)) & N_0(\sigma^{r+1}(\beta)) & \cdots & N_0(\sigma^{r+\delta-2}(\beta))  \\
+	N_1(\sigma^{r}(\beta)) & N_1(\sigma^{r+1}(\beta)) & \cdots & N_1(\sigma^{r+\delta-2}(\beta))  \\
+    N_2(\sigma^{r}(\beta)) & N_2(\sigma^{r+1}(\beta)) & \cdots &  N_2(\sigma^{r+\delta-2}(\beta))  \\
+    \vdots & \vdots  & \vdots & \vdots  \\
+	N_{m-1}(\sigma^{r}(\beta)) & N_{m-1}(\sigma^{r+1}(\beta)) & \cdots & N_{m-1}(\sigma^{r+\delta-2}(\beta))
+			\end{array} 
+	\right) 
+\]
+
+siendo las columnas las evaluaciones a derecha de las raíces. Tenemos que probar que cualquier $\delta -1$ menor de $H$ es no nulo. La demostración es parecida lo que hemos hecho en el Lema \ref{le:dos}. Nos damos cuenta que  $N_i(\sigma^{k}(\beta)) = \sigma^{k}(N_i(\beta)) = \sigma^{k+i}(\alpha)\sigma^{k}(\alpha^{-1})$ para cualesquiera enteros $i$ y $k$. Por consiguiente, tenemos la submatriz $M$ de orden $\delta-1$,
+
+\[  M =  \left( \begin{array}{cccc}
+	N_{k_1}(\sigma^{r}(\beta)) & N_{k_1}(\sigma^{r+1}(\beta)) & \cdots & N_{k_1}(\sigma^{r+\delta-2}(\beta))  \\
+	N_{k_2}(\sigma^{r}(\beta)) & N_{k_2}(\sigma^{r+1}(\beta)) & \cdots & N_{k_2}(\sigma^{r+\delta-2}(\beta))  \\
+    N_{k_3}(\sigma^{r}(\beta)) & N_{k_3}(\sigma^{r+1}(\beta)) & \cdots &  N_{k_3}(\sigma^{r+\delta-2}(\beta))  \\
+    \vdots & \vdots  & \vdots & \vdots  \\
+	N_{k_{\delta-1}}(\sigma^{r}(\beta)) & N_{k_{\delta-1}}(\sigma^{r+1}(\beta)) & \cdots & N_{k_{\delta-1}}(\sigma^{r+\delta-2}(\beta))
+			\end{array} 
+	\right) 
+\]
+
+con $\{ k_1 < k_2 < \cdots < k_{\delta-1} \} \subset \{0,1,\cdots,n-1 \}$, luego el determinante es cero si y solo si lo es el de la matriz $M'$,
+
+\[  M' =  \left( \begin{array}{cccc}
+	\sigma^{k_1+r}(\alpha) &\sigma(\sigma^{k_1+r}(\alpha)) & \cdots & \sigma^{\delta-2}(\sigma^{k_1+r}(\alpha)) \\
+	\sigma^{k_2+r}(\alpha) & \sigma(\sigma^{k_2+r}(\alpha))& \cdots &\sigma^{\delta-2}(\sigma^{k_2+r}(\alpha)) \\
+   \sigma^{k_3+r}(\alpha) & \sigma(\sigma^{k_3+r}(\alpha)) & \cdots &\sigma^{\delta-2}(\sigma^{k_3+r}(\alpha)) \\
+    \vdots & \vdots  & \vdots & \vdots  \\
+	\sigma^{k_{\delta-1}+r}(\alpha) & \sigma(\sigma^{k_{\delta-1}+r}(\alpha)) & \cdots &\sigma^{\delta-2}(\sigma^{k_{\delta-1}+r}(\alpha))
+			\end{array} 
+	\right) 
+\]
+
+Como $\{ \alpha, \sigma(\alpha),\cdots,\sigma^{n-1}(\alpha) \}$ es una base de la extensión $\mathbb{F}^{\sigma} \subset \mathbb{F}$ por el Lema \ref{le:uno}, $\mid M' \mid \neq 0$.
+\end{proof}
+
+\begin{exampleth}
+ Sea $F = \mathbb{F}_{2^5} = \mathbb{F}_{32}$. Sea $\sigma$ el automorfismo de Frobenius con $ord(\sigma) = 5$.
+
+Vamos a calcular el elemento $\beta$, para ello, elegimos un elemento $c \in \mathbb{F}_{32}$ cualquiera por ejemplo $c=\alpha^4+1$. Creamos la matriz vista anteriormente y calculamos su determinante para ver si es distinto de cero. Tenemos que la matriz $C$ es
+
+
+\[
+ \left( \begin{array}{ccccc}
+	\alpha^4 + 1 & \alpha^3 + \alpha^2 & \alpha^4 + \alpha^3 + \alpha & \alpha + 1 & \alpha^2 + 1 \\
+	\alpha^3 + \alpha^2 & \alpha^4 + \alpha^3 + \alpha & \alpha + 1  & \alpha^2 + 1   &  \alpha^4 + 1 \\ 
+	\alpha^4 + \alpha^3 + \alpha & \alpha + 1 & \alpha^2 + 1 & \alpha^4 + 1 & \alpha^3 + \alpha^2 \\ 
+    \alpha + 1 & \alpha^2 + 1 & \alpha^4 + 1 & \alpha^3 + \alpha^2 & \alpha^4 + \alpha^3 + \alpha  \\
+   \alpha^2 + 1 & \alpha^4 + 1  & \alpha^3 + \alpha^2 & \alpha^4 + \alpha^3 + \alpha & \alpha + 1 
+			\end{array} 
+	\right)
+\]
+
+\[ det(C) = 1 \neq 0 \]
+
+Por tanto, este elemento nos sirve y podemos calcular lo que vale $\beta = \sigma(c)c^{-1} = (\alpha^3 + \alpha^2) \cdot (\alpha^4 + \alpha^3)  = \alpha^4+1$.
+
+Tenemos que 
+\[ [x+(\alpha^4+1),x+(\alpha^3 + \alpha^2),x+(\alpha^4 + \alpha^3 + \alpha),x+(\alpha + 1),x+(\alpha^3 + \alpha)]_l = x^5+1. \]
+
+Por tanto, la diferencia con un polinomio torcido cualquiera está ahora en coger un subconjunto de potencias consecutivas de $\sigma$. Vamos a poner varios ejemplos según la distancia designada $\delta$.
+
+\begin{table}[h]
+\begin{tabular}{ c | c | c | c | c |}
+	i & dimensión & longitud & $\delta$ & polinomio generador\\ \hline
+	1 & 3  & 1 & 3 & $x +(\alpha^4+1) $ \\
+	2 & 2 & 2 & 4 & $x^2 + \alpha^2x + (\alpha^4 + \alpha^3 + \alpha^2) $ \\ 
+	3 & 1 & 3 & 5 & $ x^3 + (\alpha^3 + \alpha^2)x^2 + \alpha^3x +(\alpha^4 + \alpha^2 + \alpha + 1)$ 
+	\end{tabular}
+ \caption{Polinomios generadores de distintos códigos Reed-Solomon.}
+ \end{table}
+\end{exampleth}
+
+\section{Algoritmo de Sugiyama}
+
+En el Capítulo 2 vimos como era el Algoritmo de Sugiyama para el caso conmutativo, así que en esta sección lo adaptaremos al caso no conmutativo. Para ello, describiremos a $\mathcal{C}$ como un código RS torcido con distancia designada $\delta$ como un ideal por la izquierda de $\mathcal{R}$ por $g = [x-\sigma^r(\beta), x-\sigma^{r+1}(\beta),\cdots,x-\sigma^{r+\delta-2}(\beta)]_l $ para algún $r \geq 0$, donde $\beta$ se ha escogido según la Definición \ref{def:RS}. Por el Teorema \ref{th:RS-torcido} hemos visto que la distancia de Hamming del código es justo $\delta$ y por tanto, el máximo número de error que podemos corregir es $t = \lfloor (\delta -1)/2 \rfloor$. Por simplicidad, suponemos que $r = 0$ que no es una restricción ya que siempre podemos escribir $\beta' = \sigma^r(\beta)$, luego $\beta' = \sigma(\alpha')(\alpha')^{-1}$ y $\alpha' = \sigma^r(\alpha)$ en donde $\alpha'$ sigue dando una base normal. Por tanto, 
+\[ g = [x-\beta', x-\sigma(\beta'),\cdots,x-\sigma^{\delta-2}(\beta')]_l .\]
+
+
+Sea $c \in \mathcal{C}$ una palabra código transmitida por un canal con ruido y recibimos el polinomio $y = c + e$, donde $e = e_1x^{k_1} + \cdots + e_vx^{k_v}$ con $ v \leq t$. Definimos el \textbf{polinomio localizador de errores} como 
+\[ \lambda = [1-\sigma^{k_1}(\beta)x,1-\sigma^{k_2}(\beta)x,\cdots,1-\sigma^{k_v}(\beta)x ]_r .\]
+
+Vamos a mostrar que este polinomio determina las posiciones sin cometer errores.
+
+\begin{lemma}
+\label{le:siete}
+Para cualquier subconjunto $\{ t_1,\cdots,t_m \} \subseteq \{ 0,1,\cdots,n-1 \}$, 
+
+\[ [1-\sigma^{t_1}(\beta)x,1-\sigma^{t_2}(\beta)x,\cdots,1-\sigma^{t_m}(\beta)x ]_r =\] \[ = [x-\sigma^{t_1-1}(\beta^{-1}),x-\sigma^{t_2-1}(\beta^{-1}),\cdots,x-\sigma^{t_m-1}(\beta^{-1}) ]_r\]
+    
+\end{lemma}
+\begin{proof}
+    Para cualquier $a \in \mathbb{F}$, $1-ax = (x - \sigma^{-1}(a^{-1}))(-\sigma^{-1}(a))$ y $x - \sigma^{-1}(a^{-1}) = (1-ax)(-\sigma^{-1}(a))$. Luego, los polinomios se dividen el uno al otro a izquierda.
+\end{proof}
+
+\begin{proposition}
+\label{prop:ocho}
+    $1-\sigma^d(\beta)x$ divide a izquierda a $\lambda$ si y solo si $x-\sigma^{d-1}(\beta^{-1})$ divide a izquierda a $\lambda$ si y solo si $d \in \{k_1,\cdots,k_v \}$.
+\end{proposition}
+
+\begin{proof}
+    Por el Lema \ref{le:siete}, $1-\sigma^d(\beta)x$ divide a izquierda a $\lambda$ si y solo si $x-\sigma^{d-1}(\beta^{-1})$ divide a izquierda a $\lambda$. Ahora, por el Lema \ref{le:dos}, $x-\sigma^{d-1}(\beta^{-1})$ divide a izquierda a $\lambda$ si y solo si $d \in \{k_1,\cdots,k_v \}$.
+\end{proof}
+
+Por tanto, una vez conocemos $\lambda$, las posiciones de los errores las podemos localizar gracias a la siguiente regla: $d \in \{0,1,\cdots,n-1 \}$ es una posición de error si y solo si $\sigma^{d-1}(\beta^{-1})$ es una raíz a izquierda de $\lambda$.
+
+Para cualquier $ 1 \leq j \leq v$, $\lambda = (1-\sigma^{k_j}(\beta)x)p_j $ para algún polinomio $p_j \in \mathcal{R}$ con $deg(p_j) = v-1$. Definimos el \textbf{polinomio evaluador de errores} como $\omega = \sum_{j=1}^v e_j\sigma^{k_j}(\alpha)p_j$. Una vez conocidos el polinomio localizador de error y el evaluador de erorres podemos calcular los valores de $e_1,e_2 \cdots, e_v$ resolviendo un sistema lineal y determinando completamente el error $e$.
+
+
+Ahora vamos a ver como calcular los \textbf{síndromes}. Para cada $0 \leq i \leq n-1$, el $i$-ésimo síndrome $S_i$ del polinomio recibido $y = \sum_{j=0}^{n-1} y_jx^j$ se define como el resto de dividir a izquierda $y$ por $x-\sigma^i(\beta)$. Para cualquier $0 \leq i \leq 2t-1$, las evaluaciones a derecha son cero, entonces resulta que
+
+\begin{eqnarray*}
+     S_i & = &  \sum_{j=0}^{n-1} y_jN_j(\sigma^i(\beta)) \\
+     & = & \sum_{j=0}^{v} e_jN_{k_j}(\sigma^i(\beta))\\
+     & = & \sum_{j=0}^{v} e_j\sigma^i(N_{k_j}(\beta)) \\
+      & = & \sum_{j=0}^{v} e_j\sigma^{k_j+i}(\alpha)\sigma^i(\alpha^{-1}) \\
+       & = & \sigma^i(\alpha^{-1}) \sum_{j=0}^{v} e_j\sigma^{k_j+i}(\alpha)    
+\end{eqnarray*}
+
+
+Por lo tanto, $\sigma^i(\alpha)S_i = \sum_{j=0}^{v} e_j\sigma^{k_j+i}(\alpha)$ y a $S = \sum_{i=0}^{2t-1} \sigma^i(\alpha)S_ix^i$ lo llamamos el \textbf{polinomio síndrome de y}.
+
+\begin{theorem}
+    El polinomio localizador de errores y el evaluador de errores satisfacen la ecuación clave no conmutativa 
+    \[ \omega = S\lambda + x^{2t}u ,\]
+donde $u \in \mathcal{R}$ y tiene grado menor que $v$.
+\end{theorem}
+
+\begin{proof}
+    Observamos que $R = \mathbb{F}[x;\sigma]$ se puede ver como un subanillo del anillo de series de potencias torcidas $\mathbb{F}[[x;\sigma]]$. Dado $1-ax \in \mathbb{F}[x;\sigma]$ con $a \in \mathbb{F}$, un cálculo en $\mathbb{F}[[x;\sigma]]$ muestra que $(1-ax)^{-1} = \sum_{i\geq 0} N_i(a)x^i$. Luego,
+
+    \[ p_j = (1-\sigma^{k_j}(\beta)x)^{-1}\lambda = \sum_{i\geq 0} N_i(\sigma^{k_j}(\beta))x^i\lambda\]
+
+para cualquier $1 \leq j \leq v$. Entonces,
+\begin{eqnarray*}
+    \omega & = & \sum_{j=1}^v e_j\sigma^{k_j}(\alpha)\sum_{i\geq 0} N_i(\sigma^{k_j}(\beta))x^i\lambda \\
+     & = & \sum_{i\geq 0}(\sum_{j=1}^v e_j\sigma^{k_j}(\alpha) N_i(\sigma^{k_j}(\beta)))x^i\lambda \\ 
+    & = & \sum_{i\geq 0}(\sum_{j=1}^v e_j\sigma^{k_j}(\alpha) \sigma^{k_j}(N_i(\beta)))x^i\lambda 
+\end{eqnarray*}
+ por el Lema \ref{le:veinticinco}
+
+\begin{eqnarray*}
+   & = & \sum_{i\geq 0}(\sum_{j=1}^v e_j\sigma^{k_j}(\alpha) \sigma^{k_j}(\sigma^i(\alpha)\alpha^{-1}))x^i\lambda \\
+  & = &  \sum_{i\geq 0}(\sum_{j=1}^v e_j\sigma^{k_j+i}(\alpha))x^i\lambda \\
+  &  = & \sum_{i=0}^{2t-1}(\sum_{j=1}^v e_j\sigma^{k_j+i}(\alpha))x^i\lambda + \sum_{i \geq 2t}(\sum_{j=1}^v e_j\sigma^{k_j+i}(\alpha))x^i\lambda \\
+   & = & \sum_{i=0}^{2t-1} \sigma^{i}(\alpha)S_ix^i\lambda + x^{2t}\sum_{h \geq 0}(\sum_{j=1}^v \sigma^{-2t}(e_j)\sigma^{k_j+h}(\alpha))x^h\lambda 
+\end{eqnarray*}
+ por la igualdad de $S_i$ vista anteriormente.
+
+ \begin{eqnarray*}
+     & = & S\lambda + x^{2t}\sum_{j=1}^v \sigma^{-2t}(e_j)\sum_{h \geq 0}\sigma^{k_j+h}(\alpha)x^h\lambda \\
+       & = & S\lambda + x^{2t}\sum_{j=1}^v \sigma^{-2t}(e_j)\sigma^{k_j}(\alpha) \sum_{h \geq 0}N_h(\sigma^{k_j}(\alpha))x^h\lambda \\
+      & = & S\lambda + x^{2t}\sum_{j=1}^v \sigma^{-2t}(e_j)\sigma^{k_j}(\alpha)(1-\sigma^{k_j}(\alpha)x)^{-1}\lambda \\
+       & = & S\lambda + x^{2t}\sum_{j=1}^v \sigma^{-2t}(e_j)\sigma^{k_j}(\alpha)p_j \\
+       & = & S\lambda + x^{2t}u , 
+ \end{eqnarray*}
+
+donde $u = \sum_{j=1}^v \sigma^{-2t}(e_j)\sigma^{k_j}(\alpha)p_j $.
+\end{proof}
+
+Podemos resolver la ecuación clave. Para ello, usaremos el método que vimos en el caso conmutativo, el Algoritmo Extendido de Euclides, en este caso a derecha, ya que con este algoritmo obtenemos unos coeficientes $\{u_i,v_i,r_i\}$ tal que para dos polinomios $f,g \in R$ tenemos que $fu_i + g v_i = r_i$, donde $(f,g)_r = r_h$ y $deg(r_{i+1}) < deg(r_i)$ para cualquier $0 \leq i \leq h-1$.
+
+\begin{theorem}
+\label{th:ec-nc}
+    La ecuación clave no conmutativa 
+    \[ \omega = S\lambda + x^{2t}u\]
+es un múltiplo a derecha de 
+    \[ r_I = Sv_I + x^{2t}u_I\]
+donde $u_I,v_I$ y $r_I$ son los coeficientes de Bezout del Algoritmo Extendido de Euclides a Derecha y $I$ es el índice determinado por las condiciones $deg(r_{I-1}) \geq t $ y $deg(r_I) < t$. En particular, $\lambda = x_Ig$ y $\omega = r_Ig$ para algún $g \in R$.
+\end{theorem}
+
+\begin{proof}
+  Recordemos que $deg(S) < 2t$, $deg(\lambda) \leq 2t$ y $deg(\omega) < v \leq t$ y consecuentemente $deg(u) < t$. Por otro lado, $deg(v_I)+deg(r_{I-1}) = 2t$ así que $deg(v_I) \leq t$.
+
+  Consideremos el mínimo común múltiplo a derecha $[\lambda,v_I]_r = \lambda a = v_I b$, donde $a,b \in R$ y $deg(a) \leq deg(v_I) \leq t$ y $deg(b) \leq deg(\lambda) \leq t$. Entonces $(a,b)_r = 1$. Por tanto, podemos multiplicar la ecuación clave a la derecha por $a$ y el múltiplo por $b$ a derecha para obtener
+  
+ \[ \omega a = S\lambda a + x^{2t}ua\]
+y
+    \[ r_I b = Sv_I b + x^{2t}u_I b\]
+Luego, de estas dos ecuaciones obtenemos que $x^{2t}(ua-u_Ib) = \omega a - r_Ib$. Comparando los grados, se obtiene que $ua = u_Ib$ y $\omega a = r_I b$. De hecho, como $(a,b)_r = 1$ entonces $[u,u_I]_r = ua = u_I b$ y $[\omega,r_I]_r = \omega a = r_I b$. En particular, $deg(a) \leq deg(r_I) < t$.
+
+Sea $[a,b]_l = a'a = b'b$. Como $[\lambda,v_I]_r$ es un múltiplo a izquierda de $a$ y $b$, existe un $m \in R$ tal que $[\lambda,v_I]_r = m [a,b]_l $. Entonces $\lambda a = v_I b = ma'a = mb'b$. Por lo tanto, $\lambda = ma'$ y $v_I = mb'$ y, por minimalidad, $(\lambda,v_I)_l = m$. Argumentos similares prueban que existen $m',m'' \in R $ tales que $u_I =m'b'$,$u = m'a'$,$r_I = m''b'$ y $\omega = m''a$. No obstante, $(u_I,v_I)_r = 1$ así que $b' = 1$. De esta forma, $b = a'a$ y obtenemos que $\lambda = v_I a'$,$\omega = r_I a'$ y $u = u_I a'$, terminando así la demostración.
+\end{proof}
+
+
+
+\begin{algorithm}
+    \SetAlgoNoLine
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \Input{El polinomio recibido $y = \sum_{i=0}^{n-1} y_ix^i$ tras transmitir una palabra código $c$ de un código RS torcido $\mathcal{C}$ con polinomio generador $g = [\{x-sigma^i(\beta) \}_{i = 0,\cdots,\delta-2} \} ]_l$ y capacidad de correción de errores $t = \lfloor (\delta-1)/2 \rfloor$.}
+    \Output{Una palabra código $c'$ o \textit{key equation failure}.}
+
+    \BlankLine
+    \For{$0 \leq i \leq 2t-1$}{
+        $S_i \gets \sum_{j=0}^{n-1} y_jN_j(\sigma^i(\beta))$
+    }
+    
+    $S \gets \sum_{i=0}^{2t-1} \sigma^i(\alpha)S_ix^i$
+    
+    \If{ $S = 0$}{
+         \Return{$y$}
+    }
+    $\{ u_i,v_i,r_i \}_{i=0,1,\cdots,l} \gets REEA(x^{2t},S)$
+    
+    $ I \gets$ primera iteración en el REEA con $deg(r_i) < t$
+
+    $ pos \gets \emptyset$
+
+    \For{$0 \leq i \leq n-1$}{
+        \If{$\sigma^{i-1}(\beta^{-1})$ es una raíz a izquierda de $v_I$}{
+            $pos = pos \cup \{i\}$
+        }
+    }
+
+    \If{$deg(v_I) > Cardinal(pos)$}{
+        \Return{\textit{key equation failure}}
+    }
+
+    \For{$ j \in pos$}{
+        $p_j \gets$ cociente a derecha de $(v_I,1-sigma^j(\beta)x)$
+    }
+
+    Resolvemos el sistema lineal $r_I = \sum_{j \in pos} e_j\sigma^j(\alpha)p_j$
+
+    $ e \gets  \sum_{j \in pos} e_jx^j $
+
+    \Return{$y-e$}
+
+    \caption{Algoritmo de Decodificación para códigos RS torcidos}
+    \label{alg:uno}
+\end{algorithm}
+
+
+Podemos observar que si $(\lambda,\omega)_r = 1$, entonces el Teorema \ref{th:ec-nc} nos da una forma de calcular tanto el polinomio localizador de errores como el evaluador de errores. Sin embargo, al ser polinomios no conmutativos podemos tener un máximo común dividor no trivial por lo que fallaría esta forma de calcular los polinomios  aunque es raro que esto ocurra. 
+
+Resumiendo, los pasos realizados en el Algoritmo de Sugiyama son los siguientes:
+
+\begin{enumerate}
+    \item Calculamos los síndromes y el polinomio síndrome.
+    \item Hallamos un múltiplo del polinomio localizador de errores y evaluador de errores.
+    \item Obtenemos las posiciones del error.
+    \item Calculamos los valores del error.
+    \item Hallamos el polinomio de error y decodificamos el mensaje.
+\end{enumerate}
+
+\begin{remark}
+    El Algoritmo \ref{alg:uno} falla si se satisface la condición de que $deg(v_I) > Cardinal(pos)$ como consecuencia del Lema \ref{le:dos}. Como vamos a ver en el Teorema \ref{th:quince}, esta condición es equivalente a que $deg(v_I) < deg(\lambda)$. Sin embargo, en la siguiente sección veremos qué hacer si ocurre un fallo al calcular la ecuación clave y tendríamos que este algoritmo está completo como un algoritmo de decodificación.
+\end{remark}
+
+\subsection{Fallo en la ecuación clave}
+
+Nos centraremos ahora en qué hacer en el caso de que $(\lambda,\omega)_r \neq 1$ y, por tanto, no poder encontrar los polinomios $\lambda$ y $\omega$ como se ha visto en la sección anterior.
+
+\begin{lemma}
+\label{le:catorce}
+Si $deg(v_I) \geq 1$, como consecuencia, si $deg(\lambda) = 1$ entonces $v_I$ y $\lambda$ son asociados a derecha.
+\end{lemma}
+
+\begin{proof}
+    Por el Teorema \ref{th:ec-nc}, tenemos que $\omega = r_I g$ para algún $g \in R$, así que $deg(g) < v$. Como $\lambda = v_I g$, por el Lema \ref{le:dos}, $v = deg(\lambda) = deg(v_I)+deg(g)$ y por consiguiente $deg(v_I) \geq 1$.
+\end{proof}
+
+Si falla la ecuación clave tenemos el problema de cómo calcular el polinomio localizador de errores, si seguimos el Algoritmo de Decodificación de Sugiyama , de la ejecución del Algoritmo Extendido de Euclides a Derecha obtenemos los polinomios $r_I,u_I,v_I \in R$ que satisfacen la igualdad $x^{2t}u_I + Sv_I = r_I $ con $\lambda = v_I g$ y $\omega = r_I g$ para algún $g \in R$. Además, $deg(v_I) \geq 1$ por el Lema \ref{le:catorce}. Si $deg(g) = 0$, entonces $v_I$ nos sirve como polinomio localizador y el algoritmo funcionará correctamente. La estrategia ocurre cuando $deg(g) > 0$, para ello, encontraremos una cadena creciente de divisores a izquierda de $\lambda$ cuyo primer componente sea $v_I$. Primero, probaremos el criterio para decidir si se alcanza o no el polinomio localizador de errores.
+
+Antes de esto, necesitamos hacer uso del siguiente lema.
+
+\begin{lemma}
+\label{le:veintiseis}
+Sea $\{t_1 < t_2 < \cdots < t_m \} \subseteq \{ 0,1,\cdots,n-1 \} $ con $ m > 1$, y 
+\[ q = [1-\sigma^{t_1}(\beta)x,1-\sigma^{t_2}(\beta)x,\cdots,1-\sigma^{t_m}(\beta)x ]_r .\]
+
+Sea $q_1,q_2,\cdots,q_m \in R$ tal que $q = (1-\sigma^{t_j}(\beta)x)q_j$ para cualquier $ 1 \leq j \leq m$. Entonces:
+\begin{enumerate}
+    \item $[q_1,q_2,\cdots,q_m]_l = q$ y $(q_1,q_2,\cdots,q_m)_r = 1$.
+    \item $R/Rq = \oplus_{j=1}^m Rq_j/Rq$.
+    \item Para cualquier $f \in R$ con $deg(f) < m$ existen $a_1,\cdots, a_m \in \mathbb{F}$ tal que $ f =\sum_{j=1}^m a_jq_j$.
+    \item El conjunto $\{ q_1,q_2,\cdots,q_m \}$ da una base módulo $Rq$ de $R/Rq$ como $\mathbb{F}$-espacio vectorial.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof} Para probar 1), de los Lemas \ref{le:dos} y \ref{le:siete}, y $deg(q) = m$ obtenemos que $deg(q_j) = m-1$ para cualquier $j = 1,\cdots,m$. Como $m>1$, el grado de $[q_1,q_2,\cdots,q_m]_l$ debe de ser al menos $m-1+1 = m$. Pero $q$ es el mínimo común múltiplo de $q_1,q_2,\cdots,q_m$ de donde 
+$ q = [q_1,q_2,\cdots,q_m]_l$.
+
+Para 2) como $Rq \subseteq Rq_j$ para todo $1 \leq j \leq m$ y $(q_1,q_2,\cdots,q_m)_r = 1$, obtenemos que $R/Rq = \sum_{j=1}^m Rq_j/Rq$. Observamos ahora que $Rq_j/R_q \cong R/R(1-\sigma^{t_j}(\beta)x)$ es uno dimensional sobre $\mathbb{F}$. Como la dimensión de $R/R_q$ como $\mathbb{F}$-espacio vectorial es $deg(q) = m$, obtenemos la suma directa. 3) y 4) los obtenemos a partir de 2).
+\end{proof}
+
+
+\begin{theorem}
+\label{th:quince}
+Sea $q,p,s \in R$ tal que $x^{2t}q + Sp = s$,$qg = u$,$pg = \lambda$ y $sg = \omega$ para algún $g \in R$. Sea $T = \{ t_1,t_2,\cdots,t_m \} \subset \{ 0,1,\cdots,n-1 \}$ un conjunto de índices verificando que $\sigma^{j-1}(\beta^{-1})$ es una raíz a izquierda de $p$ si y solo si $j \in T$. Entonces $m = deg(p)$ si y solo si $g$ es constante.
+\end{theorem}
+
+\begin{proof}
+    Empezamos reordenando el conjunto de las posiciones de los errores de forma que $T = \{ k_1,\cdots, k_m \}$ con $m \leq v$. Si $deg(g) = 0, m=v$ y $deg(p) = v$ por el Lema \ref{le:dos}. Por otro lado, si $m = deg(p)$, entonces 
+    \[ p = [1-\sigma^{k_1}(\beta)x,1-\sigma^{k_2}(\beta)x,\cdots,1-\sigma^{k_m}(\beta)x ]_r\]
+
+por los Lemas \ref{le:dos} y \ref{le:siete}. Escribimos $p = (1-\sigma^{k_j}(\beta)x)p_j'$ para cualquier $j = 1,\cdots,m$. Por el Lema \ref{le:veintiseis} 3) cada polinomio de grado menor que $m$ se puede escribir como una $\mathbb{F}$ combinación lineal de los polinomios $p_1',\cdots,p_{m-1}',p_m'$. En particular, como $deg(s) = deg(\omega)-deg(g) = deg(\omega)+deg(p)-deg(\lambda) \leq v-1+m-v = m-1$, obtenemos $s = \sum_{i=1}^m a_ip_i'$ para algunos $a_1,\cdots,a_m \in \mathbb{F}$. Por otra parte, $\lambda = pg$. De este modo, para cualquier $j = 1,\cdots,m$,$(1-\sigma^{k_j}(\beta)x)p_j = (1-\sigma^{k_j}(\beta)x)p_j'g$, así que $p_j = p_j'g$. Además, $sg = \omega$, por tanto
+
+
+\begin{eqnarray*}
+     \sum_{j=1}^m a_jp_j & = & (\sum_{j=1}^m a_jp_j')g = sg = \omega \\
+     & = & \sum_{j=1}^m e_j\sigma^{k_j}(\alpha)p_j + \sum_{j=m+1}^v e_j\sigma^{k_j}(\alpha)p_j .
+\end{eqnarray*}
+
+Por el Lema \ref{le:veintiseis} 4) , $\{p_1,\cdots,p_v \}$ da una bae de $R/R\lambda$ como $\mathbb{F}$-espacio vectorial. Por lo tanto, como $e_i\sigma^{k_i}(\alpha) \neq 0 $ para todo $i \leq v$, la ecuación anterior implica que $m=v$ y $deg(g) = 0$. 
+\end{proof}
+
+Cuando ocurra que la ecuación clave falla podemos ejecutar el Algoritmo \ref{alg:dos} y así encontramos nuevas posiciones de error.
+
+\begin{algorithm}
+    \SetAlgoNoLine
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \Input{Un polinomio no constante $p$ con $\lambda = pg$ para algún $g \in R$,$pos = \{ i \geq 0$ con $ (1-\sigma^i(\beta)x \mid_l p \}$, con $deg(p) > Cardinal(pos)$.}
+    \Output{$d \notin pos$ tal que $(1-\sigma^d(\beta)x)$ divide a izquierda a $\lambda$ .}
+
+    \BlankLine
+
+    $f \gets p$,$e \gets deg(f)$
+    
+    \For{$0 \leq i \leq n-1$}{
+        \If{$i \notin pos$}{
+            $f \gets [f,1-\sigma^d(\beta)x]_r$
+            
+            \eIf{$deg(f) = e$}{
+            
+                \Return{i}
+            }{
+                $e \gets e+1$
+            }
+        }
+    }
+
+    \caption{Encontrar posición}
+    \label{alg:dos}
+\end{algorithm}
+
+
+\begin{proposition}
+    El Algoritmo \ref{alg:dos} encuentra correctamente una nueva posición de error.
+\end{proposition}
+
+\begin{proof}
+    Sea $T = \{t_1 < t_2 < \cdots,t_r \} = \{ 0,1,\cdots,n-1 \} \ pos$. Para cualquier $1 \leq i \leq r$, denotemos $\lambda_i = [\lambda_{i-1},1-sigma^{t_i}(\beta)x ]_r$ con $\lambda_0 = \lambda$ y $f_i = f_{i-1},1-sigma^{t_i}(\beta)x ]_r$ con $f_0 = p$.
+
+Podemos ver que $f_i \mid_l \lambda_i$ para cualquier $i=0,\cdots,r$. Probaremos primero que el algoritmo siempre devuelve una posición. Supongamos que la secuencia $\{deg(f_i)_{0\leq i \leq r } \}$ siempre crece. Por tanto, $deg(f_r) = r+deg(p) > n-Cardinal(pos)+deg(p) > n$, lo cual no es posible, ya que $f_r \mid_l \lambda_r = x^n-1$. Entonces, existe un mínimo $d \geq 0$ tal que $deg(f_{d-1}) = deg(f_d)$. Ahora, $1-sigma^{t_d}(\beta)x \mid_l f_{d-1} \mid_l \lambda_{d-1} = [ \lambda,1-sigma^{t_1}(\beta)x,\cdots,1-sigma^{t_{d-1}}(\beta)x]_r$. Como  $t_d \neq t_1,\cdots,t_{d-1}$, $1-sigma^{t_d}(\beta)x \mid_l \lambda$. Por consiguiente, por el Lema \ref{le:dos} y la Proposición \ref{prop:ocho}, $t_d$ es una posición de error.
+\end{proof}
+
+Ahora podemos generar nuevas posiciones de error aplicando de manera recursiva el Algoritmo \ref{alg:dos} y así encontrar el polinomio localizador de errores y el evaluador de errores que podemos hacerlo gracias al Algoritmo \ref{alg:tres}.
+
+\begin{algorithm}
+    \SetAlgoNoLine
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \Input{Los polinomios $v_I,r_I$ con $\lambda = v_Ig$,$\omega = r_Ig$ para algún $g \in R$, el conjunto $pos = \{ i \geq 0 $ con $(1-\sigma^i(\beta)x \mid_l v_I \}$.}
+    \Output{El polinomio localizador de errores $\lambda$ y el polinomio evaluador de errores $\omega$.}
+
+    \BlankLine
+
+    $f \gets v_I$
+    
+    \While{$Cardinal(pos) < deg(f)$}{
+        $d \gets$ Encontrar\_posicion $(f,pos)$
+
+       $f \gets [f,1-\sigma^d(\beta)x]_r$
+
+        \For{$0 \leq i \leq n-1$}{
+
+            \If{$ i \notin pos$ y $1-\sigma^i(\beta)x \mid_l f$}{
+                $pos \gets pos \cup \{i\}$
+            }
+        }
+    }   
+     $g \gets $ cociente de división a derecha entre $ (f,v_I) $  
+    
+    \Return{$f,r_Ig$}
+    \caption{Resolver el fallo en la ecuación clave}
+    \label{alg:tres}
+\end{algorithm}
+
